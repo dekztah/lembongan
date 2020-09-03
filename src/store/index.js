@@ -10,11 +10,15 @@ const currentTime = Vue.moment();
 export default new Vuex.Store({
   state: {
     timestamp: currentTime,
-    day: currentTime.day() - 1,
-    hour: currentTime.hour(),
-    minute: currentTime.minute(),
+    // day: currentTime.day() - 1,
+    // hour: currentTime.hour(),
+    // minute: currentTime.minute(),
   },
-  mutations: {},
+  mutations: {
+    updateTimeStamp(state) {
+      state.timestamp = Vue.moment();
+    },
+  },
   actions: {},
   modules: {},
 });
