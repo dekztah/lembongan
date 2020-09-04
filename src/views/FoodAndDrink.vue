@@ -1,5 +1,5 @@
 <template lang="pug">
-  .food-and-drink
+  .food-and-drink.main
     .filter-control
       .filter
         input(type="checkbox" v-model="open")
@@ -144,7 +144,7 @@ export default {
 
 <style lang="scss">
 .placelist {
-  margin-top: 130px;
+  // margin-top: 130px;
   padding: 5px;
 }
 .place {
@@ -155,6 +155,10 @@ export default {
   overflow: hidden;
   border-radius: 4px;
   box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.2);
+
+  @media only screen and (max-width: 575px) {
+    width: calc(50% - 15px);
+  }
 
   .content {
     padding: 10px;
@@ -218,6 +222,10 @@ export default {
   z-index: 1;
   padding: 10px;
   top: 85px;
+
+  @media only screen and (max-width: 575px) {
+    display: none;
+  }
 }
 .filter {
   margin-right: 10px;

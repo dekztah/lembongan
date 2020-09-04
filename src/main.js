@@ -3,6 +3,7 @@ import App from './App.vue';
 import router from './router';
 import store from './store';
 import { rtdbPlugin as VueFire } from 'vuefire';
+import '@/assets/styles/main.scss';
 
 Vue.use(VueFire);
 
