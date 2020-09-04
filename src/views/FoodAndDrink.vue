@@ -1,25 +1,28 @@
 <template lang="pug">
   .food-and-drink.main
-    .filter-control
-      .filter
-        input(type="checkbox" v-model="open")
-        label open places only
+    .filter-control(:class="{'active': mobileNavOpen}")
+      .filter.checkbox
+        input(type="checkbox" v-model="open" id="open")
+        label(for="open") open places only
+        .text show open places only
+
+      .filter.checkbox
+        input(type="checkbox" v-model="dineIn" id="dineIn")
+        label(for="dineIn") dine-in only
+        .text show dine-in only
+
+      .filter.checkbox
+        input(type="checkbox" v-model="delivery" id="delivery")
+        label(for="delivery") delivery only
+        .text show delivery only
+
+      .filter.checkbox
+        input(type="checkbox" v-model="noPreorder" id="noPreorder")
+        label(for="noPreorder") no preorder
+        .text no preorder
 
       .filter
-        input(type="checkbox" v-model="dineIn")
-        label dine-in only
-
-      .filter
-        input(type="checkbox" v-model="delivery")
-        label delivery only
-
-      .filter
-        input(type="checkbox" v-model="noPreorder")
-        label no preorder
-
-      .filter
-        label search by name:&nbsp;
-        input(type="text" v-model="search")
+        input(type="text" v-model="search" placeholder="search by name")
 
     isotope.placelist(:list="filteredPlaces" :options="isotopeOptions")
       .place(v-for="(place, index) in filteredPlaces" :class="{'open': place.isOpen, 'warn': (place.opensIn !== null && place.opensIn >= 0) || (place.closesIn !== null && place.closesIn >= 1) }" :key="`place-${index}`")
@@ -70,6 +73,9 @@ export default {
     };
   },
   computed: {
+    mobileNavOpen() {
+      return this.$store.state.mobileNavOpen;
+    },
     timestamp() {
       return this.$store.state.timestamp;
     },
@@ -102,7 +108,6 @@ export default {
   firebase: {
     places: db.ref('places').orderByChild('name'),
   },
-  mounted() {},
   methods: {
     setIsOpen() {
       this.places.forEach((place) => {
@@ -136,6 +141,7 @@ export default {
             }
           });
         }
+        this.$store.commit('toggleLoading', false);
       });
     },
   },
@@ -222,18 +228,45 @@ export default {
   z-index: 1;
   padding: 10px;
   top: 85px;
+  vertical-align: middle;
+  font-size: 12px;
+  font-weight: 600;
 
   @media only screen and (max-width: 575px) {
-    display: none;
+    transform: translateX(-575px);
+    position: fixed;
+    top: 125px;
+    transition: transform 0.3s ease-out;
+    width: 100%;
+    padding: 10px;
+    display: block;
+    border-bottom: 1px solid darken(#2ccfff, 20);
+    // font-size: 12px;
+
+    &.active {
+      transform: translateX(0px);
+    }
+  }
+  .text {
+    display: inline-block;
   }
 }
 .filter {
-  margin-right: 10px;
+  margin-right: 15px;
 
   input[type='text'] {
-    border: 1px solid #999;
-    border-radius: 4px;
-    padding: 4px;
+    border: none;
+    border-radius: 12px;
+    height: 24px;
+    padding: 4px 8px;
+    vertical-align: middle;
+
+    &:focus {
+      outline: none;
+    }
+  }
+  @media only screen and (max-width: 575px) {
+    margin-bottom: 10px;
   }
 }
 .chip {

@@ -1,5 +1,5 @@
 <template lang="pug">
-  .boats
+  .boats.main
     | boats coming soon...
 </template>
 

@@ -1,5 +1,5 @@
 <template lang="pug">
-  .activities
+  .activities.main
     | activities coming soon...
 </template>
 

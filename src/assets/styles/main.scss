@@ -1,8 +1,8 @@
 $hamburger-padding-x: 15px !default;
 $hamburger-padding-y: 5px !default;
-$hamburger-layer-width: 30px !default;
-$hamburger-layer-height: 4px !default;
-$hamburger-layer-spacing: 6px !default;
+$hamburger-layer-width: 32px !default;
+$hamburger-layer-height: 2px !default;
+$hamburger-layer-spacing: 8px !default;
 $hamburger-layer-color: #000 !default;
 $hamburger-layer-border-radius: 4px !default;
 $hamburger-hover-opacity: 0.7 !default;
@@ -27,7 +27,7 @@ $hamburger-active-hover-filter: $hamburger-hover-filter !default;
   text-transform: none;
   background-color: transparent;
   border: 0;
-  margin: 0;
+  margin: 8px 0 0 0;
   overflow: visible;
 
   &:hover {
@@ -148,4 +148,100 @@ $hamburger-active-hover-filter: $hamburger-hover-filter !default;
       }
     }
   }
+}
+
+.filter-control .checkbox {
+  input[type='checkbox'] {
+    height: 0;
+    width: 0;
+    visibility: hidden;
+    display: none;
+    margin: 0;
+  }
+
+  label {
+    cursor: pointer;
+    text-indent: -9999px;
+    width: 50px;
+    height: 24px;
+    background: darken(#2ccfff, 20);
+    display: inline-block;
+    border-radius: 24px;
+    position: relative;
+    margin-right: 5px;
+    vertical-align: middle;
+  }
+
+  label:after {
+    content: '';
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    width: 20px;
+    height: 20px;
+    background: #2ccfff;
+    border-radius: 20px;
+    transition: 0.1s;
+  }
+
+  input:checked + label {
+    background: #fff;
+  }
+
+  input:checked + label:after {
+    left: calc(100% - 2px);
+    transform: translateX(-100%);
+    background: darken(#2ccfff, 20);
+  }
+
+  label:active:after {
+    width: 30px;
+  }
+}
+
+@keyframes blast-ripple {
+  0% {
+    top: calc(var(--loader-height, 100px) / 2 - var(--line-width, 4px));
+    left: calc(var(--loader-width, 100px) / 2 - var(--line-width, 4px));
+    width: 0;
+    height: 0;
+    opacity: 1;
+  }
+  100% {
+    top: -1px;
+    left: -1px;
+    width: calc(var(--loader-width, 100px) - var(--line-width, 4px));
+    height: calc(var(--loader-height, 100px) - var(--line-width, 4px));
+    opacity: 0;
+  }
+}
+
+.loader.blasting-ripple {
+  position: relative;
+  width: var(--loader-width, 100px);
+  height: var(--loader-height, 100px);
+}
+
+.loader.blasting-ripple::after {
+  opacity: 0;
+  content: '';
+  position: absolute;
+  border: var(--line-width, 4px) solid var(--loader-color-primary, #fff);
+  opacity: 1;
+  border-radius: 50%;
+  animation: blast-ripple var(--animation-duration, 2s)
+    cubic-bezier(0, 0.2, 0.8, 1) infinite;
+}
+.loader.blasting-ripple::before {
+  opacity: 0;
+  top: calc(var(--loader-height, 100px) / 2 - var(--line-width, 4px));
+  left: calc(var(--loader-width, 100px) / 2 - var(--line-width, 4px));
+  content: '';
+  position: absolute;
+  border: var(--line-width, 4px) solid var(--loader-color-primary, #fff);
+  opacity: 1;
+  border-radius: 50%;
+  animation: blast-ripple var(--animation-duration, 2s)
+    cubic-bezier(0, 0.2, 0.8, 1) infinite;
+  animation-delay: calc(var(--animation-duration, 2s) / 2);
 }

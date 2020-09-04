@@ -1,37 +1,44 @@
 <template lang="pug">
   #app
-    header
-      #nav-mobile
-        .hamburger.hamburger--emphatic(type="button" @click="navOpen = !navOpen" :class="{'is-active': navOpen}")
-          .hamburger-box
-            .hamburger-inner
+    transition(name="fade")
+      .loading(v-show="loading")
+        .loader.blasting-ripple
 
-      #nav(:class="{'active': navOpen}")
-        router-link(to="/food-and-drink") Food and Drink
-        router-link(to="/activities") Activities
-        router-link(to="/boats") Boats
+    transition(name="fade")
+      .wrapper(v-show="!loading")
+        header
+          #nav-mobile
+            .hamburger.hamburger--emphatic(type="button" @click="toggleMobileNav" :class="{'is-active': mobileNavOpen}")
+              .hamburger-box
+                .hamburger-inner
 
-      .greeting
-        h1 Selamat {{ partOfTheDay }}!
+          #nav(:class="{'active': mobileNavOpen}")
+            router-link(to="/food-and-drink") Food and Drink
+            router-link(to="/activities") Activities
+            router-link(to="/boats") Boats
 
-      .today
-        h2 {{ dayOfTheWeek }}
-        | {{ date }}
-        br
-        | {{ time }}
+          .greeting
+            h1 Selamat {{ partOfTheDay }}!
 
-    router-view
+          .today
+            h2 {{ dayOfTheWeek }}
+            | {{ date }}
+            br
+            | {{ time }}
+
+        router-view
 
 </template>
 
 <script>
 export default {
   data() {
-    return {
-      navOpen: false,
-    };
+    return {};
   },
   computed: {
+    mobileNavOpen() {
+      return this.$store.state.mobileNavOpen;
+    },
     dayOfTheWeek() {
       return this.$store.state.timestamp.format('dddd');
     },
@@ -40,6 +47,9 @@ export default {
     },
     time() {
       return this.$store.state.timestamp.format('HH:mm');
+    },
+    loading() {
+      return this.$store.state.loading;
     },
     partOfTheDay() {
       let parts = ['pagi', 'siang', 'sore', 'malam'];
@@ -98,6 +108,16 @@ export default {
     toMoment(time) {
       return this.$moment(time, 'HH:mm');
     },
+    toggleMobileNav() {
+      this.$store.commit('toggleMobileNav');
+    },
+  },
+  watch: {
+    $route(to, from) {
+      if (from.name) {
+        this.toggleMobileNav();
+      }
+    },
   },
 };
 </script>
@@ -111,6 +131,17 @@ export default {
 body {
   background: #92e6ff;
   margin: 0;
+}
+.loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: fixed;
+  background: rgba(0, 0, 0, 0.2);
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
 }
 #app {
   font-family: 'Raleway', sans-serif;
@@ -132,9 +163,6 @@ header {
   align-items: center;
   padding: 10px;
   box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.2);
-  // + * {
-  //   margin-top: 85px;
-  // }
 
   @media only screen and (max-width: 575px) {
     .greeting {
@@ -210,5 +238,13 @@ header {
   @media only screen and (max-width: 575px) {
     margin-top: 85px;
   }
+}
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.6s;
+}
+.fade-enter,
+.fade-leave-to {
+  opacity: 0;
 }
 </style>
