@@ -16,6 +16,7 @@
             router-link(to="/food-and-drink") Food and Drink
             router-link(to="/activities") Activities
             router-link(to="/boats") Boats
+            //- router-link(to="/contact") Contact
 
           .greeting
             h1 Selamat {{ partOfTheDay }}!
@@ -27,6 +28,9 @@
             | {{ time }}
 
         router-view
+        footer
+          span Wrong data? Contact me on:&nbsp;
+          a.wa(href="https://wa.me/6282144453436" target="_blank") WA
 
 </template>
 
@@ -235,6 +239,7 @@ header {
 }
 .main {
   margin-top: 130px;
+  margin-bottom: 52px;
   @media only screen and (max-width: 575px) {
     margin-top: 85px;
   }
@@ -246,5 +251,17 @@ header {
 .fade-enter,
 .fade-leave-to {
   opacity: 0;
+}
+footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  font-size: 12px;
+  display: flex;
+  align-items: center;
+  background: darken(#92e6ff, 60);
+  color: white;
+  padding: 10px;
 }
 </style>

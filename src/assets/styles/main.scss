@@ -245,3 +245,21 @@ $hamburger-active-hover-filter: $hamburger-hover-filter !default;
     cubic-bezier(0, 0.2, 0.8, 1) infinite;
   animation-delay: calc(var(--animation-duration, 2s) / 2);
 }
+
+.maps {
+  display: inline-block;
+  width: 28px;
+  height: 28px;
+  background-image: url(../GoogleMaps.svg);
+  text-indent: -9999px;
+  background-size: 28px 28px;
+}
+
+.wa {
+  display: inline-block;
+  width: 32px;
+  height: 32px;
+  background-image: url(../WhatsApp.svg);
+  text-indent: -9999px;
+  background-size: 32px 32px;
+}

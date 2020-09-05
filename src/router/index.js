@@ -24,6 +24,18 @@ const routes = [
     component: () =>
       import(/* webpackChunkName: "boats" */ '../views/Boats.vue'),
   },
+  // {
+  //   path: '/contact',
+  //   name: 'Contact',
+  //   component: () =>
+  //     import(/* webpackChunkName: "contact" */ '../views/Contact.vue'),
+  // },
+  {
+    path: '/addPlace',
+    name: 'AddPlace',
+    component: () =>
+      import(/* webpackChunkName: "add" */ '../views/AddPlace.vue'),
+  },
   {
     path: '/',
     redirect: '/food-and-drink',

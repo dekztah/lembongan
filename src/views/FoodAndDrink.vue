@@ -24,21 +24,25 @@
       .filter
         input(type="text" v-model="search" placeholder="search by name")
 
-    isotope.placelist(:list="filteredPlaces" :options="isotopeOptions")
-      .place(v-for="(place, index) in filteredPlaces" :class="{'open': place.isOpen, 'warn': (place.opensIn !== null && place.opensIn >= 0) || (place.closesIn !== null && place.closesIn >= 1) }" :key="`place-${index}`")
+      .count(v-if="!loading") {{ filteredPlaces.length }} results
+
+    isotope.placelist(v-if="!loading" :list="filteredPlaces" :options="isotopeOptions" ref="isotope")
+      .place(v-for="(place, index) in filteredPlaces" :class="{'open': place.isOpen, 'double': isDouble === index, 'warn': (place.opensIn !== null && place.opensIn >= 0) || (place.closesIn !== null && place.closesIn >= 1) }" :key="`place-${index}`")
         .content
-          h2.name {{ place.name }}
+          h2.name(@click="toggleDouble(index)") {{ place.name }}
 
           .weekdays
             .wd(v-for="(weekday, wid) in place.openingHours" :class="{'closed': typeof weekday === 'string', 'today' : wid === today}")
+              div.day-names {{ dayNames[wid] }}
               span(v-if="typeof weekday === 'object'")
-                div(v-for="time in weekday")
+                div.interval(v-for="time in weekday")
                   | {{ time.start }}-{{ time.end }}
 
-              span(v-else).closed Closed today
-          .info
-            //- span x {{ place.isOpen }}
+              span(v-else).closed-icon-text
+                .icon
+                .text Closed today
 
+          .info
             span.chip.dine-in(v-if="place.dineIn") dine-in
             span.chip.preorder(v-if="place.preorder") preorder
             span.chip.delivery(v-if="place.delivery") delivery
@@ -70,9 +74,15 @@ export default {
       delivery: false,
       noPreorder: false,
       search: null,
+      isDouble: false,
+      columnWidth: 180,
+      dayNames: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
     };
   },
   computed: {
+    loading() {
+      return this.$store.state.loading;
+    },
     mobileNavOpen() {
       return this.$store.state.mobileNavOpen;
     },
@@ -85,10 +95,15 @@ export default {
     isotopeOptions() {
       return {
         transitionDuration: '0.3s',
+        layoutMode: 'masonry',
+        masonry: {
+          columnWidth: this.columnWidth,
+          gutter: 10,
+        },
       };
     },
+
     filteredPlaces() {
-      this.setIsOpen();
       return this.places
         .filter((place) => (this.open ? place.isOpen === this.open : true))
         .filter((place) => (this.dineIn ? place.dineIn === this.dineIn : true))
@@ -105,8 +120,20 @@ export default {
         );
     },
   },
-  firebase: {
-    places: db.ref('places').orderByChild('name'),
+  created() {
+    if (window.innerWidth < 575) this.columnWidth = 165;
+  },
+  mounted() {
+    db.ref('places')
+      .orderByChild('name')
+      .once('value')
+      .then((snapshot) => {
+        snapshot.forEach((child) => {
+          this.places.push(child.val());
+        });
+        this.$store.commit('toggleLoading', false);
+        this.setIsOpen();
+      });
   },
   methods: {
     setIsOpen() {
@@ -141,8 +168,18 @@ export default {
             }
           });
         }
-        this.$store.commit('toggleLoading', false);
       });
+    },
+    toggleDouble(index) {
+      this.isDouble = this.isDouble === index ? null : index;
+      this.$nextTick(() => {
+        this.$refs.isotope.layout('masonry');
+      });
+    },
+  },
+  watch: {
+    timestamp() {
+      this.setIsOpen();
     },
   },
 };
@@ -150,20 +187,75 @@ export default {
 
 <style lang="scss">
 .placelist {
-  // margin-top: 130px;
-  padding: 5px;
+  padding: 10px;
 }
 .place {
   background: #fff;
-  margin: 5px;
+  margin-bottom: 10px;
   align-items: center;
   width: 180px;
   overflow: hidden;
   border-radius: 4px;
   box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.2);
 
+  .day-names {
+    display: none;
+    font-weight: 600;
+  }
+
+  &.double {
+    width: 370px;
+
+    .day-names {
+      display: block;
+      text-align: center;
+    }
+    .interval {
+      padding: 4px 4px 0 4px;
+      text-align: center;
+
+      &:not(:first-child) {
+        border-top: 1px solid #ccc;
+      }
+    }
+
+    .closed-icon-text {
+      padding-top: 4px;
+
+      .text {
+        display: none;
+      }
+      .icon {
+        display: inline-block;
+        width: 24px;
+        height: 24px;
+        background-image: url(../assets/Closed.svg);
+        background-size: 24px 24px;
+      }
+    }
+
+    .wd {
+      display: flex;
+      flex-direction: column;
+      font-size: 14px;
+      padding: 8px 0;
+
+      &:not(:last-child) {
+        border-right: 1px solid #ccc;
+      }
+
+      &.today {
+        background: #f1f1f1;
+      }
+    }
+  }
+
   @media only screen and (max-width: 575px) {
     width: calc(50% - 15px);
+
+    &.double {
+      width: calc(100% - 20px);
+    }
   }
 
   .content {
@@ -187,6 +279,7 @@ export default {
     font-size: 16px;
     margin-top: 0;
     vertical-align: middle;
+    cursor: pointer;
 
     &:before {
       display: inline-block;
@@ -206,7 +299,11 @@ export default {
 .wd {
   display: none;
   align-items: center;
-  margin-right: 1px;
+  flex: 1;
+
+  hr {
+    margin: 2px 0;
+  }
 
   &.today {
     display: flex;
@@ -215,8 +312,18 @@ export default {
   &.closed {
     &.today {
       display: flex;
-      color: red;
+
       font-weight: 600;
+    }
+
+    .closed-icon-text {
+      align-items: center;
+      display: flex;
+      flex: 1;
+
+      .text {
+        color: #ff0000;
+      }
     }
   }
 }
@@ -269,6 +376,10 @@ export default {
     margin-bottom: 10px;
   }
 }
+.count {
+  align-self: center;
+  margin-left: auto;
+}
 .chip {
   display: inline-block;
   border-radius: 10px;
@@ -299,24 +410,6 @@ export default {
   .status {
     margin-right: auto;
     font-size: 12px;
-  }
-
-  .maps {
-    display: inline-block;
-    width: 32px;
-    height: 32px;
-    background-image: url(../assets/GoogleMaps.svg);
-    text-indent: -9999px;
-    background-size: 32px 32px;
-  }
-
-  .wa {
-    display: inline-block;
-    width: 32px;
-    height: 32px;
-    background-image: url(../assets/WhatsApp.svg);
-    text-indent: -9999px;
-    background-size: 32px 32px;
   }
 }
 </style>
