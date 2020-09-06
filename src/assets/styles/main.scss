@@ -1,17 +1,144 @@
-$hamburger-padding-x: 15px !default;
-$hamburger-padding-y: 5px !default;
-$hamburger-layer-width: 32px !default;
-$hamburger-layer-height: 2px !default;
-$hamburger-layer-spacing: 8px !default;
-$hamburger-layer-color: #000 !default;
-$hamburger-layer-border-radius: 4px !default;
-$hamburger-hover-opacity: 0.7 !default;
-$hamburger-active-layer-color: $hamburger-layer-color !default;
-$hamburger-active-hover-opacity: $hamburger-hover-opacity !default;
+@import 'variables';
 
-$hamburger-hover-use-filter: false !default;
-$hamburger-hover-filter: opacity(50%) !default;
-$hamburger-active-hover-filter: $hamburger-hover-filter !default;
+@import url('https://fonts.googleapis.com/css2?family=Raleway&display=swap');
+
+* {
+  box-sizing: border-box;
+}
+body {
+  background: #92e6ff;
+  margin: 0;
+}
+.loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: fixed;
+  background: rgba(0, 0, 0, 0.2);
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+}
+#app {
+  font-family: 'Raleway', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-align: left;
+  color: #2c3e50;
+}
+
+header {
+  position: fixed;
+  z-index: 2;
+  width: 100%;
+  top: 0;
+  height: 85px;
+  background-color: white;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+  box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.2);
+
+  @media only screen and (max-width: $breakpoint-small) {
+    .greeting {
+      h1 {
+        font-size: 20px;
+      }
+    }
+
+    .today {
+      font-size: 12px;
+      h2 {
+        font-size: 16px;
+      }
+    }
+  }
+  #nav {
+    flex: 1;
+
+    a {
+      margin-right: 10px;
+      display: inline-block;
+      border-radius: 4px;
+      padding: 2px 8px;
+      background: darken(#92e6ff, 20);
+      color: white;
+      text-decoration: none;
+
+      &.router-link-active {
+        background: darken(#92e6ff, 40);
+      }
+    }
+    @media only screen and (max-width: $breakpoint-small) {
+      transform: translateX(-$breakpoint-small);
+      position: fixed;
+      z-index: 1;
+      background: white;
+      top: 85px;
+      transition: transform 0.3s ease-out;
+      width: 100%;
+      padding: 10px;
+
+      &.active {
+        transform: translateX(-10px);
+      }
+    }
+  }
+  .greeting {
+    flex: 1;
+
+    h1 {
+      text-align: center;
+      margin: 0;
+    }
+  }
+  .today {
+    flex: 1;
+    text-align: right;
+    h2 {
+      margin: 0;
+    }
+  }
+  #nav-mobile {
+    display: none;
+
+    @media only screen and (max-width: $breakpoint-small) {
+      margin-left: -15px;
+      flex: 1;
+      display: block;
+    }
+  }
+}
+.main {
+  margin-top: 130px;
+  margin-bottom: 52px;
+
+  @media only screen and (max-width: $breakpoint-small) {
+    margin-top: 85px;
+  }
+}
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.6s;
+}
+.fade-enter,
+.fade-leave-to {
+  opacity: 0;
+}
+footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  font-size: 12px;
+  display: flex;
+  align-items: center;
+  background: darken(#92e6ff, 60);
+  color: white;
+  padding: 10px;
+}
 
 .hamburger {
   padding: $hamburger-padding-y $hamburger-padding-x;

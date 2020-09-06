@@ -59,18 +59,19 @@
               strong {{ place.opensIn + 1 }}m
             span(v-if="place.closesIn !== null") Closes in:&nbsp;
               strong {{ place.closesIn + 1 }}m
+
           a.maps(v-if="place.gMapsLink" :href="place.gMapsLink" target="_blank")
           a.wa(v-if="place.contact" :href="place.contact" target="_blank") WA
 
 </template>
 
 <script>
-import { db } from '@/db';
-import isotope from 'vueisotope';
+import { db } from "@/db";
+import isotope from "vueisotope";
 
 export default {
   components: {
-    isotope,
+    isotope
   },
   data() {
     return {
@@ -83,7 +84,7 @@ export default {
       search: null,
       isDouble: false,
       columnWidth: 180,
-      dayNames: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+      dayNames: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"]
     };
   },
   computed: {
@@ -101,81 +102,81 @@ export default {
     },
     isotopeOptions() {
       return {
-        transitionDuration: '0.3s',
-        layoutMode: 'masonry',
+        transitionDuration: "0.3s",
+        layoutMode: "masonry",
         masonry: {
           columnWidth: this.columnWidth,
-          gutter: 10,
-        },
+          gutter: 10
+        }
       };
     },
 
     filteredPlaces() {
       return this.places
-        .filter((place) => (this.open ? place.isOpen === this.open : true))
-        .filter((place) => (this.dineIn ? place.dineIn === this.dineIn : true))
-        .filter((place) =>
+        .filter(place => (this.open ? place.isOpen === this.open : true))
+        .filter(place => (this.dineIn ? place.dineIn === this.dineIn : true))
+        .filter(place =>
           this.delivery ? place.delivery === this.delivery : true
         )
-        .filter((place) =>
+        .filter(place =>
           this.noPreorder ? place.preorder !== this.noPreorder : true
         )
-        .filter((place) =>
+        .filter(place =>
           this.localDishes ? place.localDishes === this.localDishes : true
         )
-        .filter((place) =>
+        .filter(place =>
           this.search
             ? place.name.toLowerCase().includes(this.search.toLowerCase())
             : true
         );
-    },
+    }
   },
   created() {
-    if (window.innerWidth < 575)
+    if (window.innerWidth < 576)
       this.columnWidth = (window.innerWidth - 30) / 2;
   },
   mounted() {
-    db.ref('places')
-      .orderByChild('name')
-      .once('value')
-      .then((snapshot) => {
-        snapshot.forEach((child) => {
+    db.ref("places")
+      .orderByChild("name")
+      .once("value")
+      .then(snapshot => {
+        snapshot.forEach(child => {
           this.places.push(child.val());
         });
-        this.$store.commit('toggleLoading', false);
+        this.$store.commit("toggleLoading", false);
         this.setIsOpen();
       });
   },
   methods: {
     setIsOpen() {
-      this.places.forEach((place) => {
+      this.places.forEach(place => {
         const today = this.timestamp.isoWeekday() - 1;
-        const time = this.$moment(this.timestamp, 'HH:mm');
+        const time = this.$moment(this.timestamp, "HH:mm");
         place.isOpen = false;
         place.opensIn = null;
         place.closesIn = null;
 
-        if (typeof place.openingHours[today] === 'object') {
-          place.openingHours[today].forEach((element) => {
-            const startTime = this.$moment(element.start, 'HH:mm');
-            const endTime = this.$moment(element.end, 'HH:mm');
+        if (typeof place.openingHours[today] === "object") {
+          place.openingHours[today].forEach(element => {
+            const startTime = this.$moment(element.start, "HH:mm");
+            const endTime = this.$moment(element.end, "HH:mm");
 
-            if (this.$moment(time, 'HH:mm').isBetween(startTime, endTime)) {
+            if (this.$moment(time, "HH:mm").isBetween(startTime, endTime)) {
               place.isOpen = true;
             }
 
             if (
-              startTime.diff(time, 's') < 1800 &&
-              startTime.diff(time, 's') >= 0
+              startTime.diff(time, "s") < 1800 &&
+              startTime.diff(time, "s") >= 0
             ) {
-              place.opensIn = startTime.diff(time, 'm');
+              place.opensIn = startTime.diff(time, "m");
             }
 
             if (
-              endTime.diff(time, 's') < 1800 &&
-              endTime.diff(time, 's') >= 0
+              endTime.diff(time, "s") < 1800 &&
+              endTime.diff(time, "s") >= 0
             ) {
-              place.closesIn = endTime.diff(time, 'm');
+              place.closesIn = endTime.diff(time, "m");
             }
           });
         }
@@ -184,19 +185,20 @@ export default {
     toggleDouble(index) {
       this.isDouble = this.isDouble === index ? null : index;
       this.$nextTick(() => {
-        this.$refs.isotope.layout('masonry');
+        this.$refs.isotope.layout("masonry");
       });
-    },
+    }
   },
   watch: {
     timestamp() {
       this.setIsOpen();
-    },
-  },
+    }
+  }
 };
 </script>
 
 <style lang="scss">
+@import "../assets/styles/variables";
 .placelist {
   padding: 10px;
 }
@@ -254,7 +256,7 @@ export default {
       font-size: 14px;
       padding: 8px 0;
 
-      @media only screen and (max-width: 575px) {
+      @media only screen and (max-width: $breakpoint-small) {
         font-size: 12px;
       }
 
@@ -268,7 +270,7 @@ export default {
     }
   }
 
-  @media only screen and (max-width: 575px) {
+  @media only screen and (max-width: $breakpoint-small) {
     width: calc(50% - 15px);
 
     &.double {
@@ -301,7 +303,7 @@ export default {
 
     &:before {
       display: inline-block;
-      content: '';
+      content: "";
       width: 16px;
       height: 16px;
       border-radius: 50%;
@@ -357,8 +359,8 @@ export default {
   font-size: 12px;
   font-weight: 600;
 
-  @media only screen and (max-width: 575px) {
-    transform: translateX(-575px);
+  @media only screen and (max-width: $breakpoint-small) {
+    transform: translateX(-$breakpoint-small);
     position: fixed;
     top: 125px;
     transition: transform 0.3s ease-out;
@@ -378,7 +380,7 @@ export default {
 .filter {
   margin-right: 15px;
 
-  input[type='text'] {
+  input[type="text"] {
     border: none;
     border-radius: 12px;
     height: 24px;
@@ -389,7 +391,7 @@ export default {
       outline: none;
     }
   }
-  @media only screen and (max-width: 575px) {
+  @media only screen and (max-width: $breakpoint-small) {
     margin-bottom: 10px;
   }
 }
