@@ -366,7 +366,7 @@ export default {
   @media only screen and (max-width: $breakpoint-small) {
     transform: translateX(-$breakpoint-small);
     position: fixed;
-    top: 129px;
+    top: 127px;
     transition: transform 0.3s ease-out;
     width: 100%;
     padding: 10px;
