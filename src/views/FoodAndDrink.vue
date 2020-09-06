@@ -39,7 +39,7 @@
 
           .weekdays
             .wd(v-for="(weekday, wid) in place.openingHours" :class="{'closed': typeof weekday === 'string', 'today' : wid === today}")
-              div.day-names {{ dayNames[wid] }}
+              div.day-names {{ weekArray[wid] }}
               span(v-if="typeof weekday === 'object'")
                 div.interval(v-for="time in weekday")
                   | {{ time.start }}-{{ time.end }}
@@ -62,7 +62,7 @@
               strong {{ place.closesIn + 1 }}m
 
           a.maps(v-if="place.gMapsLink" :href="place.gMapsLink" target="_blank")
-          a.wa(v-if="place.contact" :href="place.contact" target="_blank") WA
+          a.wa(v-if="place.contact" :href="waUrl(place.contact)" target="_blank") WA
 
 </template>
 
@@ -84,8 +84,7 @@ export default {
       localDishes: false,
       search: "",
       isDouble: false,
-      columnWidth: 180,
-      dayNames: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"]
+      columnWidth: 180
     };
   },
   computed: {
@@ -98,6 +97,10 @@ export default {
     timestamp() {
       return this.$store.state.timestamp;
     },
+    weekArray() {
+      return this.$store.state.weekArray;
+    },
+
     today() {
       return this.$store.state.timestamp.isoWeekday() - 1;
     },
@@ -113,6 +116,7 @@ export default {
     },
     filteredPlaces() {
       return this.places
+        .filter(place => place.active === true)
         .filter(place => (this.open ? place.isOpen === this.open : true))
         .filter(place => (this.dineIn ? place.dineIn === this.dineIn : true))
         .filter(place =>
@@ -189,6 +193,9 @@ export default {
       });
       this.$store.commit("toggleLoading", false);
       if (this.mobileNavOpen) this.$store.commit("toggleMobileNav");
+    },
+    waUrl(contact) {
+      return `https://wa.me/${contact}`;
     }
   },
   watch: {

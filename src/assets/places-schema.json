@@ -1,0 +1,54 @@
+{
+  "name": "",
+  "openingHours": [
+    [
+      {
+        "start": "",
+        "end": ""
+      }
+    ],
+    [
+      {
+        "start": "",
+        "end": ""
+      }
+    ],
+    [
+      {
+        "start": "",
+        "end": ""
+      }
+    ],
+    [
+      {
+        "start": "",
+        "end": ""
+      }
+    ],
+    [
+      {
+        "start": "",
+        "end": ""
+      }
+    ],
+    [
+      {
+        "start": "",
+        "end": ""
+      }
+    ],
+    [
+      {
+        "start": "",
+        "end": ""
+      }
+    ]
+  ],
+  "dineIn": false,
+  "preorder": false,
+  "delivery": false,
+  "localDishes": false,
+  "active": false,
+  "contact": "",
+  "gMapsLink": ""
+}

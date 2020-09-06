@@ -1,28 +1,28 @@
-import Vue from 'vue';
-import VueRouter from 'vue-router';
+import Vue from "vue";
+import VueRouter from "vue-router";
 
 Vue.use(VueRouter);
 
 const routes = [
   {
-    path: '/food-and-drink',
-    name: 'FoodAndDrink',
+    path: "/food-and-drink",
+    name: "FoodAndDrink",
     component: () =>
       import(
-        /* webpackChunkName: "food-and-drink" */ '../views/FoodAndDrink.vue'
-      ),
+        /* webpackChunkName: "food-and-drink" */ "../views/FoodAndDrink.vue"
+      )
   },
   {
-    path: '/activities',
-    name: 'Activities',
+    path: "/activities",
+    name: "Activities",
     component: () =>
-      import(/* webpackChunkName: "activities" */ '../views/Activities.vue'),
+      import(/* webpackChunkName: "activities" */ "../views/Activities.vue")
   },
   {
-    path: '/boats',
-    name: 'Boats',
+    path: "/boats",
+    name: "Boats",
     component: () =>
-      import(/* webpackChunkName: "boats" */ '../views/Boats.vue'),
+      import(/* webpackChunkName: "boats" */ "../views/Boats.vue")
   },
   // {
   //   path: '/contact',
@@ -31,21 +31,27 @@ const routes = [
   //     import(/* webpackChunkName: "contact" */ '../views/Contact.vue'),
   // },
   {
-    path: '/addPlace',
-    name: 'AddPlace',
+    path: "/login",
+    name: "Login",
     component: () =>
-      import(/* webpackChunkName: "add" */ '../views/AddPlace.vue'),
+      import(/* webpackChunkName: "login" */ "../views/Login.vue")
   },
   {
-    path: '/',
-    redirect: '/food-and-drink',
+    path: "/addPlace",
+    name: "AddPlace",
+    component: () =>
+      import(/* webpackChunkName: "add" */ "../views/AddPlace.vue")
   },
+  {
+    path: "/",
+    redirect: "/food-and-drink"
+  }
 ];
 
 const router = new VueRouter({
-  mode: 'history',
+  mode: "history",
   base: process.env.BASE_URL,
-  routes,
+  routes
 });
 
 export default router;
