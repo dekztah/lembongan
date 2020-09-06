@@ -34,13 +34,12 @@
       label Active
       input(type="checkbox" v-model="form.active")
 
-    pre {{ form }}
     button(@click= "insert") insert
 
 </template>
 
 <script>
-import { db } from "@/db";
+import { db } from "@/firebase";
 import schema from "@/assets/places-schema.json";
 
 export default {

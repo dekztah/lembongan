@@ -67,7 +67,7 @@
 </template>
 
 <script>
-import { db } from "@/db";
+import { db } from "@/firebase";
 import isotope from "vueisotope";
 
 export default {

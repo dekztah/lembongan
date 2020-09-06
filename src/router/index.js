@@ -39,6 +39,9 @@ const routes = [
   {
     path: "/addPlace",
     name: "AddPlace",
+    meta: {
+      requiresAuth: true
+    },
     component: () =>
       import(/* webpackChunkName: "add" */ "../views/AddPlace.vue")
   },

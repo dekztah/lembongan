@@ -7,8 +7,7 @@
 </template>
 
 <script>
-// import firebase from "firebase";
-import { fb } from "@/db";
+// import { auth } from "@/firebase";
 export default {
   data() {
     return {
@@ -23,15 +22,10 @@ export default {
   },
   methods: {
     login() {
-      fb.auth()
-        .signInWithEmailAndPassword(this.form.email, this.form.password)
-        .then(data => {
-          console.log("x", data);
-          this.$router.replace({ name: "AddPlace" });
-        })
-        .catch(err => {
-          this.error = err.message;
-        });
+      this.$store.dispatch("login", {
+        email: this.form.email,
+        password: this.form.password
+      });
     }
   }
 };

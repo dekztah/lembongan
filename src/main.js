@@ -2,15 +2,28 @@ import Vue from "vue";
 import App from "./App.vue";
 import router from "./router";
 import store from "./store";
-import { rtdbPlugin as VueFire } from "vuefire";
 import "@/assets/styles/main.scss";
-
-Vue.use(VueFire);
+import { auth } from "@/firebase";
 
 Vue.config.productionTip = false;
 
-new Vue({
-  router,
-  store,
-  render: h => h(App)
-}).$mount("#app");
+router.beforeEach((to, from, next) => {
+  const requiresAuth = to.matched.some(x => x.meta.requiresAuth);
+
+  if (requiresAuth && !auth.currentUser) {
+    next("/login");
+  } else {
+    next();
+  }
+});
+
+let app;
+auth.onAuthStateChanged(() => {
+  if (!app) {
+    app = new Vue({
+      router,
+      store,
+      render: h => h(App)
+    }).$mount("#app");
+  }
+});
