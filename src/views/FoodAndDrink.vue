@@ -121,7 +121,8 @@ export default {
     },
   },
   created() {
-    if (window.innerWidth < 575) this.columnWidth = 165;
+    if (window.innerWidth < 575)
+      this.columnWidth = (window.innerWidth - 30) / 2;
   },
   mounted() {
     db.ref('places')
@@ -216,6 +217,9 @@ export default {
 
       &:not(:first-child) {
         border-top: 1px solid #ccc;
+      }
+      &:not(:last-child) {
+        padding-bottom: 4px;
       }
     }
 
