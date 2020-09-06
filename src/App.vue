@@ -16,6 +16,8 @@
             router-link(to="/food-and-drink") Food and Drink
             router-link(to="/activities") Activities
             router-link(to="/boats") Boats
+            a(v-if="userProfile.email" @click="logout") logout
+            pre {{userProfile.email }}
 
           .greeting
             h1 Selamat {{ partOfTheDay }}!
@@ -35,11 +37,16 @@
 </template>
 
 <script>
+import { mapState } from "vuex";
 export default {
   data() {
     return {};
   },
   computed: {
+    ...mapState(["userProfile"]),
+    showLogout() {
+      return Object.keys(this.userProfile).length > 1;
+    },
     mobileNavOpen() {
       return this.$store.state.mobileNavOpen;
     },
@@ -114,6 +121,9 @@ export default {
     },
     toggleMobileNav() {
       this.$store.commit("toggleMobileNav");
+    },
+    logout() {
+      this.$store.dispatch("logout");
     }
   },
   watch: {

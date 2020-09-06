@@ -32,21 +32,20 @@ export default new Vuex.Store({
     }
   },
   actions: {
-    async login({ dispatch }, form) {
-      console.log("fasz", form);
+    async login({ commit }, form) {
       const { user } = await fb.auth.signInWithEmailAndPassword(
         form.email,
         form.password
       );
 
-      dispatch("fetchUserProfile", user);
+      commit("setUserProfile", user);
+      router.push("/addPlace");
     },
-    async fetchUserProfile({ commit }, user) {
-      const userProfile = await fb.usersCollection.doc(user.uid).get();
+    async logout({ commit }) {
+      await fb.auth.signOut();
 
-      commit("setUserProfile", userProfile.data());
-
-      router.push("/");
+      commit("setUserProfile", {});
+      router.push("/login");
     }
   },
   modules: {}
