@@ -3,23 +3,28 @@
     .filter-control(:class="{'active': mobileNavOpen}")
       .filter.checkbox
         input(type="checkbox" v-model="open" id="open")
-        label(for="open") open places only
+        label(for="open")
         .text show open places only
 
       .filter.checkbox
         input(type="checkbox" v-model="dineIn" id="dineIn")
-        label(for="dineIn") dine-in only
+        label(for="dineIn")
         .text show dine-in only
 
       .filter.checkbox
         input(type="checkbox" v-model="delivery" id="delivery")
-        label(for="delivery") delivery only
+        label(for="delivery")
         .text show delivery only
 
       .filter.checkbox
         input(type="checkbox" v-model="noPreorder" id="noPreorder")
-        label(for="noPreorder") no preorder
+        label(for="noPreorder")
         .text no preorder
+
+      .filter.checkbox
+        input(type="checkbox" v-model="localDishes" id="localDishes")
+        label(for="localDishes")
+        .text local dishes
 
       .filter
         input(type="text" v-model="search" placeholder="search by name")
@@ -46,6 +51,7 @@
             span.chip.dine-in(v-if="place.dineIn") dine-in
             span.chip.preorder(v-if="place.preorder") preorder
             span.chip.delivery(v-if="place.delivery") delivery
+            span.chip.local-dishes(v-if="place.localDishes") local dishes
 
         .footer
           .status
@@ -73,6 +79,7 @@ export default {
       dineIn: false,
       delivery: false,
       noPreorder: false,
+      localDishes: false,
       search: null,
       isDouble: false,
       columnWidth: 180,
@@ -112,6 +119,9 @@ export default {
         )
         .filter((place) =>
           this.noPreorder ? place.preorder !== this.noPreorder : true
+        )
+        .filter((place) =>
+          this.localDishes ? place.localDishes === this.localDishes : true
         )
         .filter((place) =>
           this.search
@@ -404,6 +414,9 @@ export default {
   }
   &.delivery {
     background: #990099;
+  }
+  &.local-dishes {
+    background: #52eaab;
   }
 }
 .footer {
