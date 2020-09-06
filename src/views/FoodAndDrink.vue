@@ -90,7 +90,7 @@ export default {
       return this.$store.state.timestamp;
     },
     today() {
-      return this.$store.state.timestamp.day() - 1;
+      return this.$store.state.timestamp.isoWeekday() - 1;
     },
     isotopeOptions() {
       return {
@@ -138,7 +138,7 @@ export default {
   methods: {
     setIsOpen() {
       this.places.forEach((place) => {
-        const today = this.timestamp.day() - 1;
+        const today = this.timestamp.isoWeekday() - 1;
         const time = this.$moment(this.timestamp, 'HH:mm');
         place.isOpen = false;
         place.opensIn = null;
@@ -239,6 +239,10 @@ export default {
       flex-direction: column;
       font-size: 14px;
       padding: 8px 0;
+
+      @media only screen and (max-width: 575px) {
+        font-size: 12px;
+      }
 
       &:not(:last-child) {
         border-right: 1px solid #ccc;
@@ -348,7 +352,6 @@ export default {
     padding: 10px;
     display: block;
     border-bottom: 1px solid darken(#2ccfff, 20);
-    // font-size: 12px;
 
     &.active {
       transform: translateX(0px);

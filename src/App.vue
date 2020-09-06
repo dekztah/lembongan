@@ -5,7 +5,7 @@
         .loader.blasting-ripple
 
     transition(name="fade")
-      .wrapper(v-show="!loading")
+      .wrapper(v-show="!loading" :class="{'mobile-nav-open': mobileNavOpen}")
         header
           #nav-mobile
             .hamburger.hamburger--emphatic(type="button" @click="toggleMobileNav" :class="{'is-active': mobileNavOpen}")
@@ -157,7 +157,7 @@ body {
 
 header {
   position: fixed;
-  z-index: 1;
+  z-index: 2;
   width: 100%;
   top: 0;
   height: 85px;
@@ -201,6 +201,7 @@ header {
     @media only screen and (max-width: 575px) {
       transform: translateX(-575px);
       position: fixed;
+      z-index: 1;
       background: white;
       top: 85px;
       transition: transform 0.3s ease-out;
@@ -240,9 +241,15 @@ header {
 .main {
   margin-top: 130px;
   margin-bottom: 52px;
+
   @media only screen and (max-width: 575px) {
+    //   transform: translateY(-205px);
     margin-top: 85px;
+    //   transition: transform 0.3s ease-out;
   }
+}
+.mobile-nav-open .main {
+  // transform: translateY(43px);
 }
 .fade-enter-active,
 .fade-leave-active {
