@@ -1,6 +1,6 @@
-@import 'variables';
+@import "variables";
 
-@import url('https://fonts.googleapis.com/css2?family=Raleway&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Raleway&display=swap");
 
 * {
   box-sizing: border-box;
@@ -21,7 +21,7 @@ body {
   left: 0;
 }
 #app {
-  font-family: 'Raleway', sans-serif;
+  font-family: "Raleway", sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: left;
@@ -119,6 +119,12 @@ header {
     margin-top: 85px;
   }
 }
+
+.mobile-nav-open {
+  .placelist {
+    transform: translateY(282px);
+  }
+}
 .fade-enter-active,
 .fade-leave-active {
   transition: opacity 0.6s;
@@ -209,7 +215,7 @@ footer {
 
   &::before,
   &::after {
-    content: '';
+    content: "";
     display: block;
   }
 
@@ -278,7 +284,7 @@ footer {
 }
 
 .filter-control .checkbox {
-  input[type='checkbox'] {
+  input[type="checkbox"] {
     height: 0;
     width: 0;
     visibility: hidden;
@@ -300,7 +306,7 @@ footer {
   }
 
   label:after {
-    content: '';
+    content: "";
     position: absolute;
     top: 2px;
     left: 2px;
@@ -351,7 +357,7 @@ footer {
 
 .loader.blasting-ripple::after {
   opacity: 0;
-  content: '';
+  content: "";
   position: absolute;
   border: var(--line-width, 4px) solid var(--loader-color-primary, #fff);
   opacity: 1;
@@ -363,7 +369,7 @@ footer {
   opacity: 0;
   top: calc(var(--loader-height, 100px) / 2 - var(--line-width, 4px));
   left: calc(var(--loader-width, 100px) / 2 - var(--line-width, 4px));
-  content: '';
+  content: "";
   position: absolute;
   border: var(--line-width, 4px) solid var(--loader-color-primary, #fff);
   opacity: 1;

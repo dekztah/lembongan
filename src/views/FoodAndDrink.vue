@@ -26,15 +26,16 @@
         label(for="localDishes")
         .text local dishes
 
-      .filter
+      .filter.text-input
         input(type="text" v-model="search" placeholder="search by name")
+        button.clear(v-if="search !== ''" @click="search = ''")
 
       .count(v-if="!loading") {{ filteredPlaces.length }} results
 
     isotope.placelist(v-if="!loading" :list="filteredPlaces" :options="isotopeOptions" ref="isotope")
       .place(v-for="(place, index) in filteredPlaces" :class="{'open': place.isOpen, 'double': isDouble === index, 'warn': (place.opensIn !== null && place.opensIn >= 0) || (place.closesIn !== null && place.closesIn >= 1) }" :key="`place-${index}`")
-        .content
-          h2.name(@click="toggleDouble(index)") {{ place.name }}
+        .content(@click="toggleDouble(index)")
+          h2.name {{ place.name }}
 
           .weekdays
             .wd(v-for="(weekday, wid) in place.openingHours" :class="{'closed': typeof weekday === 'string', 'today' : wid === today}")
@@ -81,7 +82,7 @@ export default {
       delivery: false,
       noPreorder: false,
       localDishes: false,
-      search: null,
+      search: "",
       isDouble: false,
       columnWidth: 180,
       dayNames: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"]
@@ -186,6 +187,8 @@ export default {
       this.$nextTick(() => {
         this.$refs.isotope.layout("masonry");
       });
+      this.$store.commit("toggleLoading", false);
+      if (this.mobileNavOpen) this.$store.commit("toggleMobileNav");
     }
   },
   watch: {
@@ -201,6 +204,7 @@ export default {
 
 .placelist {
   padding: 10px;
+  transition: transform 0.3s ease-out;
 }
 .place {
   background: #fff;
@@ -362,7 +366,7 @@ export default {
   @media only screen and (max-width: $breakpoint-small) {
     transform: translateX(-$breakpoint-small);
     position: fixed;
-    top: 125px;
+    top: 129px;
     transition: transform 0.3s ease-out;
     width: 100%;
     padding: 10px;
@@ -384,12 +388,23 @@ export default {
     border: none;
     border-radius: 12px;
     height: 24px;
-    padding: 4px 8px;
+    padding: 4px 28px 4px 8px;
     vertical-align: middle;
 
     &:focus {
       outline: none;
     }
+  }
+  .clear {
+    border: none;
+    width: 16px;
+    height: 16px;
+    vertical-align: middle;
+    background: none;
+    display: inline-block;
+    background-image: url(../assets/Clear.svg);
+    background-size: 16px 16px;
+    margin-left: -24px;
   }
   @media only screen and (max-width: $breakpoint-small) {
     margin-bottom: 10px;
