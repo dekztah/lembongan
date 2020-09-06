@@ -110,7 +110,6 @@ export default {
         }
       };
     },
-
     filteredPlaces() {
       return this.places
         .filter(place => (this.open ? place.isOpen === this.open : true))
@@ -150,7 +149,7 @@ export default {
   methods: {
     setIsOpen() {
       this.places.forEach(place => {
-        const today = this.timestamp.isoWeekday() - 1;
+        const today = this.today;
         const time = this.$moment(this.timestamp, "HH:mm");
         place.isOpen = false;
         place.opensIn = null;
@@ -199,6 +198,7 @@ export default {
 
 <style lang="scss">
 @import "../assets/styles/variables";
+
 .placelist {
   padding: 10px;
 }
