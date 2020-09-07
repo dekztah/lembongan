@@ -421,6 +421,9 @@ export default {
   align-self: center;
   margin-left: auto;
 }
+.info {
+  margin-top: 10px;
+}
 .chip {
   display: inline-block;
   border-radius: 10px;
@@ -444,7 +447,7 @@ export default {
   }
 }
 .footer {
-  margin-top: 10px;
+  // margin-top: 10px;
   display: flex;
   justify-content: flex-end;
   align-items: center;

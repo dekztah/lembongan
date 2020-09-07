@@ -1,0 +1,1390 @@
+{
+  "0" : {
+    "active" : true,
+    "contact" : "6282340734530",
+    "delivery" : "",
+    "dineIn" : true,
+    "gMapsLink" : "https://g.page/kayulembongan?share",
+    "localDishes" : false,
+    "name" : "Kayu Lembongan",
+    "openingHours" : [ "closed", "closed", "closed", "closed", [ {
+      "end" : "15:00",
+      "start" : "08:00"
+    } ], [ {
+      "end" : "20:00",
+      "start" : "12:00"
+    } ], "closed" ],
+    "preorder" : ""
+  },
+  "1" : {
+    "active" : true,
+    "contact" : "6281337530536",
+    "delivery" : "",
+    "dineIn" : true,
+    "gMapsLink" : "https://goo.gl/maps/VMrwgmdZh34u2ojf7",
+    "localDishes" : false,
+    "name" : "Ginger & Jamu",
+    "openingHours" : [ "closed", "closed", [ {
+      "end" : "15:00",
+      "start" : "10:00"
+    }, {
+      "end" : "20:00",
+      "start" : "17:00"
+    } ], [ {
+      "end" : "15:00",
+      "start" : "10:00"
+    }, {
+      "end" : "20:00",
+      "start" : "17:00"
+    } ], [ {
+      "end" : "15:00",
+      "start" : "10:00"
+    }, {
+      "end" : "20:00",
+      "start" : "17:00"
+    } ], [ {
+      "end" : "15:00",
+      "start" : "10:00"
+    }, {
+      "end" : "20:00",
+      "start" : "17:00"
+    } ], [ {
+      "end" : "15:00",
+      "start" : "10:00"
+    }, {
+      "end" : "20:00",
+      "start" : "17:00"
+    } ] ],
+    "preorder" : ""
+  },
+  "2" : {
+    "active" : true,
+    "contact" : "6281916563501",
+    "delivery" : "",
+    "dineIn" : true,
+    "gMapsLink" : "https://goo.gl/maps/Qs18S7ynRxPUM1PC8",
+    "localDishes" : false,
+    "name" : "Agung Beach Club",
+    "openingHours" : [ [ {
+      "end" : "19:00",
+      "start" : "11:00"
+    } ], [ {
+      "end" : "19:00",
+      "start" : "11:00"
+    } ], [ {
+      "end" : "19:00",
+      "start" : "11:00"
+    } ], [ {
+      "end" : "19:00",
+      "start" : "11:00"
+    } ], [ {
+      "end" : "19:00",
+      "start" : "11:00"
+    } ], [ {
+      "end" : "19:00",
+      "start" : "11:00"
+    } ], [ {
+      "end" : "19:00",
+      "start" : "11:00"
+    } ] ],
+    "preorder" : ""
+  },
+  "3" : {
+    "active" : true,
+    "contact" : "6281236449119",
+    "delivery" : "",
+    "dineIn" : true,
+    "gMapsLink" : "https://g.page/TheCoconutHutLembongan?share",
+    "localDishes" : false,
+    "name" : "The Coconut Hut",
+    "openingHours" : [ "closed", "closed", "closed", "closed", "closed", "closed", [ {
+      "end" : "21:00",
+      "start" : "10:00"
+    } ] ],
+    "preorder" : true
+  },
+  "4" : {
+    "active" : true,
+    "contact" : "628123906300",
+    "delivery" : "",
+    "dineIn" : true,
+    "gMapsLink" : "https://goo.gl/maps/QX2EsYSyvme1qCDS7",
+    "localDishes" : false,
+    "name" : "Agus Shipwreck Bar and Restaurant",
+    "openingHours" : [ [ {
+      "end" : "19:00",
+      "start" : "16:00"
+    } ], [ {
+      "end" : "19:00",
+      "start" : "16:00"
+    } ], [ {
+      "end" : "19:00",
+      "start" : "16:00"
+    } ], [ {
+      "end" : "19:00",
+      "start" : "16:00"
+    } ], [ {
+      "end" : "19:00",
+      "start" : "16:00"
+    } ], [ {
+      "end" : "19:00",
+      "start" : "16:00"
+    } ], [ {
+      "end" : "19:00",
+      "start" : "16:00"
+    } ] ],
+    "preorder" : ""
+  },
+  "5" : {
+    "active" : true,
+    "contact" : "628123808999",
+    "delivery" : false,
+    "dineIn" : true,
+    "gMapsLink" : "https://goo.gl/maps/VCGXgFskzTH84EcF7",
+    "localDishes" : false,
+    "name" : "Lemongrass Bar and Restaurant",
+    "openingHours" : [ [ {
+      "end" : "22:00",
+      "start" : "11:00"
+    } ], [ {
+      "end" : "22:00",
+      "start" : "11:00"
+    } ], [ {
+      "end" : "22:00",
+      "start" : "11:00"
+    } ], [ {
+      "end" : "22:00",
+      "start" : "11:00"
+    } ], [ {
+      "end" : "22:00",
+      "start" : "11:00"
+    } ], [ {
+      "end" : "22:00",
+      "start" : "11:00"
+    } ], [ {
+      "end" : "22:00",
+      "start" : "11:00"
+    } ] ],
+    "preorder" : ""
+  },
+  "6" : {
+    "active" : true,
+    "contact" : "6282145788594",
+    "delivery" : "",
+    "dineIn" : "",
+    "gMapsLink" : "https://goo.gl/maps/shoBbP3wFmfnrmuQ7",
+    "localDishes" : true,
+    "name" : "Oka Warung",
+    "openingHours" : [ "closed", "closed", "closed", "closed", "closed", "closed", "closed" ],
+    "preorder" : ""
+  },
+  "7" : {
+    "active" : true,
+    "contact" : "628123940992",
+    "delivery" : "",
+    "dineIn" : true,
+    "gMapsLink" : "https://goo.gl/maps/GJyEVnLnbYa24mRB9",
+    "localDishes" : true,
+    "name" : "Pondok Baruna Warung",
+    "openingHours" : [ [ {
+      "end" : "21:00",
+      "start" : "09:00"
+    } ], [ {
+      "end" : "21:00",
+      "start" : "09:00"
+    } ], [ {
+      "end" : "21:00",
+      "start" : "09:00"
+    } ], [ {
+      "end" : "21:00",
+      "start" : "09:00"
+    } ], [ {
+      "end" : "21:00",
+      "start" : "09:00"
+    } ], [ {
+      "end" : "21:00",
+      "start" : "09:00"
+    } ], [ {
+      "end" : "21:00",
+      "start" : "09:00"
+    } ] ],
+    "preorder" : ""
+  },
+  "8" : {
+    "active" : true,
+    "contact" : "6282236293577",
+    "delivery" : "",
+    "dineIn" : true,
+    "gMapsLink" : "https://goo.gl/maps/qWEPQuQ3UDeyjFd6A",
+    "localDishes" : true,
+    "name" : "Nyoman's Warung",
+    "openingHours" : [ [ {
+      "end" : "19:00",
+      "start" : "10:00"
+    } ], [ {
+      "end" : "19:00",
+      "start" : "10:00"
+    } ], [ {
+      "end" : "19:00",
+      "start" : "10:00"
+    } ], [ {
+      "end" : "19:00",
+      "start" : "10:00"
+    } ], [ {
+      "end" : "19:00",
+      "start" : "10:00"
+    } ], [ {
+      "end" : "19:00",
+      "start" : "10:00"
+    } ], [ {
+      "end" : "19:00",
+      "start" : "10:00"
+    } ] ],
+    "preorder" : ""
+  },
+  "9" : {
+    "active" : true,
+    "contact" : "6281338365156",
+    "delivery" : false,
+    "dineIn" : true,
+    "gMapsLink" : "https://goo.gl/maps/yVwZLPvX97BGUiZv5",
+    "localDishes" : false,
+    "name" : "KLYF Club Blue Lagoon",
+    "openingHours" : [ [ {
+      "end" : "21:00",
+      "start" : "08:00"
+    } ], [ {
+      "end" : "21:00",
+      "start" : "08:00"
+    } ], [ {
+      "end" : "21:00",
+      "start" : "08:00"
+    } ], [ {
+      "end" : "21:00",
+      "start" : "08:00"
+    } ], [ {
+      "end" : "21:00",
+      "start" : "08:00"
+    } ], [ {
+      "end" : "21:00",
+      "start" : "08:00"
+    } ], [ {
+      "end" : "21:00",
+      "start" : "08:00"
+    } ] ],
+    "preorder" : ""
+  },
+  "10" : {
+    "active" : true,
+    "contact" : "6281238441996",
+    "delivery" : "",
+    "dineIn" : true,
+    "gMapsLink" : "https://goo.gl/maps/QcrPqA6TvpHM2nB78",
+    "localDishes" : false,
+    "name" : "Pisang Pisang",
+    "openingHours" : [ [ {
+      "end" : "15:00",
+      "start" : "09:00"
+    } ], [ {
+      "end" : "15:00",
+      "start" : "09:00"
+    } ], [ {
+      "end" : "15:00",
+      "start" : "09:00"
+    } ], [ {
+      "end" : "15:00",
+      "start" : "09:00"
+    } ], [ {
+      "end" : "15:00",
+      "start" : "09:00"
+    } ], [ {
+      "end" : "15:00",
+      "start" : "09:00"
+    } ], [ {
+      "end" : "15:00",
+      "start" : "09:00"
+    } ] ],
+    "preorder" : true
+  },
+  "11" : {
+    "active" : true,
+    "contact" : "6282144863890",
+    "delivery" : false,
+    "dineIn" : true,
+    "gMapsLink" : "https://g.page/lindabeachresort?share",
+    "localDishes" : false,
+    "name" : "Linda Beach Resort",
+    "openingHours" : [ [ {
+      "end" : "21:00",
+      "start" : "17:00"
+    } ], [ {
+      "end" : "21:00",
+      "start" : "17:00"
+    } ], [ {
+      "end" : "21:00",
+      "start" : "17:00"
+    } ], [ {
+      "end" : "21:00",
+      "start" : "17:00"
+    } ], [ {
+      "end" : "21:00",
+      "start" : "17:00"
+    } ], [ {
+      "end" : "21:00",
+      "start" : "17:00"
+    } ], [ {
+      "end" : "21:00",
+      "start" : "17:00"
+    } ] ],
+    "preorder" : ""
+  },
+  "12" : {
+    "active" : true,
+    "contact" : "6285238347999",
+    "delivery" : true,
+    "dineIn" : true,
+    "gMapsLink" : "https://g.page/nick-s-place-nusa-lembongan?share",
+    "localDishes" : false,
+    "name" : "Nick's Place Lembongan",
+    "openingHours" : [ [ {
+      "end" : "21:00",
+      "start" : "10:00"
+    } ], [ {
+      "end" : "21:00",
+      "start" : "10:00"
+    } ], [ {
+      "end" : "21:00",
+      "start" : "10:00"
+    } ], [ {
+      "end" : "21:00",
+      "start" : "10:00"
+    } ], [ {
+      "end" : "21:00",
+      "start" : "10:00"
+    } ], [ {
+      "end" : "21:00",
+      "start" : "10:00"
+    } ], [ {
+      "end" : "21:00",
+      "start" : "10:00"
+    } ] ],
+    "preorder" : ""
+  },
+  "13" : {
+    "active" : true,
+    "contact" : "6281237233233",
+    "delivery" : false,
+    "dineIn" : true,
+    "gMapsLink" : "https://g.page/tiny-beach?share",
+    "localDishes" : false,
+    "name" : "Tiny Beach",
+    "openingHours" : [ [ {
+      "end" : "21:00",
+      "start" : "08:00"
+    } ], [ {
+      "end" : "21:00",
+      "start" : "08:00"
+    } ], [ {
+      "end" : "21:00",
+      "start" : "08:00"
+    } ], [ {
+      "end" : "21:00",
+      "start" : "08:00"
+    } ], [ {
+      "end" : "21:00",
+      "start" : "08:00"
+    } ], [ {
+      "end" : "21:00",
+      "start" : "08:00"
+    } ], [ {
+      "end" : "21:00",
+      "start" : "08:00"
+    } ] ],
+    "preorder" : ""
+  },
+  "14" : {
+    "active" : true,
+    "contact" : "623665551844",
+    "delivery" : false,
+    "dineIn" : true,
+    "gMapsLink" : "https://goo.gl/maps/bHEvG9W2W22AyRpj9",
+    "localDishes" : false,
+    "name" : "L. Good bar and grill",
+    "openingHours" : [ [ {
+      "end" : "21:00",
+      "start" : "15:00"
+    } ], [ {
+      "end" : "21:00",
+      "start" : "15:00"
+    } ], [ {
+      "end" : "21:00",
+      "start" : "15:00"
+    } ], [ {
+      "end" : "21:00",
+      "start" : "15:00"
+    } ], [ {
+      "end" : "21:00",
+      "start" : "15:00"
+    } ], [ {
+      "end" : "21:00",
+      "start" : "15:00"
+    } ], [ {
+      "end" : "21:00",
+      "start" : "15:00"
+    } ] ],
+    "preorder" : ""
+  },
+  "15" : {
+    "active" : true,
+    "contact" : "6282235311110",
+    "delivery" : false,
+    "dineIn" : true,
+    "gMapsLink" : "https://goo.gl/maps/C4AVt1e16g5nr95N8",
+    "localDishes" : false,
+    "name" : "Ombak Zero Waste Cafe",
+    "openingHours" : [ [ {
+      "end" : "14:00",
+      "start" : "09:00"
+    } ], [ {
+      "end" : "14:00",
+      "start" : "09:00"
+    } ], [ {
+      "end" : "14:00",
+      "start" : "09:00"
+    } ], [ {
+      "end" : "14:00",
+      "start" : "09:00"
+    } ], [ {
+      "end" : "20:00",
+      "start" : "17:00"
+    } ], [ {
+      "end" : "20:00",
+      "start" : "17:00"
+    } ], [ {
+      "end" : "20:00",
+      "start" : "17:00"
+    } ] ],
+    "preorder" : ""
+  },
+  "16" : {
+    "active" : true,
+    "contact" : "6282247734431",
+    "delivery" : true,
+    "dineIn" : true,
+    "gMapsLink" : "https://goo.gl/maps/e9noR8GFdKSeAiVT7",
+    "localDishes" : true,
+    "name" : "Warung Cassava",
+    "openingHours" : [ [ {
+      "end" : "20:00",
+      "start" : "08:00"
+    } ], [ {
+      "end" : "20:00",
+      "start" : "08:00"
+    } ], [ {
+      "end" : "20:00",
+      "start" : "08:00"
+    } ], [ {
+      "end" : "20:00",
+      "start" : "08:00"
+    } ], [ {
+      "end" : "20:00",
+      "start" : "08:00"
+    } ], [ {
+      "end" : "20:00",
+      "start" : "08:00"
+    } ], [ {
+      "end" : "20:00",
+      "start" : "08:00"
+    } ] ],
+    "preorder" : ""
+  },
+  "17" : {
+    "active" : true,
+    "contact" : "6285238261300",
+    "delivery" : true,
+    "dineIn" : true,
+    "gMapsLink" : "https://goo.gl/maps/JdRKm5W3MMZWT7oWA",
+    "localDishes" : true,
+    "name" : "Warung Kevin",
+    "openingHours" : [ [ {
+      "end" : "20:00",
+      "start" : "10:00"
+    } ], [ {
+      "end" : "20:00",
+      "start" : "10:00"
+    } ], [ {
+      "end" : "20:00",
+      "start" : "10:00"
+    } ], [ {
+      "end" : "20:00",
+      "start" : "10:00"
+    } ], [ {
+      "end" : "20:00",
+      "start" : "10:00"
+    } ], [ {
+      "end" : "20:00",
+      "start" : "10:00"
+    } ], [ {
+      "end" : "21:00",
+      "start" : "09:00"
+    } ] ],
+    "preorder" : ""
+  },
+  "18" : {
+    "active" : true,
+    "contact" : "6281237940300",
+    "delivery" : true,
+    "dineIn" : true,
+    "gMapsLink" : "https://goo.gl/maps/J1VNHoG2w7W93TsF6",
+    "localDishes" : false,
+    "name" : "Warung Pizzeria",
+    "openingHours" : [ "closed", "closed", "closed", "closed", [ {
+      "end" : "22:00",
+      "start" : "16:00"
+    } ], "closed", "closed" ],
+    "preorder" : ""
+  },
+  "19" : {
+    "active" : true,
+    "contact" : "6281239567407",
+    "delivery" : "",
+    "dineIn" : true,
+    "gMapsLink" : "https://goo.gl/maps/Vi1YoD8aNK7xEmmf6",
+    "localDishes" : true,
+    "name" : "Seabreeze Ceningan",
+    "openingHours" : [ [ {
+      "end" : "22:00",
+      "start" : "09:00"
+    } ], [ {
+      "end" : "22:00",
+      "start" : "09:00"
+    } ], [ {
+      "end" : "22:00",
+      "start" : "09:00"
+    } ], [ {
+      "end" : "22:00",
+      "start" : "09:00"
+    } ], [ {
+      "end" : "22:00",
+      "start" : "09:00"
+    } ], [ {
+      "end" : "22:00",
+      "start" : "09:00"
+    } ], [ {
+      "end" : "22:00",
+      "start" : "09:00"
+    } ] ],
+    "preorder" : ""
+  },
+  "20" : {
+    "active" : true,
+    "contact" : "6282144077242",
+    "delivery" : false,
+    "dineIn" : true,
+    "gMapsLink" : "https://goo.gl/maps/3KUa6tEY7Ce2nAgJ7",
+    "localDishes" : false,
+    "name" : "Ware Ware Rooftop bar",
+    "openingHours" : [ [ {
+      "end" : "21:00",
+      "start" : "16:00"
+    } ], [ {
+      "end" : "21:00",
+      "start" : "16:00"
+    } ], [ {
+      "end" : "21:00",
+      "start" : "16:00"
+    } ], [ {
+      "end" : "21:00",
+      "start" : "16:00"
+    } ], [ {
+      "end" : "21:00",
+      "start" : "16:00"
+    } ], [ {
+      "end" : "21:00",
+      "start" : "16:00"
+    } ], [ {
+      "end" : "21:00",
+      "start" : "16:00"
+    } ] ],
+    "preorder" : ""
+  },
+  "21" : {
+    "active" : true,
+    "contact" : "6281338995448",
+    "delivery" : false,
+    "dineIn" : true,
+    "gMapsLink" : "https://goo.gl/maps/g5VibK3up7DSFn21A",
+    "localDishes" : false,
+    "name" : "Hai Bar & Grill",
+    "openingHours" : [ [ {
+      "end" : "21:00",
+      "start" : "07:00"
+    } ], [ {
+      "end" : "21:00",
+      "start" : "07:00"
+    } ], [ {
+      "end" : "21:00",
+      "start" : "07:00"
+    } ], [ {
+      "end" : "21:00",
+      "start" : "07:00"
+    } ], [ {
+      "end" : "21:00",
+      "start" : "07:00"
+    } ], [ {
+      "end" : "21:00",
+      "start" : "07:00"
+    } ], [ {
+      "end" : "21:00",
+      "start" : "07:00"
+    } ] ],
+    "preorder" : ""
+  },
+  "22" : {
+    "active" : true,
+    "contact" : "6281337880133",
+    "delivery" : "",
+    "dineIn" : true,
+    "gMapsLink" : "https://goo.gl/maps/ZZpkvgWSYEwTvkgN6",
+    "localDishes" : true,
+    "name" : "Mama mia bar & grill",
+    "openingHours" : [ [ {
+      "end" : "22:00",
+      "start" : "08:00"
+    } ], [ {
+      "end" : "22:00",
+      "start" : "08:00"
+    } ], [ {
+      "end" : "22:00",
+      "start" : "08:00"
+    } ], [ {
+      "end" : "22:00",
+      "start" : "08:00"
+    } ], [ {
+      "end" : "22:00",
+      "start" : "08:00"
+    } ], [ {
+      "end" : "22:00",
+      "start" : "08:00"
+    } ], [ {
+      "end" : "22:00",
+      "start" : "08:00"
+    } ] ],
+    "preorder" : ""
+  },
+  "23" : {
+    "active" : true,
+    "contact" : "6281339228488",
+    "delivery" : false,
+    "dineIn" : true,
+    "gMapsLink" : "https://goo.gl/maps/qnkmMbPtA7K7HSzC7",
+    "localDishes" : false,
+    "name" : "Oishi",
+    "openingHours" : [ [ {
+      "end" : "21:00",
+      "start" : "09:00"
+    } ], [ {
+      "end" : "21:00",
+      "start" : "09:00"
+    } ], [ {
+      "end" : "21:00",
+      "start" : "09:00"
+    } ], [ {
+      "end" : "21:00",
+      "start" : "09:00"
+    } ], [ {
+      "end" : "21:00",
+      "start" : "09:00"
+    } ], [ {
+      "end" : "21:00",
+      "start" : "09:00"
+    } ], [ {
+      "end" : "21:00",
+      "start" : "09:00"
+    } ] ],
+    "preorder" : ""
+  },
+  "24" : {
+    "active" : true,
+    "contact" : "6281237275971",
+    "delivery" : true,
+    "dineIn" : true,
+    "gMapsLink" : "https://goo.gl/maps/2TtB4SD3r21MdTAJ7",
+    "localDishes" : false,
+    "name" : "Chill & grill resto",
+    "openingHours" : [ [ {
+      "end" : "15:00",
+      "start" : "11:00"
+    }, {
+      "end" : "20:00",
+      "start" : "17:00"
+    } ], [ {
+      "end" : "15:00",
+      "start" : "11:00"
+    }, {
+      "end" : "20:00",
+      "start" : "17:00"
+    } ], [ {
+      "end" : "15:00",
+      "start" : "11:00"
+    }, {
+      "end" : "20:00",
+      "start" : "17:00"
+    } ], [ {
+      "end" : "15:00",
+      "start" : "11:00"
+    }, {
+      "end" : "20:00",
+      "start" : "17:00"
+    } ], [ {
+      "end" : "15:00",
+      "start" : "11:00"
+    }, {
+      "end" : "20:00",
+      "start" : "17:00"
+    } ], [ {
+      "end" : "15:00",
+      "start" : "11:00"
+    }, {
+      "end" : "20:00",
+      "start" : "17:00"
+    } ], "closed" ],
+    "preorder" : true
+  },
+  "25" : {
+    "active" : true,
+    "contact" : "628179755857",
+    "delivery" : true,
+    "dineIn" : false,
+    "gMapsLink" : "https://goo.gl/maps/GjbHwKQyuPxchbfy7",
+    "localDishes" : true,
+    "name" : "B'fresh",
+    "openingHours" : [ [ {
+      "end" : "20:00",
+      "start" : "08:00"
+    } ], [ {
+      "end" : "20:00",
+      "start" : "08:00"
+    } ], [ {
+      "end" : "20:00",
+      "start" : "08:00"
+    } ], [ {
+      "end" : "20:00",
+      "start" : "08:00"
+    } ], [ {
+      "end" : "20:00",
+      "start" : "08:00"
+    } ], [ {
+      "end" : "20:00",
+      "start" : "08:00"
+    } ], [ {
+      "end" : "20:00",
+      "start" : "08:00"
+    } ] ],
+    "preorder" : ""
+  },
+  "26" : {
+    "active" : true,
+    "contact" : "6281236436111",
+    "delivery" : false,
+    "dineIn" : true,
+    "gMapsLink" : "https://goo.gl/maps/BTxmRtBafhwe5B9M8",
+    "localDishes" : false,
+    "name" : "The Akah Cottage and Resto",
+    "openingHours" : [ [ {
+      "end" : "20:00",
+      "start" : "10:00"
+    } ], [ {
+      "end" : "20:00",
+      "start" : "10:00"
+    } ], [ {
+      "end" : "20:00",
+      "start" : "10:00"
+    } ], [ {
+      "end" : "20:00",
+      "start" : "10:00"
+    } ], [ {
+      "end" : "20:00",
+      "start" : "10:00"
+    } ], [ {
+      "end" : "20:00",
+      "start" : "10:00"
+    } ], [ {
+      "end" : "20:00",
+      "start" : "10:00"
+    } ] ],
+    "preorder" : ""
+  },
+  "27" : {
+    "active" : true,
+    "contact" : "6281338721821",
+    "delivery" : "",
+    "dineIn" : true,
+    "gMapsLink" : "https://g.page/kawans-coffee-shop?share",
+    "localDishes" : true,
+    "name" : "Kawan's Inn",
+    "openingHours" : [ [ {
+      "end" : "15:30",
+      "start" : "07:30"
+    } ], [ {
+      "end" : "15:30",
+      "start" : "07:30"
+    } ], [ {
+      "end" : "15:30",
+      "start" : "07:30"
+    } ], [ {
+      "end" : "15:30",
+      "start" : "07:30"
+    } ], [ {
+      "end" : "15:30",
+      "start" : "07:30"
+    } ], [ {
+      "end" : "15:30",
+      "start" : "07:30"
+    } ], [ {
+      "end" : "15:30",
+      "start" : "07:30"
+    } ] ],
+    "preorder" : ""
+  },
+  "28" : {
+    "active" : true,
+    "contact" : "6281239151560",
+    "delivery" : false,
+    "dineIn" : true,
+    "gMapsLink" : "https://goo.gl/maps/498aRfCvYwHWcAkx7",
+    "localDishes" : false,
+    "name" : "Le nusa beach club",
+    "openingHours" : [ [ {
+      "end" : "20:00",
+      "start" : "08:00"
+    } ], [ {
+      "end" : "20:00",
+      "start" : "08:00"
+    } ], [ {
+      "end" : "20:00",
+      "start" : "08:00"
+    } ], [ {
+      "end" : "20:00",
+      "start" : "08:00"
+    } ], [ {
+      "end" : "20:00",
+      "start" : "08:00"
+    } ], [ {
+      "end" : "20:00",
+      "start" : "08:00"
+    } ], [ {
+      "end" : "20:00",
+      "start" : "08:00"
+    } ] ],
+    "preorder" : ""
+  },
+  "29" : {
+    "active" : true,
+    "contact" : "6282237441799",
+    "delivery" : "",
+    "dineIn" : true,
+    "gMapsLink" : "https://goo.gl/maps/u3DdfsLCALfFawbm6",
+    "localDishes" : true,
+    "name" : "Tawe beach bar & grill",
+    "openingHours" : [ [ {
+      "end" : "21:00",
+      "start" : "09:00"
+    } ], [ {
+      "end" : "21:00",
+      "start" : "09:00"
+    } ], [ {
+      "end" : "21:00",
+      "start" : "09:00"
+    } ], [ {
+      "end" : "21:00",
+      "start" : "09:00"
+    } ], [ {
+      "end" : "21:00",
+      "start" : "09:00"
+    } ], [ {
+      "end" : "21:00",
+      "start" : "09:00"
+    } ], [ {
+      "end" : "21:00",
+      "start" : "09:00"
+    } ] ],
+    "preorder" : ""
+  },
+  "30" : {
+    "active" : true,
+    "contact" : "6281337618566",
+    "delivery" : "",
+    "dineIn" : true,
+    "gMapsLink" : "https://goo.gl/maps/BrcQSAy8iEYvZ46W8",
+    "localDishes" : false,
+    "name" : "MYE Bakery and Pastry",
+    "openingHours" : [ [ {
+      "end" : "20:00",
+      "start" : "07:00"
+    } ], [ {
+      "end" : "20:00",
+      "start" : "07:00"
+    } ], [ {
+      "end" : "20:00",
+      "start" : "07:00"
+    } ], [ {
+      "end" : "20:00",
+      "start" : "07:00"
+    } ], [ {
+      "end" : "20:00",
+      "start" : "07:00"
+    } ], [ {
+      "end" : "20:00",
+      "start" : "07:00"
+    } ], [ {
+      "end" : "20:00",
+      "start" : "07:00"
+    } ] ],
+    "preorder" : ""
+  },
+  "31" : {
+    "active" : true,
+    "contact" : "6282145855934",
+    "delivery" : "",
+    "dineIn" : true,
+    "gMapsLink" : "https://goo.gl/maps/RbqvHyDBWXNkSa5h8",
+    "localDishes" : false,
+    "name" : "Ceningan resort",
+    "openingHours" : [ "closed", [ {
+      "end" : "20:00",
+      "start" : "12:00"
+    } ], [ {
+      "end" : "20:00",
+      "start" : "12:00"
+    } ], [ {
+      "end" : "20:00",
+      "start" : "12:00"
+    } ], [ {
+      "end" : "20:00",
+      "start" : "12:00"
+    } ], [ {
+      "end" : "20:00",
+      "start" : "12:00"
+    } ], [ {
+      "end" : "20:00",
+      "start" : "12:00"
+    } ] ],
+    "preorder" : ""
+  },
+  "32" : {
+    "active" : true,
+    "contact" : "6281338737596",
+    "delivery" : true,
+    "dineIn" : true,
+    "gMapsLink" : "https://goo.gl/maps/LqU9sUWSFcqR6gpF6",
+    "localDishes" : true,
+    "name" : "Sunset Garden",
+    "openingHours" : [ [ {
+      "end" : "21:00",
+      "start" : "09:00"
+    } ], [ {
+      "end" : "21:00",
+      "start" : "09:00"
+    } ], [ {
+      "end" : "21:00",
+      "start" : "09:00"
+    } ], [ {
+      "end" : "21:00",
+      "start" : "09:00"
+    } ], [ {
+      "end" : "21:00",
+      "start" : "09:00"
+    } ], [ {
+      "end" : "21:00",
+      "start" : "09:00"
+    } ], [ {
+      "end" : "21:00",
+      "start" : "09:00"
+    } ] ],
+    "preorder" : ""
+  },
+  "33" : {
+    "active" : true,
+    "contact" : "6285738328235",
+    "delivery" : false,
+    "dineIn" : true,
+    "gMapsLink" : "https://goo.gl/maps/qwM3szoY5xJFtocT7",
+    "localDishes" : true,
+    "name" : "Ketut Warung",
+    "openingHours" : [ [ {
+      "end" : "20:00",
+      "start" : "10:00"
+    } ], [ {
+      "end" : "20:00",
+      "start" : "10:00"
+    } ], [ {
+      "end" : "20:00",
+      "start" : "10:00"
+    } ], [ {
+      "end" : "20:00",
+      "start" : "10:00"
+    } ], [ {
+      "end" : "20:00",
+      "start" : "10:00"
+    } ], [ {
+      "end" : "20:00",
+      "start" : "10:00"
+    } ], [ {
+      "end" : "20:00",
+      "start" : "10:00"
+    } ] ],
+    "preorder" : ""
+  },
+  "34" : {
+    "active" : true,
+    "delivery" : false,
+    "dineIn" : true,
+    "gMapsLink" : "https://goo.gl/maps/qcYMHWEKyqzXjJM46",
+    "localDishes" : true,
+    "name" : "Warung VELA",
+    "openingHours" : [ [ {
+      "end" : "21:00",
+      "start" : "10:00"
+    } ], [ {
+      "end" : "21:00",
+      "start" : "10:00"
+    } ], [ {
+      "end" : "21:00",
+      "start" : "10:00"
+    } ], [ {
+      "end" : "21:00",
+      "start" : "10:00"
+    } ], [ {
+      "end" : "21:00",
+      "start" : "10:00"
+    } ], [ {
+      "end" : "21:00",
+      "start" : "10:00"
+    } ], [ {
+      "end" : "21:00",
+      "start" : "10:00"
+    } ] ],
+    "preorder" : ""
+  },
+  "35" : {
+    "active" : true,
+    "contact" : "6282236643256",
+    "delivery" : false,
+    "dineIn" : true,
+    "gMapsLink" : "https://goo.gl/maps/wo5A4pXTNkik6HsG9",
+    "localDishes" : true,
+    "name" : "Warung Ridho",
+    "openingHours" : [ [ {
+      "end" : "22:00",
+      "start" : "06:30"
+    } ], [ {
+      "end" : "22:00",
+      "start" : "06:30"
+    } ], [ {
+      "end" : "22:00",
+      "start" : "06:30"
+    } ], [ {
+      "end" : "22:00",
+      "start" : "06:30"
+    } ], [ {
+      "end" : "22:00",
+      "start" : "06:30"
+    } ], [ {
+      "end" : "22:00",
+      "start" : "06:30"
+    } ], [ {
+      "end" : "22:00",
+      "start" : "06:30"
+    } ] ],
+    "preorder" : ""
+  },
+  "36" : {
+    "active" : true,
+    "contact" : "6282391857572",
+    "delivery" : true,
+    "dineIn" : true,
+    "gMapsLink" : "https://goo.gl/maps/eKfM76P6cNEFMumY6",
+    "localDishes" : true,
+    "name" : "RMA Masakan Padang",
+    "openingHours" : [ [ {
+      "end" : "21:00",
+      "start" : "09:00"
+    } ], [ {
+      "end" : "21:00",
+      "start" : "09:00"
+    } ], [ {
+      "end" : "21:00",
+      "start" : "09:00"
+    } ], [ {
+      "end" : "21:00",
+      "start" : "09:00"
+    } ], [ {
+      "end" : "21:00",
+      "start" : "09:00"
+    } ], [ {
+      "end" : "21:00",
+      "start" : "09:00"
+    } ], [ {
+      "end" : "21:00",
+      "start" : "09:00"
+    } ] ],
+    "preorder" : ""
+  },
+  "37" : {
+    "active" : true,
+    "contact" : "6281338687366",
+    "delivery" : false,
+    "dineIn" : true,
+    "gMapsLink" : "https://goo.gl/maps/QKWJuLrQ4fpRLFT6A",
+    "localDishes" : true,
+    "name" : "Bu Edy",
+    "openingHours" : [ [ {
+      "end" : "19:00",
+      "start" : "07:00"
+    } ], [ {
+      "end" : "19:00",
+      "start" : "07:00"
+    } ], [ {
+      "end" : "19:00",
+      "start" : "07:00"
+    } ], [ {
+      "end" : "19:00",
+      "start" : "07:00"
+    } ], [ {
+      "end" : "19:00",
+      "start" : "07:00"
+    } ], [ {
+      "end" : "19:00",
+      "start" : "07:00"
+    } ], [ {
+      "end" : "19:00",
+      "start" : "09:00"
+    } ] ],
+    "preorder" : ""
+  },
+  "38" : {
+    "active" : true,
+    "contact" : "62361294556",
+    "delivery" : false,
+    "dineIn" : true,
+    "gMapsLink" : "https://goo.gl/maps/BhmrGTQzR6VRxRb86",
+    "localDishes" : false,
+    "name" : "Mushroom Espresso",
+    "openingHours" : [ [ {
+      "end" : "18:00",
+      "start" : "07:00"
+    } ], [ {
+      "end" : "18:00",
+      "start" : "07:00"
+    } ], [ {
+      "end" : "18:00",
+      "start" : "07:00"
+    } ], [ {
+      "end" : "18:00",
+      "start" : "07:00"
+    } ], [ {
+      "end" : "18:00",
+      "start" : "07:00"
+    } ], [ {
+      "end" : "18:00",
+      "start" : "07:00"
+    } ], [ {
+      "end" : "18:00",
+      "start" : "09:00"
+    } ] ],
+    "preorder" : ""
+  },
+  "39" : {
+    "active" : true,
+    "contact" : "6282144023704",
+    "delivery" : false,
+    "dineIn" : true,
+    "gMapsLink" : "https://goo.gl/maps/7wCx2R5PmpPQMibt7",
+    "localDishes" : true,
+    "name" : "Bobo bungalows",
+    "openingHours" : [ [ {
+      "end" : "21:00",
+      "start" : "07:00"
+    } ], [ {
+      "end" : "21:00",
+      "start" : "07:00"
+    } ], [ {
+      "end" : "21:00",
+      "start" : "07:00"
+    } ], [ {
+      "end" : "21:00",
+      "start" : "07:00"
+    } ], [ {
+      "end" : "21:00",
+      "start" : "07:00"
+    } ], [ {
+      "end" : "21:00",
+      "start" : "07:00"
+    } ], [ {
+      "end" : "21:00",
+      "start" : "07:00"
+    } ] ],
+    "preorder" : ""
+  },
+  "40" : {
+    "active" : true,
+    "contact" : "6282359349905",
+    "delivery" : false,
+    "dineIn" : true,
+    "gMapsLink" : "https://goo.gl/maps/GLPPwLozDDNk64ue8",
+    "localDishes" : true,
+    "name" : "Nida's Warung",
+    "openingHours" : [ [ {
+      "end" : "21:00",
+      "start" : "09:30"
+    } ], [ {
+      "end" : "21:00",
+      "start" : "09:30"
+    } ], [ {
+      "end" : "21:00",
+      "start" : "09:30"
+    } ], [ {
+      "end" : "21:00",
+      "start" : "09:30"
+    } ], [ {
+      "end" : "21:00",
+      "start" : "09:30"
+    } ], [ {
+      "end" : "21:00",
+      "start" : "09:30"
+    } ], [ {
+      "end" : "21:00",
+      "start" : "09:30"
+    } ] ],
+    "preorder" : ""
+  },
+  "41" : {
+    "active" : true,
+    "contact" : "6282142904926",
+    "delivery" : false,
+    "dineIn" : true,
+    "gMapsLink" : "https://goo.gl/maps/x1YbpUN8iSArPjHz7",
+    "localDishes" : true,
+    "name" : "Warung I Wayan Roy",
+    "openingHours" : [ [ {
+      "end" : "21:00",
+      "start" : "09:00"
+    } ], [ {
+      "end" : "21:00",
+      "start" : "09:00"
+    } ], [ {
+      "end" : "21:00",
+      "start" : "09:00"
+    } ], [ {
+      "end" : "21:00",
+      "start" : "09:00"
+    } ], [ {
+      "end" : "21:00",
+      "start" : "09:00"
+    } ], [ {
+      "end" : "21:00",
+      "start" : "09:00"
+    } ], [ {
+      "end" : "21:00",
+      "start" : "09:00"
+    } ] ],
+    "preorder" : ""
+  },
+  "42" : {
+    "active" : true,
+    "contact" : "6281999261916",
+    "delivery" : false,
+    "dineIn" : true,
+    "gMapsLink" : "https://goo.gl/maps/pD76npJWk2HXouFd9",
+    "localDishes" : true,
+    "name" : "Little Prema Warung",
+    "openingHours" : [ [ {
+      "end" : "21:00",
+      "start" : "09:00"
+    } ], [ {
+      "end" : "21:00",
+      "start" : "09:00"
+    } ], [ {
+      "end" : "21:00",
+      "start" : "09:00"
+    } ], [ {
+      "end" : "21:00",
+      "start" : "09:00"
+    } ], [ {
+      "end" : "21:00",
+      "start" : "09:00"
+    } ], [ {
+      "end" : "21:00",
+      "start" : "09:00"
+    } ], [ {
+      "end" : "21:00",
+      "start" : "09:00"
+    } ] ],
+    "preorder" : ""
+  },
+  "43" : {
+    "active" : true,
+    "contact" : "628124692961",
+    "delivery" : false,
+    "dineIn" : true,
+    "gMapsLink" : "https://goo.gl/maps/48HNcjSu7RFrcFBj8",
+    "localDishes" : false,
+    "name" : "BFC Wiratanaya",
+    "openingHours" : [ [ {
+      "end" : "20:00",
+      "start" : "16:00"
+    } ], [ {
+      "end" : "20:00",
+      "start" : "16:00"
+    } ], [ {
+      "end" : "20:00",
+      "start" : "16:00"
+    } ], [ {
+      "end" : "20:00",
+      "start" : "16:00"
+    } ], [ {
+      "end" : "20:00",
+      "start" : "16:00"
+    } ], [ {
+      "end" : "20:00",
+      "start" : "16:00"
+    } ], [ {
+      "end" : "20:00",
+      "start" : "16:00"
+    } ] ],
+    "preorder" : ""
+  },
+  "-MGasQfO6RQWIKNd-DbT" : {
+    "active" : true,
+    "contact" : "6282236610942",
+    "delivery" : true,
+    "dineIn" : false,
+    "gMapsLink" : "",
+    "localDishes" : true,
+    "name" : "Pawon Yanti",
+    "openingHours" : [ [ {
+      "end" : "21:30",
+      "start" : "07:30"
+    } ], [ {
+      "end" : "21:30",
+      "start" : "07:30"
+    } ], [ {
+      "end" : "21:30",
+      "start" : "07:30"
+    } ], [ {
+      "end" : "21:30",
+      "start" : "07:30"
+    } ], [ {
+      "end" : "21:30",
+      "start" : "07:30"
+    } ], [ {
+      "end" : "21:30",
+      "start" : "07:30"
+    } ], [ {
+      "end" : "21:30",
+      "start" : "07:30"
+    } ] ],
+    "preorder" : false
+  }
+}

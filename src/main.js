@@ -18,12 +18,16 @@ router.beforeEach((to, from, next) => {
 });
 
 let app;
-auth.onAuthStateChanged(() => {
+auth.onAuthStateChanged(user => {
   if (!app) {
     app = new Vue({
       router,
       store,
       render: h => h(App)
     }).$mount("#app");
+  }
+
+  if (user) {
+    store.commit("setUserProfile", user);
   }
 });

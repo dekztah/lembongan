@@ -37,14 +37,29 @@ const routes = [
       import(/* webpackChunkName: "login" */ "../views/Login.vue")
   },
   {
-    path: "/addPlace",
-    name: "AddPlace",
+    path: "/admin",
     meta: {
       requiresAuth: true
     },
     component: () =>
-      import(/* webpackChunkName: "add" */ "../views/AddPlace.vue")
+      import(/* webpackChunkName: "admin" */ "../views/Admin.vue"),
+
+    children: [
+      {
+        path: "",
+        name: "PlaceList",
+        component: () =>
+          import(/* webpackChunkName: "place-list" */ "../views/PlaceList.vue")
+      },
+      {
+        path: "place/:id?",
+        name: "Place",
+        component: () =>
+          import(/* webpackChunkName: "place" */ "../views/Place.vue")
+      }
+    ]
   },
+
   {
     path: "/",
     redirect: "/food-and-drink"

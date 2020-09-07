@@ -39,7 +39,7 @@ export default new Vuex.Store({
       );
 
       commit("setUserProfile", user);
-      router.push("/addPlace");
+      router.push("/admin");
     },
     async logout({ commit }) {
       await fb.auth.signOut();
