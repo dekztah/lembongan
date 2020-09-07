@@ -47,15 +47,31 @@ const routes = [
     children: [
       {
         path: "",
-        name: "PlaceList",
+        name: "PlacesList",
         component: () =>
-          import(/* webpackChunkName: "place-list" */ "../views/PlaceList.vue")
+          import(
+            /* webpackChunkName: "places-list" */ "../views/admin/PlacesList.vue"
+          )
       },
       {
         path: "place/:id?",
         name: "Place",
         component: () =>
-          import(/* webpackChunkName: "place" */ "../views/Place.vue")
+          import(/* webpackChunkName: "place" */ "../views/admin/Place.vue")
+      },
+      {
+        path: "boats-list",
+        name: "BoatsList",
+        component: () =>
+          import(
+            /* webpackChunkName: "boats-list" */ "../views/admin/BoatsList.vue"
+          )
+      },
+      {
+        path: "boat/:id?",
+        name: "Boat",
+        component: () =>
+          import(/* webpackChunkName: "boat" */ "../views/admin/Boat.vue")
       }
     ]
   },
