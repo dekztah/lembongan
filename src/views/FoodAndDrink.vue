@@ -100,7 +100,6 @@ export default {
     weekArray() {
       return this.$store.state.weekArray;
     },
-
     today() {
       return this.$store.state.timestamp.isoWeekday() - 1;
     },
@@ -210,8 +209,13 @@ export default {
 @import "../assets/styles/variables";
 
 .placelist {
+  margin-top: 130px;
   padding: 10px;
   transition: transform 0.3s ease-out;
+
+  @media only screen and (max-width: $breakpoint-small) {
+    margin-top: 85px;
+  }
 }
 .place {
   background: #fff;
@@ -358,36 +362,7 @@ export default {
     }
   }
 }
-.filter-control {
-  display: flex;
-  position: fixed;
-  background: darken(#92e6ff, 20);
-  width: 100%;
-  z-index: 1;
-  padding: 10px;
-  top: 85px;
-  vertical-align: middle;
-  font-size: 12px;
-  font-weight: 600;
 
-  @media only screen and (max-width: $breakpoint-small) {
-    transform: translateX(-$breakpoint-small);
-    position: fixed;
-    top: 127px;
-    transition: transform 0.3s ease-out;
-    width: 100%;
-    padding: 10px;
-    display: block;
-    border-bottom: 1px solid darken(#2ccfff, 20);
-
-    &.active {
-      transform: translateX(0px);
-    }
-  }
-  .text {
-    display: inline-block;
-  }
-}
 .filter {
   margin-right: 15px;
 

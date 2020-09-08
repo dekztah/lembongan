@@ -27,6 +27,9 @@ export default new Vuex.Store({
     toggleMobileNav(state) {
       state.mobileNavOpen = !state.mobileNavOpen;
     },
+    closeMobileNav(state) {
+      state.mobileNavOpen = false;
+    },
     toggleLoading(state, bool) {
       state.loading = bool;
     }

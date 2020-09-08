@@ -122,6 +122,9 @@ export default {
     toggleMobileNav() {
       this.$store.commit("toggleMobileNav");
     },
+    closeMobileNav() {
+      this.$store.commit("closeMobileNav");
+    },
     logout() {
       this.$store.dispatch("logout");
     }
@@ -129,7 +132,7 @@ export default {
   watch: {
     $route(to, from) {
       if (from.name) {
-        this.toggleMobileNav();
+        this.closeMobileNav();
       }
     }
   }
