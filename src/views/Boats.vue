@@ -104,6 +104,7 @@ export default {
     destination(dest) {
       let departures = [];
       const time = this.$moment(this.timestamp, "HH:mm");
+      this.boats = this.boats.filter(place => place.active === true);
 
       this.boats.forEach(boat => {
         if (boat[dest] && typeof boat[dest][this.today] === "object") {
@@ -132,6 +133,7 @@ export default {
             ) {
               departure.leavingIn = leaveTimeMoment.diff(time, "m");
             }
+
             departures.push(departure);
           });
         }
