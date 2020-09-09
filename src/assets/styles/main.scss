@@ -119,7 +119,7 @@ header {
 
 .mobile-nav-open {
   .placelist {
-    transform: translateY(282px);
+    transform: translateY(315px);
   }
 }
 .fade-enter-active,
@@ -422,5 +422,23 @@ footer {
   }
   .text {
     display: inline-block;
+  }
+}
+
+.admin-list {
+  padding: 10px;
+
+  .list-item {
+    padding: 10px;
+    display: flex;
+    align-items: center;
+
+    &:not(:last-child) {
+      border-bottom: 1px solid #eee;
+    }
+
+    .button {
+      margin-left: auto;
+    }
   }
 }

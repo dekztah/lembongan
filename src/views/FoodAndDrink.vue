@@ -1,8 +1,13 @@
 <template lang="pug">
   .food-and-drink.main
+
     .filter-control(:class="{'active': mobileNavOpen}")
+      .filter.text-input
+        input(type="text" v-model="search"  placeholder="search by name...")
+        button.clear(v-if="search !== ''" @click="search = undefined")
+
       .filter.checkbox
-        input(type="checkbox" v-model="open" id="open")
+        input(type="checkbox" v-model="status" id="open")
         label(for="open")
         .text show open places only
 
@@ -26,9 +31,10 @@
         label(for="localDishes")
         .text local dishes
 
-      .filter.text-input
-        input(type="text" v-model="search" placeholder="search by name")
-        button.clear(v-if="search !== ''" @click="search = ''")
+      .filter.checkbox
+        input(type="checkbox" v-model="coffee" id="coffee")
+        label(for="coffee")
+        .text coffee
 
       .count(v-if="!loading") {{ filteredPlaces.length }} results
 
@@ -53,6 +59,7 @@
             span.chip.preorder(v-if="place.preorder") preorder
             span.chip.delivery(v-if="place.delivery") delivery
             span.chip.local-dishes(v-if="place.localDishes") local dishes
+            span.chip.coffee(v-if="place.coffee") coffee
 
         .footer
           .status
@@ -74,15 +81,14 @@ export default {
   components: {
     isotope
   },
+  props: {
+    tags: Array,
+    q: String,
+    open: String
+  },
   data() {
     return {
       places: [],
-      open: false,
-      dineIn: false,
-      delivery: false,
-      noPreorder: false,
-      localDishes: false,
-      search: "",
       isDouble: false,
       columnWidth: 180
     };
@@ -116,7 +122,7 @@ export default {
     filteredPlaces() {
       return this.places
         .filter(place => place.active === true)
-        .filter(place => (this.open ? place.isOpen === this.open : true))
+        .filter(place => (this.status ? place.isOpen === this.status : true))
         .filter(place => (this.dineIn ? place.dineIn === this.dineIn : true))
         .filter(place =>
           this.delivery ? place.delivery === this.delivery : true
@@ -127,11 +133,74 @@ export default {
         .filter(place =>
           this.localDishes ? place.localDishes === this.localDishes : true
         )
+        .filter(place => (this.coffee ? place.coffee === this.coffee : true))
         .filter(place =>
           this.search
             ? place.name.toLowerCase().includes(this.search.toLowerCase())
             : true
         );
+    },
+    status: {
+      get() {
+        return this.open == "true";
+      },
+      set(val) {
+        if (!val) val = undefined;
+        this.$router.replace({
+          query: { q: this.q, tags: this.tags, open: val }
+        });
+      }
+    },
+    search: {
+      get() {
+        return this.q ? this.q : "";
+      },
+      set(val) {
+        if (val === "") val = undefined;
+        this.$router.replace({
+          query: { q: val, tags: this.tags, open: this.status }
+        });
+      }
+    },
+    dineIn: {
+      get() {
+        return this.tags ? this.tags.includes("dineIn") : false;
+      },
+      set(val) {
+        this.setQuery("dineIn", val);
+      }
+    },
+    delivery: {
+      get() {
+        return this.tags ? this.tags.includes("delivery") : false;
+      },
+      set(val) {
+        this.setQuery("delivery", val);
+      }
+    },
+    noPreorder: {
+      get() {
+        return this.tags ? this.tags.includes("noPreorder") : false;
+      },
+      set(val) {
+        this.setQuery("noPreorder", val);
+      }
+    },
+    localDishes: {
+      get() {
+        return this.tags ? this.tags.includes("localDishes") : false;
+      },
+      set(val) {
+        this.setQuery("localDishes", val);
+      }
+    },
+    coffee: {
+      get() {
+        return this.tags ? this.tags.includes("coffee") : false;
+      },
+      set(val) {
+        this.setQuery("coffee", val);
+      }
     }
   },
   created() {
@@ -192,6 +261,17 @@ export default {
       });
       this.$store.commit("toggleLoading", false);
       if (this.mobileNavOpen) this.$store.commit("toggleMobileNav");
+    },
+    setQuery(queryKey, val) {
+      let queryPush = JSON.parse(JSON.stringify(this.$route.query));
+      if (!queryPush.tags) queryPush.tags = [];
+
+      if (val) {
+        queryPush.tags.push(queryKey);
+      } else {
+        queryPush.tags.splice(this.tags.indexOf(queryKey), 1);
+      }
+      this.$router.push({ query: queryPush });
     },
     waUrl(contact) {
       return `https://wa.me/${contact}`;
@@ -365,6 +445,11 @@ export default {
 
 .filter {
   margin-right: 15px;
+  position: relative;
+
+  @media only screen and (max-width: $breakpoint-small) {
+    margin-right: 0;
+  }
 
   input[type="text"] {
     border: none;
@@ -372,6 +457,10 @@ export default {
     height: 24px;
     padding: 4px 28px 4px 8px;
     vertical-align: middle;
+
+    @media only screen and (max-width: $breakpoint-small) {
+      width: 100%;
+    }
 
     &:focus {
       outline: none;
@@ -386,7 +475,14 @@ export default {
     display: inline-block;
     background-image: url(../assets/Clear.svg);
     background-size: 16px 16px;
-    margin-left: -24px;
+    position: absolute;
+    top: 4px;
+    right: 10px;
+    cursor: pointer;
+
+    &:focus {
+      outline: none;
+    }
   }
   @media only screen and (max-width: $breakpoint-small) {
     margin-bottom: 10px;
@@ -419,6 +515,9 @@ export default {
   }
   &.local-dishes {
     background: #52eaab;
+  }
+  &.coffee {
+    background: #a24011;
   }
 }
 .footer {

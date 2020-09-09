@@ -14,8 +14,8 @@
 
           #nav(:class="{'active': mobileNavOpen}")
             router-link(to="/food-and-drink") Food and Drink
-            router-link(to="/activities") Activities
             router-link(to="/boats") Boats
+            //- router-link(to="/activities") Activities
             a(v-if="userProfile.email" @click="logout") logout
             //- pre {{userProfile.email }}
 
@@ -71,7 +71,9 @@ export default {
       if (
         this.$moment(time, "HH:mm").isBetween(
           this.toMoment("0:00"),
-          this.toMoment("11:59")
+          this.toMoment("11:59"),
+          undefined,
+          "[]"
         )
       ) {
         greeting = parts[0];
@@ -80,7 +82,9 @@ export default {
       if (
         this.$moment(time, "HH:mm").isBetween(
           this.toMoment("12:00"),
-          this.toMoment("14:59")
+          this.toMoment("14:59"),
+          undefined,
+          "[]"
         )
       ) {
         greeting = parts[1];
@@ -89,7 +93,9 @@ export default {
       if (
         this.$moment(time, "HH:mm").isBetween(
           this.toMoment("15:00"),
-          this.toMoment("18:29")
+          this.toMoment("18:29"),
+          undefined,
+          "[]"
         )
       ) {
         greeting = parts[2];
@@ -98,7 +104,9 @@ export default {
       if (
         time.isBetween(
           this.$moment("18:30", "HH:mm"),
-          this.$moment("23:59", "HH:mm")
+          this.$moment("23:59", "HH:mm"),
+          undefined,
+          "[]"
         )
       ) {
         greeting = parts[3];
@@ -131,7 +139,7 @@ export default {
   },
   watch: {
     $route(to, from) {
-      if (from.name) {
+      if (from.name && from.name !== to.name) {
         this.closeMobileNav();
       }
     }

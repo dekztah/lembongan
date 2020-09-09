@@ -10,7 +10,7 @@
           strong {{ nextBoatFormatted(dest) }}
 
         .wrap
-          .boat(v-for="boat in destination(dest)" :class="{'has-left': boat.hasLeft, 'warn': boat.leavingIn}")
+          .boat(v-for="boat in destination(dest)" :class="{'has-left': boat.hasLeft, 'warn': (boat.leavingIn !== null && boat.leavingIn >= 0)}")
             .time {{ boat[dest][today]}} {{ boat.name }}
               br
               span.leaving(v-if="boat.leavingIn !== null") Leaving in:&nbsp;
@@ -25,7 +25,7 @@
           .before-noon
             .segment(v-for="segment in hoursArray['beforeNoon']")
               .hour {{ segment }}:00
-              .boat(v-for="boat in destination(dest)" v-if="compareTime(boat[dest][today], segment)" :class="{'has-left': boat.hasLeft, 'warn': boat.leavingIn}")
+              .boat(v-for="boat in destination(dest)" v-if="compareTime(boat[dest][today], segment)" :class="{'has-left': boat.hasLeft, 'warn': (boat.leavingIn !== null && boat.leavingIn >= 0)}")
                 .content
                   h2.time {{boat[dest][today]}}
                   .name {{ boat.name}}
@@ -41,7 +41,7 @@
           .after-noon
             .segment(v-for="segment in hoursArray['afterNoon']")
               .hour {{ segment }}:00
-              .boat(v-for="boat in destination(dest)" v-if="compareTime(boat[dest][today], segment)" :class="{'has-left': boat.hasLeft, 'warn': boat.leavingIn}")
+              .boat(v-for="boat in destination(dest)" v-if="compareTime(boat[dest][today], segment)" :class="{'has-left': boat.hasLeft, 'warn': (boat.leavingIn !== null && boat.leavingIn >= 0)}")
                 .content
                   h2.time {{boat[dest][today]}}
                   .name {{ boat.name }}
@@ -117,6 +117,9 @@ export default {
             if (leaveTimeMoment.diff(time, "s") > 0) {
               if (leaveTimeMoment.diff(time, "s") < this.nextBoatIn[dest]) {
                 this.nextBoatIn[dest] = leaveTimeMoment.diff(time, "s");
+                if (this.nextBoatIn[dest] <= 0) {
+                  this.nextBoatIn[dest] = 86400;
+                }
               }
             }
 
@@ -168,6 +171,7 @@ export default {
       background: darken(#92e6ff, 10);
       color: rgba(255, 255, 255, 0.4);
       border-radius: 0;
+      height: 44px;
 
       &.active {
         background: none;

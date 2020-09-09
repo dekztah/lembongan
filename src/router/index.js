@@ -1,5 +1,6 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
+import qs from "qs";
 
 Vue.use(VueRouter);
 
@@ -10,7 +11,12 @@ const routes = [
     component: () =>
       import(
         /* webpackChunkName: "food-and-drink" */ "../views/FoodAndDrink.vue"
-      )
+      ),
+    props: route => ({
+      tags: route.query.tags,
+      q: route.query.q,
+      open: route.query.open
+    })
   },
   {
     path: "/activities",
@@ -85,6 +91,13 @@ const routes = [
 const router = new VueRouter({
   mode: "history",
   base: process.env.BASE_URL,
+  parseQuery: query => {
+    return qs.parse(query);
+  },
+  stringifyQuery: query => {
+    let result = qs.stringify(query, { encode: false });
+    return result ? "?" + result : "";
+  },
   routes
 });
 

@@ -22,6 +22,9 @@
       .checkbox
         input(type="checkbox" v-model="form.localDishes")
         label Local dishes
+      .checkbox
+        input(type="checkbox" v-model="form.coffee")
+        label Coffee
 
     .form-element
       label Opening hours
@@ -101,6 +104,7 @@ export default {
       db.ref().update(updates, error => {
         console.log("error", error);
         this.saveDisabled = false;
+        this.$router.push("/admin");
       });
     }
   }
