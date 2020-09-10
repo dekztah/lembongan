@@ -112,15 +112,17 @@ export default {
   methods: {
     destination(dest) {
       this.allDepartures[dest] = [];
-      this.boats.forEach(boat => {
-        let departures = boat[dest][this.today];
+      this.boats
+        .filter(boat => boat.active === true)
+        .forEach(boat => {
+          let departures = boat[dest][this.today];
 
-        departures.forEach(val => {
-          boat = JSON.parse(JSON.stringify(boat));
-          boat[dest][this.today] = val;
-          this.allDepartures[dest].push(boat);
+          departures.forEach(val => {
+            boat = JSON.parse(JSON.stringify(boat));
+            boat[dest][this.today] = val;
+            this.allDepartures[dest].push(boat);
+          });
         });
-      });
 
       this.allDepartures[dest]
         .sort((a, b) => {
