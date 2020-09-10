@@ -9,7 +9,7 @@
         .next
           span(v-if="nextBoat[dest]") next boat to {{ dest === 'departToSanur' ? 'Sanur' : 'Lembongan'}} in:&nbsp;
             strong {{ nextBoat[dest].leavingIn}}
-          span(v-else) All boats have left today
+          span(v-else) All boats to {{ dest === 'departToSanur' ? 'Sanur' : 'Lembongan'}} have left today
 
         .wrap
           .boat(v-for="boat in allDepartures[dest]" :class="{'has-left': boat.hasLeft, 'warn': boat.leavingSoon }")
