@@ -69,7 +69,8 @@
               strong {{ place.closesIn + 1 }}m
 
           a.maps(v-if="place.gMapsLink" :href="place.gMapsLink" target="_blank")
-          a.wa(v-if="place.contact" :href="waUrl(place.contact)" target="_blank") WA
+          a.fb(v-if="place.facebookLink" :href="place.facebookLink" target="_blank")
+          a.wa(v-if="place.contact" :href="waUrl(place.contact)" target="_blank")
 
 </template>
 

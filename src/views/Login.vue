@@ -1,9 +1,10 @@
 <template lang="pug">
   .login.main
-    input(type="email" v-model="form.email")
-    input(type="password" v-model="form.password")
+    .form
+      input.text-input(type="email" v-model="form.email")
+      input.text-input(type="password" v-model="form.password")
 
-    button(@click="login") login
+    button.button(@click="login") login
 </template>
 
 <script>
@@ -29,3 +30,4 @@ export default {
   }
 };
 </script>
+<style lang="scss"></style>

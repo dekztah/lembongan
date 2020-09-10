@@ -3,25 +3,36 @@
     .form-element
       label Place name
       input(type="text" v-model="form.name")
+
     .form-element
       label Contact
       input(type="number" v-model="form.contact")
+
     .form-element
       label Maps link
       input(type="text" v-model="form.gMapsLink")
+
+    .form-element
+      label Facebook link
+      input(type="text" v-model="form.facebookLink")
+
     .form-element.checkboxes
       .checkbox
         input(type="checkbox" v-model="form.dineIn")
         label Dine-in
+
       .checkbox
         input(type="checkbox" v-model="form.delivery")
         label Delivery
+
       .checkbox
         input(type="checkbox" v-model="form.preorder")
         label Preorder
+
       .checkbox
         input(type="checkbox" v-model="form.localDishes")
         label Local dishes
+
       .checkbox
         input(type="checkbox" v-model="form.coffee")
         label Coffee

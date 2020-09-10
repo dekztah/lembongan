@@ -1,7 +1,7 @@
 import Vue from "vue";
 import Vuex from "vuex";
 import VueMoment from "vue-moment";
-import * as fb from "../firebase";
+import { auth } from "@/firebase";
 import router from "../router/index";
 
 Vue.use(Vuex);
@@ -36,7 +36,7 @@ export default new Vuex.Store({
   },
   actions: {
     async login({ commit }, form) {
-      const { user } = await fb.auth.signInWithEmailAndPassword(
+      const { user } = await auth.signInWithEmailAndPassword(
         form.email,
         form.password
       );
@@ -45,7 +45,7 @@ export default new Vuex.Store({
       router.push("/admin");
     },
     async logout({ commit }) {
-      await fb.auth.signOut();
+      await auth.signOut();
 
       commit("setUserProfile", {});
       router.push("/login");
