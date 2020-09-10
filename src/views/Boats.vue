@@ -5,19 +5,20 @@
       button.button(@click="dest = 'departToLembongan'" :class="{'active': dest === 'departToLembongan'}") Sanur to Lembongan
 
     .daily-schedule
-      .direction
-        .next next boat to {{ dest === 'departToSanur' ? 'Sanur' : 'Lembongan'}} in:&nbsp;
-          strong {{ nextBoatFormatted(dest) }}
+      .direction(v-if="!loading")
+        .next
+          span(v-if="nextBoat[dest]") next boat to {{ dest === 'departToSanur' ? 'Sanur' : 'Lembongan'}} in:&nbsp;
+            strong {{ nextBoat[dest].leavingIn}}
+          span(v-else) All boats have left today
 
         .wrap
-          .boat(v-for="boat in destination(dest)" :class="{'has-left': boat.hasLeft, 'warn': (boat.leavingIn !== null && boat.leavingIn >= 0)}")
+          .boat(v-for="boat in allDepartures[dest]" :class="{'has-left': boat.hasLeft, 'warn': boat.leavingSoon }")
             .time {{ boat[dest][today]}} {{ boat.name }}
               br
-              span.leaving(v-if="boat.leavingIn !== null") Leaving in:&nbsp;
-                strong {{ boat.leavingIn + 1}}m
+              span.leaving(v-if="boat.leavingIn") departs in:&nbsp;
+                strong {{ boat.leavingIn}}
+
             .other
-
-
               a.maps(v-if="boat.gMapsLink" :href="boat.gMapsLink" target="_blank")
               a.wa(v-if="boat.contact" :href="waUrl(boat.contact)" target="_blank") WA
 
@@ -25,15 +26,15 @@
           .before-noon
             .segment(v-for="segment in hoursArray['beforeNoon']")
               .hour {{ segment }}:00
-              .boat(v-for="boat in destination(dest)" v-if="compareTime(boat[dest][today], segment)" :class="{'has-left': boat.hasLeft, 'warn': (boat.leavingIn !== null && boat.leavingIn >= 0)}")
+              .boat(v-for="boat in allDepartures[dest]" v-if="compareTime(boat[dest][today], segment)" :class="{'has-left': boat.hasLeft, 'warn': boat.leavingSoon}")
                 .content
                   h2.time {{boat[dest][today]}}
                   .name {{ boat.name}}
 
                 .footer
                   .status
-                    span(v-if="boat.leavingIn !== null") Leaving in:&nbsp;
-                      strong {{ boat.leavingIn + 1}}m
+                    span(v-if="boat.leavingIn") departs in:&nbsp;
+                      strong {{ boat.leavingIn}}
 
                   a.maps(v-if="boat.gMapsLink" :href="boat.gMapsLink" target="_blank")
                   a.wa(v-if="boat.contact" :href="waUrl(boat.contact)" target="_blank") WA
@@ -41,19 +42,18 @@
           .after-noon
             .segment(v-for="segment in hoursArray['afterNoon']")
               .hour {{ segment }}:00
-              .boat(v-for="boat in destination(dest)" v-if="compareTime(boat[dest][today], segment)" :class="{'has-left': boat.hasLeft, 'warn': (boat.leavingIn !== null && boat.leavingIn >= 0)}")
+              .boat(v-for="boat in allDepartures[dest]" v-if="compareTime(boat[dest][today], segment)" :class="{'has-left': boat.hasLeft, 'warn': boat.leavingSoon }")
                 .content
                   h2.time {{boat[dest][today]}}
                   .name {{ boat.name }}
 
                 .footer
                   .status
-                    span(v-if="boat.leavingIn !== null") Leaving in:&nbsp;
-                      strong {{ boat.leavingIn + 1}}m
+                    span(v-if="boat.leavingIn") departs in:&nbsp;
+                      strong {{ boat.leavingIn }}
 
                   a.maps(v-if="boat.gMapsLink" :href="boat.gMapsLink" target="_blank")
                   a.wa(v-if="boat.contact" :href="waUrl(boat.contact)" target="_blank") WA
-
 
 </template>
 
@@ -64,18 +64,25 @@ export default {
   data() {
     return {
       boats: [],
+      allDepartures: {
+        departToSanur: [],
+        departToLembongan: []
+      },
       hoursArray: {
         beforeNoon: [7, 8, 9, 10, 11],
         afterNoon: [12, 13, 14, 15, 16]
       },
-      nextBoatIn: {
-        departToLembongan: 86400,
-        departToSanur: 86400
+      nextBoat: {
+        departToLembongan: [],
+        departToSanur: []
       },
       dest: "departToSanur"
     };
   },
   computed: {
+    loading() {
+      return this.$store.state.loading;
+    },
     timestamp() {
       return this.$store.state.timestamp;
     },
@@ -98,61 +105,65 @@ export default {
           this.boats.push(child.val());
         });
         this.$store.commit("toggleLoading", false);
+        this.destination("departToSanur");
+        this.destination("departToLembongan");
       });
   },
   methods: {
     destination(dest) {
-      let departures = [];
-      const time = this.$moment(this.timestamp, "HH:mm");
-      this.boats = this.boats.filter(place => place.active === true);
-
+      this.allDepartures[dest] = [];
       this.boats.forEach(boat => {
-        if (boat[dest] && typeof boat[dest][this.today] === "object") {
-          boat[dest][this.today].forEach(leaveTime => {
-            let departure = JSON.parse(JSON.stringify(boat));
-            departure.hasLeft = true;
-            departure.leavingIn = null;
-            departure[dest][this.today] = leaveTime;
-            const leaveTimeMoment = this.$moment(leaveTime, "HH:mm");
+        let departures = boat[dest][this.today];
 
-            if (leaveTimeMoment.diff(time, "s") > 0) {
-              if (leaveTimeMoment.diff(time, "s") < this.nextBoatIn[dest]) {
-                this.nextBoatIn[dest] = leaveTimeMoment.diff(time, "s");
-                if (this.nextBoatIn[dest] <= 0) {
-                  this.nextBoatIn[dest] = 86400;
-                }
-              }
-            }
-
-            if (this.$moment(time, "HH:mm").isBefore(leaveTimeMoment)) {
-              departure.hasLeft = false;
-            }
-            if (
-              leaveTimeMoment.diff(time, "s") < 1800 &&
-              leaveTimeMoment.diff(time, "s") >= 0
-            ) {
-              departure.leavingIn = leaveTimeMoment.diff(time, "m");
-            }
-
-            departures.push(departure);
-          });
-        }
+        departures.forEach(val => {
+          boat = JSON.parse(JSON.stringify(boat));
+          boat[dest][this.today] = val;
+          this.allDepartures[dest].push(boat);
+        });
       });
 
-      return departures.sort((a, b) => {
-        let aTime = this.$moment(a[dest][this.today], "HH:mm");
-        let bTime = this.$moment(b[dest][this.today], "HH:mm");
-        return aTime.diff(bTime, "m");
-      });
-    },
-    nextBoatFormatted(dest) {
-      return this.$moment.utc(this.nextBoatIn[dest] * 1000).format("HH:mm");
+      this.allDepartures[dest]
+        .sort((a, b) => {
+          let aTime = this.$moment(a[dest][this.today], "HH:mm");
+          let bTime = this.$moment(b[dest][this.today], "HH:mm");
+          return aTime.diff(bTime, "m");
+        })
+        .forEach((dep, index) => {
+          const leaveTime = this.$moment(dep[dest][this.today], "HH:mm");
+          const timeDiff = leaveTime.diff(this.timestamp, "s");
+
+          if (timeDiff >= 0) {
+            dep.leavingIn = this.$moment
+              .utc((timeDiff + 60) * 1000)
+              .format("HH:mm");
+          }
+
+          if (timeDiff < 1800 && timeDiff >= 0) {
+            dep.leavingSoon = true;
+          }
+
+          if (this.timestamp.isAfter(leaveTime)) {
+            dep.hasLeft = true;
+
+            if (index === this.allDepartures[dest].length - 1) {
+              this.nextBoat[dest] = false;
+            } else {
+              this.nextBoat[dest] = this.allDepartures[dest][index + 1];
+            }
+          }
+        });
     },
     compareTime(a, b) {
       return this.$moment(a, "HH:mm").hour() === b;
     },
     waUrl(contact) {
       return `https://wa.me/${contact}`;
+    }
+  },
+  watch: {
+    timestamp() {
+      this.destination("departToSanur");
+      this.destination("departToLembongan");
     }
   }
 };

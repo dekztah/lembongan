@@ -57,7 +57,7 @@ export default {
       return this.$store.state.timestamp.format("YYYY-MM-DD");
     },
     time() {
-      return this.$store.state.timestamp.format("HH:mm");
+      return this.$store.state.timestamp.format("HH:mm:ss");
     },
     loading() {
       return this.$store.state.loading;
@@ -121,7 +121,7 @@ export default {
   mounted() {
     setInterval(() => {
       this.$store.commit("updateTimeStamp");
-    }, 30000);
+    }, 1000);
   },
   methods: {
     toMoment(time) {
