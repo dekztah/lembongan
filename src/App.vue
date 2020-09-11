@@ -17,7 +17,6 @@
             router-link(to="/boats") Boats
             router-link(to="/activities") Activities (beta)
             a(v-if="userProfile.email" @click="logout") logout
-            //- pre {{userProfile.email }}
 
           .greeting
             h1 Selamat {{ partOfTheDay }}!

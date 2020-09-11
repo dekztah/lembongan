@@ -89,6 +89,10 @@ header {
       &.active {
         transform: translateX(-10px);
       }
+
+      a:last-child {
+        margin-right: 0;
+      }
     }
   }
   .greeting {
@@ -122,8 +126,8 @@ header {
 }
 
 .mobile-nav-open {
-  .placelist {
-    transform: translateY(315px);
+  .tile-list {
+    transform: translateY(349px);
   }
 }
 .fade-enter-active,

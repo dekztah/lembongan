@@ -79,7 +79,7 @@
 
           .weekdays.reservation(v-else)
             a.button(v-if="place.contact" :href="waUrl(place.contact)" target="_blank")
-             span contact for reservation
+             span contact for details
              .wa
 
           .info
@@ -91,7 +91,7 @@
             span.chip.snorkeling(v-if="place.snorkeling") snorkeling
             span.chip.fishing(v-if="place.fishing") fishing
             span.chip.tour(v-if="place.tour") tour
-            span.chip.reservation(v-if="place.reservation") reservation
+            //- span.chip.reservation(v-if="place.reservation") reservation
 
         .footer
           .status
