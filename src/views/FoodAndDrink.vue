@@ -9,17 +9,17 @@
       .filter.checkbox
         input(type="checkbox" v-model="status" id="open")
         label(for="open")
-        .text show open places only
+        .text open places only
 
       .filter.checkbox
         input(type="checkbox" v-model="dineIn" id="dineIn")
         label(for="dineIn")
-        .text show dine-in only
+        .text dine-in only
 
       .filter.checkbox
         input(type="checkbox" v-model="delivery" id="delivery")
         label(for="delivery")
-        .text show delivery only
+        .text delivery only
 
       .filter.checkbox
         input(type="checkbox" v-model="noPreorder" id="noPreorder")
@@ -35,6 +35,11 @@
         input(type="checkbox" v-model="coffee" id="coffee")
         label(for="coffee")
         .text coffee
+
+      .filter.checkbox
+        input(type="checkbox" v-model="drinks" id="drinks")
+        label(for="drinks")
+        .text drinks
 
       .count(v-if="!loading") {{ filteredPlaces.length }} results
 
@@ -60,6 +65,7 @@
             span.chip.delivery(v-if="place.delivery") delivery
             span.chip.local-dishes(v-if="place.localDishes") local dishes
             span.chip.coffee(v-if="place.coffee") coffee
+            span.chip.drinks(v-if="place.drinks") drinks
 
         .footer
           .status
@@ -135,6 +141,7 @@ export default {
           this.localDishes ? place.localDishes === this.localDishes : true
         )
         .filter(place => (this.coffee ? place.coffee === this.coffee : true))
+        .filter(place => (this.drinks ? place.drinks === this.drinks : true))
         .filter(place =>
           this.search
             ? place.name.toLowerCase().includes(this.search.toLowerCase())
@@ -201,6 +208,14 @@ export default {
       },
       set(val) {
         this.setQuery("coffee", val);
+      }
+    },
+    drinks: {
+      get() {
+        return this.tags ? this.tags.includes("drinks") : false;
+      },
+      set(val) {
+        this.setQuery("drinks", val);
       }
     }
   },
@@ -519,6 +534,9 @@ export default {
   }
   &.coffee {
     background: #a24011;
+  }
+  &.drinks {
+    background: #fdd92b;
   }
 }
 .footer {

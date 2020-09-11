@@ -37,6 +37,10 @@
         input(type="checkbox" v-model="form.coffee")
         label Coffee
 
+      .checkbox
+        input(type="checkbox" v-model="form.drinks")
+        label Drinks
+
     .form-element
       label Opening hours
 
