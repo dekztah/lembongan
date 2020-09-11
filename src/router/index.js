@@ -78,6 +78,22 @@ const routes = [
         name: "Boat",
         component: () =>
           import(/* webpackChunkName: "boat" */ "../views/admin/Boat.vue")
+      },
+      {
+        path: "activities-list",
+        name: "ActivitiesList",
+        component: () =>
+          import(
+            /* webpackChunkName: "activities-list" */ "../views/admin/ActivitiesList.vue"
+          )
+      },
+      {
+        path: "activity/:id?",
+        name: "Activity",
+        component: () =>
+          import(
+            /* webpackChunkName: "activity" */ "../views/admin/Activity.vue"
+          )
       }
     ]
   },

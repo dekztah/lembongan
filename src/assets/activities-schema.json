@@ -44,11 +44,14 @@
       }
     ]
   ],
-  "dineIn": false,
-  "preorder": false,
-  "delivery": false,
-  "localDishes": false,
   "active": false,
+  "yoga": false,
+  "freeDiving": false,
+  "scubaDiving": false,
+  "surf": false,
+  "spa": false,
+  "snorkeling": false,
+  "fishing": false,
   "contact": "",
   "gMapsLink": "",
   "facebookLink": ""
