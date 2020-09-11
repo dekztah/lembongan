@@ -22,8 +22,8 @@
         label Yoga
 
       .checkbox
-        input(type="checkbox" v-model="form.freeDiving")
-        label Free diving
+        input(type="checkbox" v-model="form.freediving")
+        label Freediving
 
       .checkbox
         input(type="checkbox" v-model="form.scubaDiving")
@@ -44,6 +44,15 @@
       .checkbox
         input(type="checkbox" v-model="form.fishing")
         label Fishing
+
+      .checkbox
+        input(type="checkbox" v-model="form.tour")
+        label Tour
+
+    .form-element
+      .checkbox
+        input(type="checkbox" v-model="form.reservation")
+        label Reservation
 
     .form-element
       label Opening hours
@@ -123,6 +132,7 @@ export default {
       db.ref().update(updates, error => {
         console.log("error", error);
         this.saveDisabled = false;
+        // this.form = this.key === null ? {} : this.form;
         this.$router.push("/admin/activities-list");
       });
     }

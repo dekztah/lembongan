@@ -184,7 +184,7 @@ export default {
     button {
       flex: 1;
       background: darken(#92e6ff, 10);
-      color: rgba(255, 255, 255, 0.4);
+      color: rgba(255, 255, 255, 0.8);
       border-radius: 0;
       height: 44px;
 

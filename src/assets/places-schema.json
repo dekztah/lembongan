@@ -49,7 +49,9 @@
   "delivery": false,
   "localDishes": false,
   "active": false,
+  "reservation": false,
   "contact": "",
   "gMapsLink": "",
-  "facebookLink": ""
+  "facebookLink": "",
+  "instagramLink": ""
 }

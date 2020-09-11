@@ -22,7 +22,12 @@ const routes = [
     path: "/activities",
     name: "Activities",
     component: () =>
-      import(/* webpackChunkName: "activities" */ "../views/Activities.vue")
+      import(/* webpackChunkName: "activities" */ "../views/Activities.vue"),
+    props: route => ({
+      tags: route.query.tags,
+      q: route.query.q,
+      open: route.query.open
+    })
   },
   {
     path: "/boats",

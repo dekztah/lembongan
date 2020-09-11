@@ -43,15 +43,24 @@
 
       .count(v-if="!loading") {{ filteredPlaces.length }} results
 
-    isotope.placelist(v-if="!loading" :list="filteredPlaces" :options="isotopeOptions" ref="isotope")
-      .place(v-for="(place, index) in filteredPlaces" :class="{'open': place.isOpen, 'double': isDouble === index, 'warn': (place.opensIn !== null && place.opensIn >= 0) || (place.closesIn !== null && place.closesIn >= 1) }" :key="`place-${index}`")
+    isotope.tile-list.places-list(
+      v-if="!loading"
+      :list="filteredPlaces"
+      :options="isotopeOptions"
+      ref="isotope"
+    )
+      .tile.place(
+        v-for="(place, index) in filteredPlaces"
+        :class="{'open': place.isOpen, 'double': isDouble === index, 'warn': (place.opensIn !== null && place.opensIn >= 0) || (place.closesIn !== null && place.closesIn >= 1) }"
+        :key="`place-${index}`"
+      )
         .content(@click="toggleDouble(index)")
           h2.name {{ place.name }}
 
           .weekdays
             .wd(v-for="(weekday, wid) in place.openingHours" :class="{'closed': typeof weekday === 'string', 'today' : wid === today}")
               div.day-names {{ weekArray[wid] }}
-              span(v-if="typeof weekday === 'object'")
+              span(v-if="typeof weekday === 'object' && weekday[0].start !== ''")
                 div.interval(v-for="time in weekday")
                   | {{ time.start }}-{{ time.end }}
 
@@ -76,6 +85,7 @@
 
           a.maps(v-if="place.gMapsLink" :href="place.gMapsLink" target="_blank")
           a.fb(v-if="place.facebookLink" :href="place.facebookLink" target="_blank")
+          a.insta(v-if="place.instagramLink" :href="place.instagramLink" target="_blank")
           a.wa(v-if="place.contact" :href="waUrl(place.contact)" target="_blank")
 
 </template>
@@ -166,7 +176,7 @@ export default {
       set(val) {
         if (val === "") val = undefined;
         this.$router.replace({
-          query: { q: val, tags: this.tags, open: this.status }
+          query: { q: val, tags: this.tags, open: this.status || undefined }
         });
       }
     },
@@ -300,256 +310,3 @@ export default {
   }
 };
 </script>
-
-<style lang="scss">
-@import "../assets/styles/variables";
-
-.placelist {
-  margin-top: 130px;
-  padding: 10px;
-  transition: transform 0.3s ease-out;
-
-  @media only screen and (max-width: $breakpoint-small) {
-    margin-top: 85px;
-  }
-}
-.place {
-  background: #fff;
-  margin-bottom: 10px;
-  align-items: center;
-  width: 180px;
-  overflow: hidden;
-  border-radius: 4px;
-  box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.2);
-
-  .day-names {
-    display: none;
-    font-weight: 600;
-  }
-
-  &.double {
-    width: 370px;
-
-    .day-names {
-      display: block;
-      text-align: center;
-    }
-    .interval {
-      padding: 4px 4px 0 4px;
-      text-align: center;
-
-      &:not(:first-child) {
-        border-top: 1px solid #ccc;
-      }
-      &:not(:last-child) {
-        padding-bottom: 4px;
-      }
-    }
-
-    .closed-icon-text {
-      padding-top: 4px;
-
-      .text {
-        display: none;
-      }
-      .icon {
-        display: inline-block;
-        width: 24px;
-        height: 24px;
-        background-image: url(../assets/Closed.svg);
-        background-size: 24px 24px;
-      }
-    }
-
-    .wd {
-      display: flex;
-      flex-direction: column;
-      font-size: 14px;
-      padding: 8px 0;
-
-      @media only screen and (max-width: $breakpoint-small) {
-        font-size: 12px;
-      }
-
-      &:not(:last-child) {
-        border-right: 1px solid #ccc;
-      }
-
-      &.today {
-        background: #f1f1f1;
-      }
-    }
-  }
-
-  @media only screen and (max-width: $breakpoint-small) {
-    width: calc(50% - 15px);
-
-    &.double {
-      width: calc(100% - 20px);
-    }
-  }
-
-  .content {
-    padding: 10px;
-  }
-  &.open {
-    h2.name {
-      &:before {
-        background: #00ff00;
-      }
-    }
-  }
-  &.warn {
-    h2.name {
-      &:before {
-        background: #ff9900;
-      }
-    }
-  }
-  h2.name {
-    font-size: 16px;
-    margin-top: 0;
-    vertical-align: middle;
-    cursor: pointer;
-
-    &:before {
-      display: inline-block;
-      content: "";
-      width: 16px;
-      height: 16px;
-      border-radius: 50%;
-      background: red;
-      vertical-align: middle;
-      margin: 0 6px 2px 0;
-    }
-  }
-}
-.weekdays {
-  display: flex;
-}
-.wd {
-  display: none;
-  align-items: center;
-  flex: 1;
-
-  hr {
-    margin: 2px 0;
-  }
-
-  &.today {
-    display: flex;
-  }
-
-  &.closed {
-    &.today {
-      display: flex;
-
-      font-weight: 600;
-    }
-
-    .closed-icon-text {
-      align-items: center;
-      display: flex;
-      flex: 1;
-
-      .text {
-        color: #ff0000;
-      }
-    }
-  }
-}
-
-.filter {
-  margin-right: 15px;
-  position: relative;
-
-  @media only screen and (max-width: $breakpoint-small) {
-    margin-right: 0;
-  }
-
-  input[type="text"] {
-    border: none;
-    border-radius: 12px;
-    height: 24px;
-    padding: 4px 28px 4px 8px;
-    vertical-align: middle;
-
-    @media only screen and (max-width: $breakpoint-small) {
-      width: 100%;
-    }
-
-    &:focus {
-      outline: none;
-    }
-  }
-  .clear {
-    border: none;
-    width: 16px;
-    height: 16px;
-    vertical-align: middle;
-    background: none;
-    display: inline-block;
-    background-image: url(../assets/Clear.svg);
-    background-size: 16px 16px;
-    position: absolute;
-    top: 4px;
-    right: 10px;
-    cursor: pointer;
-
-    &:focus {
-      outline: none;
-    }
-  }
-  @media only screen and (max-width: $breakpoint-small) {
-    margin-bottom: 10px;
-  }
-}
-.count {
-  align-self: center;
-  margin-left: auto;
-}
-.info {
-  margin-top: 10px;
-}
-.chip {
-  display: inline-block;
-  border-radius: 10px;
-  padding: 2px 8px;
-  background: #ccc;
-  margin: 6px 6px 0 0;
-  font-size: 12px;
-  color: white;
-
-  &.dine-in {
-    background: #ff00b0;
-  }
-  &.preorder {
-    background: #0066ff;
-  }
-  &.delivery {
-    background: #990099;
-  }
-  &.local-dishes {
-    background: #52eaab;
-  }
-  &.coffee {
-    background: #a24011;
-  }
-  &.drinks {
-    background: #fdd92b;
-  }
-}
-.footer {
-  // margin-top: 10px;
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
-  background: #ddd;
-  padding: 10px;
-
-  .status {
-    margin-right: auto;
-    font-size: 12px;
-  }
-}
-</style>

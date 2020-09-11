@@ -1,0 +1,49 @@
+.filter {
+  margin-right: 15px;
+  position: relative;
+
+  @media only screen and (max-width: $breakpoint-small) {
+    margin-right: 0;
+  }
+
+  input[type="text"] {
+    border: none;
+    border-radius: 12px;
+    height: 24px;
+    padding: 4px 28px 4px 8px;
+    vertical-align: middle;
+
+    @media only screen and (max-width: $breakpoint-small) {
+      width: 100%;
+    }
+
+    &:focus {
+      outline: none;
+    }
+  }
+  .clear {
+    border: none;
+    width: 16px;
+    height: 16px;
+    vertical-align: middle;
+    background: none;
+    display: inline-block;
+    background-image: url(../Clear.svg);
+    background-size: 16px 16px;
+    position: absolute;
+    top: 4px;
+    right: 10px;
+    cursor: pointer;
+
+    &:focus {
+      outline: none;
+    }
+  }
+  @media only screen and (max-width: $breakpoint-small) {
+    margin-bottom: 10px;
+  }
+}
+.count {
+  align-self: center;
+  margin-left: auto;
+}

@@ -1,0 +1,53 @@
+.chip {
+  display: inline-block;
+  border-radius: 10px;
+  padding: 2px 8px;
+  background: #ccc;
+  margin: 6px 6px 0 0;
+  font-size: 12px;
+  color: white;
+
+  &.dine-in {
+    background: #ff00b0;
+  }
+  &.preorder {
+    background: #0066ff;
+  }
+  &.delivery {
+    background: #990099;
+  }
+  &.local-dishes {
+    background: #52eaab;
+  }
+  &.coffee {
+    background: #a24011;
+  }
+  &.drinks {
+    background: #fdd92b;
+  }
+
+  &.yoga {
+    background: #f3a8ea;
+  }
+  &.spa {
+    background: #a3c1da;
+  }
+  &.reservation {
+    background: $wa-color;
+  }
+  &.freediving {
+    background: #999;
+  }
+  &.scuba-diving {
+    background: #042e79;
+  }
+  &.surf {
+    background: #00dcff;
+  }
+  &.snorkeling {
+    background: #ffb101;
+  }
+  &.tour {
+    background: #458c0f;
+  }
+}

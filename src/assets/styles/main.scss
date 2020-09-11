@@ -1,6 +1,9 @@
 @import "variables";
 @import "buttons";
 @import "form";
+@import "tiles";
+@import "chips";
+@import "filter";
 
 @import url("https://fonts.googleapis.com/css2?family=Raleway&display=swap");
 
@@ -402,6 +405,15 @@ footer {
   background-image: url(../Facebook.svg);
   text-indent: -9999px;
   background-size: 36px 36px;
+}
+
+.insta {
+  display: inline-block;
+  width: 28px;
+  height: 28px;
+  background-image: url(../Instagram.svg);
+  text-indent: -9999px;
+  background-size: 28px 28px;
 }
 
 .filter-control {

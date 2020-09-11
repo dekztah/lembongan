@@ -3,6 +3,8 @@
     .form
       input(type="text" v-model="search")
 
+      button.button(@click="addNew") add new activity
+
     .activity.list-item(v-if="!loading" v-for="(activity, key) in activities")
       input(type="checkbox" v-model="activity.active")
       .name {{ activity.name }}
@@ -32,6 +34,11 @@ export default {
         this.activities = snapshot.val();
         this.$store.commit("toggleLoading", false);
       });
+  },
+  methods: {
+    addNew() {
+      this.$router.push("/admin/activity");
+    }
   }
 };
 </script>
