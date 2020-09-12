@@ -96,8 +96,6 @@ header {
       transform: translateX(-$breakpoint-small);
       position: fixed;
       z-index: 1;
-      // background: darken(white, 20);
-      // background: $base-color;
       background: lighten($base-color, 10);
       top: 85px;
       transition: transform 0.3s ease-out;

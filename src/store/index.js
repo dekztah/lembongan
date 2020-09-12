@@ -1,7 +1,7 @@
 import Vue from "vue";
 import Vuex from "vuex";
 import VueMoment from "vue-moment";
-import { auth } from "@/firebase";
+import { auth, db } from "@/firebase";
 import router from "../router/index";
 
 Vue.use(Vuex);
@@ -15,7 +15,10 @@ export default new Vuex.Store({
     weekArray: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
     mobileNavOpen: false,
     loading: true,
-    userProfile: {}
+    userProfile: {},
+    places: [],
+    activities: [],
+    boats: []
   },
   mutations: {
     setUserProfile(state, val) {
@@ -32,6 +35,15 @@ export default new Vuex.Store({
     },
     toggleLoading(state, bool) {
       state.loading = bool;
+    },
+    setPlaces(state, val) {
+      state.places = val;
+    },
+    setActivities(state, val) {
+      state.activities = val;
+    },
+    setBoats(state, val) {
+      state.boats = val;
     }
   },
   actions: {
@@ -49,6 +61,57 @@ export default new Vuex.Store({
 
       commit("setUserProfile", {});
       router.push("/login");
+    },
+    async fetchPlaces({ commit, state }) {
+      let places = [];
+
+      if (!state.places.length) {
+        db.ref("places")
+          .orderByChild("name")
+          .once("value")
+          .then(snapshot => {
+            snapshot.forEach(child => {
+              places.push(child.val());
+            });
+            commit("toggleLoading", false);
+          });
+
+        commit("setPlaces", places);
+      }
+    },
+    async fetchActivities({ commit, state }) {
+      let activities = [];
+
+      if (!state.activities.length) {
+        db.ref("activities")
+          .orderByChild("name")
+          .once("value")
+          .then(snapshot => {
+            snapshot.forEach(child => {
+              activities.push(child.val());
+            });
+            commit("toggleLoading", false);
+          });
+
+        commit("setActivities", activities);
+      }
+    },
+    async fetchBoats({ commit, state }) {
+      let boats = [];
+
+      if (!state.boats.length) {
+        db.ref("boats")
+          .orderByChild("name")
+          .once("value")
+          .then(snapshot => {
+            snapshot.forEach(child => {
+              boats.push(child.val());
+            });
+            commit("toggleLoading", false);
+          });
+
+        commit("setBoats", boats);
+      }
     }
   },
   modules: {}

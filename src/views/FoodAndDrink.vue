@@ -91,7 +91,7 @@
 </template>
 
 <script>
-import { db } from "@/firebase";
+import { mapState } from "vuex";
 import isotope from "vueisotope";
 
 export default {
@@ -105,12 +105,12 @@ export default {
   },
   data() {
     return {
-      places: [],
       isDouble: false,
       columnWidth: 180
     };
   },
   computed: {
+    ...mapState(["places"]),
     loading() {
       return this.$store.state.loading;
     },
@@ -230,20 +230,10 @@ export default {
     }
   },
   created() {
+    this.$store.dispatch("fetchPlaces");
+
     if (window.innerWidth < 576)
       this.columnWidth = (window.innerWidth - 30) / 2;
-  },
-  mounted() {
-    db.ref("places")
-      .orderByChild("name")
-      .once("value")
-      .then(snapshot => {
-        snapshot.forEach(child => {
-          this.places.push(child.val());
-        });
-        this.$store.commit("toggleLoading", false);
-        this.setIsOpen();
-      });
   },
   methods: {
     setIsOpen() {
@@ -285,7 +275,6 @@ export default {
       this.$nextTick(() => {
         this.$refs.isotope.layout("masonry");
       });
-      this.$store.commit("toggleLoading", false);
       if (this.mobileNavOpen) this.$store.commit("toggleMobileNav");
     },
     setQuery(queryKey, val) {
@@ -306,6 +295,11 @@ export default {
   watch: {
     timestamp() {
       this.setIsOpen();
+    },
+    places(val) {
+      if (val.length) {
+        this.setIsOpen();
+      }
     }
   }
 };

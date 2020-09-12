@@ -58,12 +58,11 @@
 </template>
 
 <script>
-import { db } from "@/firebase";
+import { mapState } from "vuex";
 
 export default {
   data() {
     return {
-      boats: [],
       allDepartures: {
         departToSanur: [],
         departToLembongan: []
@@ -80,6 +79,7 @@ export default {
     };
   },
   computed: {
+    ...mapState(["boats"]),
     loading() {
       return this.$store.state.loading;
     },
@@ -96,18 +96,12 @@ export default {
       return this.$store.state.timestamp.isoWeekday() - 1;
     }
   },
-  mounted() {
-    db.ref("boats")
-      .orderByChild("name")
-      .once("value")
-      .then(snapshot => {
-        snapshot.forEach(child => {
-          this.boats.push(child.val());
-        });
-        this.$store.commit("toggleLoading", false);
-        this.destination("departToSanur");
-        this.destination("departToLembongan");
-      });
+  created() {
+    this.$store.dispatch("fetchBoats");
+    if (this.boats.length) {
+      this.destination("departToSanur");
+      this.destination("departToLembongan");
+    }
   },
   methods: {
     destination(dest) {
@@ -166,6 +160,12 @@ export default {
     timestamp() {
       this.destination("departToSanur");
       this.destination("departToLembongan");
+    },
+    boats(val) {
+      if (val.length) {
+        this.destination("departToSanur");
+        this.destination("departToLembongan");
+      }
     }
   }
 };
