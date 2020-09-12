@@ -40,10 +40,10 @@
         label(for="snorkeling")
         .text snorkeling
 
-      .filter.checkbox
-        input(type="checkbox" v-model="fishing" id="fishing")
-        label(for="fishing")
-        .text fishing
+      //- .filter.checkbox
+      //-   input(type="checkbox" v-model="fishing" id="fishing")
+      //-   label(for="fishing")
+      //-   .text fishing
 
       .filter.checkbox
         input(type="checkbox" v-model="tour" id="tour")
@@ -52,7 +52,7 @@
 
       .count(v-if="!loading") {{ filteredActivities.length }} results
 
-    isotope.tile-list.activites-list(
+    isotope.tile-list.activities-list(
       v-if="!loading"
       :list="filteredActivities"
       :options="isotopeOptions"

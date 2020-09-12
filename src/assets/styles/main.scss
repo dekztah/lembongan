@@ -67,24 +67,59 @@ header {
       margin-right: 10px;
       display: inline-block;
       border-radius: 4px;
-      padding: 2px 8px;
-      background: darken($base-color, 20);
-      color: white;
+      padding: 8px;
+      color: black;
       text-decoration: none;
+      position: relative;
+
+      &:before {
+        content: "";
+        position: absolute;
+        bottom: -2px;
+        left: 0;
+        display: block;
+        background: black;
+        width: 0;
+        height: 2px;
+        transition: width 0.4s ease-in-out;
+      }
 
       &.router-link-active {
-        background: darken($base-color, 40);
+        font-weight: 600;
+
+        &:before {
+          width: 100%;
+        }
       }
     }
     @media only screen and (max-width: $breakpoint-small) {
       transform: translateX(-$breakpoint-small);
       position: fixed;
       z-index: 1;
-      background: white;
+      // background: darken(white, 20);
+      // background: $base-color;
+      background: lighten($base-color, 10);
       top: 85px;
       transition: transform 0.3s ease-out;
       width: 100%;
       padding: 10px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+
+      a {
+        font-size: 14px;
+        padding: 2px 8px;
+
+        &.router-link-active {
+          font-size: 16px;
+          font-weight: 600;
+
+          &:before {
+            display: none;
+          }
+        }
+      }
 
       &.active {
         transform: translateX(-10px);
@@ -127,7 +162,7 @@ header {
 
 .mobile-nav-open {
   .tile-list {
-    transform: translateY(349px);
+    transform: translateY(247px);
   }
 }
 .fade-enter-active,
@@ -335,6 +370,10 @@ footer {
   label:active:after {
     width: 30px;
   }
+
+  @media only screen and (max-width: $breakpoint-small) {
+    width: 50%;
+  }
 }
 
 @keyframes blast-ripple {
@@ -439,8 +478,12 @@ footer {
     transition: transform 0.3s ease-out;
     width: 100%;
     padding: 10px;
-    display: block;
     border-bottom: 1px solid darken(#2ccfff, 20);
+    flex-wrap: wrap;
+
+    .text-input {
+      width: 100%;
+    }
 
     &.active {
       transform: translateX(0px);

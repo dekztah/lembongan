@@ -16,6 +16,10 @@
       label Facebook link
       input(type="text" v-model="form.facebookLink")
 
+    .form-element
+      label Instagram link
+      input(type="text" v-model="form.instagramLink")
+
     .form-element.checkboxes
       .checkbox
         input(type="checkbox" v-model="form.yoga")

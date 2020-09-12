@@ -46,4 +46,9 @@
 .count {
   align-self: center;
   margin-left: auto;
+
+  @media only screen and (max-width: $breakpoint-small) {
+    width: 100%;
+    text-align: right;
+  }
 }
