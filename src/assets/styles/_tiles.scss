@@ -155,11 +155,13 @@
   &.reservation {
     h2.name {
       &:before {
-        background: #ddd;
-        line-height: 1.4;
-        font-size: 12px;
-        text-align: center;
-        content: "R";
+        width: 18px;
+        height: 18px;
+        background: url(../Contact.svg);
+        text-indent: -9999px;
+        background-size: 16px 16px;
+        background-position: 1px 1px;
+        background-repeat: no-repeat;
       }
     }
   }
@@ -189,6 +191,15 @@
     align-items: center;
     background: #ddd;
     padding: 10px;
+
+    &.reservation {
+      background: $wa-color;
+      color: white;
+    }
+
+    a {
+      flex-shrink: 0;
+    }
 
     .status {
       margin-right: auto;

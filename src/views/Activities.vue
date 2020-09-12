@@ -77,11 +77,6 @@
                 .icon
                 .text Closed today
 
-          .weekdays.reservation(v-else)
-            a.button(v-if="place.contact" :href="waUrl(place.contact)" target="_blank")
-             span contact for details
-             .wa
-
           .info
             span.chip.yoga(v-if="place.yoga") yoga
             span.chip.spa(v-if="place.spa") spa
@@ -93,12 +88,13 @@
             span.chip.tour(v-if="place.tour") tour
             //- span.chip.reservation(v-if="place.reservation") reservation
 
-        .footer
+        .footer(:class="{'reservation': place.reservation}")
           .status
             span(v-if="place.opensIn !== null") Opens in:&nbsp;
               strong {{ place.opensIn + 1 }}m
             span(v-if="place.closesIn !== null") Closes in:&nbsp;
               strong {{ place.closesIn + 1 }}m
+            span(v-if="place.reservation") Contact for details
 
           a.maps(v-if="place.gMapsLink" :href="place.gMapsLink" target="_blank")
           a.fb(v-if="place.facebookLink" :href="place.facebookLink" target="_blank")
