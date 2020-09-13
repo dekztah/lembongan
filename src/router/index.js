@@ -7,7 +7,7 @@ Vue.use(VueRouter);
 const routes = [
   {
     path: "/food-and-drink",
-    name: "FoodAndDrink",
+    name: "Food & Drink",
     component: () =>
       import(
         /* webpackChunkName: "food-and-drink" */ "../views/FoodAndDrink.vue"

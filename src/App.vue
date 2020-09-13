@@ -21,6 +21,7 @@
 
           .greeting
             h1 Selamat {{ partOfTheDay }}!
+            .current-page {{ $route.name }}
 
           .today
             h2 {{ dayOfTheWeek }}
