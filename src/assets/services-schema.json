@@ -49,6 +49,8 @@
   "barber": false,
   "hairdresser": false,
   "tailor": false,
+  "handcraft": false,
+  "preorder": false,
   "contact": "",
   "gMapsLink": "",
   "facebookLink": "",

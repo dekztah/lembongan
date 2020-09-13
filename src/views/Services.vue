@@ -30,6 +30,11 @@
         label(for="tailor")
         .text tailor
 
+      .filter.checkbox
+        input(type="checkbox" v-model="handcraft" id="handcraft")
+        label(for="handcraft")
+        .text handcraft
+
       .count(v-if="!loading") {{ filteredServices.length }} results
 
     isotope.tile-list.services-list(
@@ -62,6 +67,8 @@
             span.chip.barber(v-if="place.barber") barber
             span.chip.hairdresser(v-if="place.hairdresser") hairdresser
             span.chip.tailor(v-if="place.tailor") tailor
+            span.chip.handcraft(v-if="place.handcraft") handcraft
+            span.chip.preorder(v-if="place.preorder") preorder
 
         .footer(:class="{'reservation': place.reservation}")
           .status
@@ -140,6 +147,9 @@ export default {
         )
         .filter(place => (this.tailor ? place.tailor === this.tailor : true))
         .filter(place =>
+          this.handcraft ? place.handcraft === this.handcraft : true
+        )
+        .filter(place =>
           this.search
             ? place.name.toLowerCase().includes(this.search.toLowerCase())
             : true
@@ -197,6 +207,14 @@ export default {
       },
       set(val) {
         this.setQuery("tailor", val);
+      }
+    },
+    handcraft: {
+      get() {
+        return this.tags ? this.tags.includes("handcraft") : false;
+      },
+      set(val) {
+        this.setQuery("handcraft", val);
       }
     }
   },

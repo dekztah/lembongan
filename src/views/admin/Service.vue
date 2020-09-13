@@ -37,6 +37,14 @@
         input(type="checkbox" v-model="form.tailor")
         label Tailor
 
+      .checkbox
+        input(type="checkbox" v-model="form.handcraft")
+        label Handcraft
+
+      .checkbox
+        input(type="checkbox" v-model="form.preorder")
+        label Preorder
+
     .form-element
       .checkbox
         input(type="checkbox" v-model="form.reservation")
