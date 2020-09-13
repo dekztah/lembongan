@@ -18,6 +18,7 @@ export default new Vuex.Store({
     userProfile: {},
     places: [],
     activities: [],
+    services: [],
     boats: []
   },
   mutations: {
@@ -44,6 +45,9 @@ export default new Vuex.Store({
     },
     setBoats(state, val) {
       state.boats = val;
+    },
+    setServices(state, val) {
+      state.services = val;
     }
   },
   actions: {
@@ -94,6 +98,23 @@ export default new Vuex.Store({
           });
 
         commit("setActivities", activities);
+      }
+    },
+    async fetchServices({ commit, state }) {
+      let services = [];
+
+      if (!state.services.length) {
+        db.ref("services")
+          .orderByChild("name")
+          .once("value")
+          .then(snapshot => {
+            snapshot.forEach(child => {
+              services.push(child.val());
+            });
+            commit("toggleLoading", false);
+          });
+
+        commit("setServices", services);
       }
     },
     async fetchBoats({ commit, state }) {

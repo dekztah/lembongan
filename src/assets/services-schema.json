@@ -1,0 +1,56 @@
+{
+  "name": "",
+  "openingHours": [
+    [
+      {
+        "start": "",
+        "end": ""
+      }
+    ],
+    [
+      {
+        "start": "",
+        "end": ""
+      }
+    ],
+    [
+      {
+        "start": "",
+        "end": ""
+      }
+    ],
+    [
+      {
+        "start": "",
+        "end": ""
+      }
+    ],
+    [
+      {
+        "start": "",
+        "end": ""
+      }
+    ],
+    [
+      {
+        "start": "",
+        "end": ""
+      }
+    ],
+    [
+      {
+        "start": "",
+        "end": ""
+      }
+    ]
+  ],
+  "active": false,
+  "spa": false,
+  "barber": false,
+  "hairdresser": false,
+  "tailor": false,
+  "contact": "",
+  "gMapsLink": "",
+  "facebookLink": "",
+  "instagramLink": ""
+}

@@ -30,6 +30,17 @@ const routes = [
     })
   },
   {
+    path: "/services",
+    name: "Services",
+    component: () =>
+      import(/* webpackChunkName: "services" */ "../views/Services.vue"),
+    props: route => ({
+      tags: route.query.tags,
+      q: route.query.q,
+      open: route.query.open
+    })
+  },
+  {
     path: "/boats",
     name: "Boats",
     component: () =>
@@ -99,6 +110,20 @@ const routes = [
           import(
             /* webpackChunkName: "activity" */ "../views/admin/Activity.vue"
           )
+      },
+      {
+        path: "services-list",
+        name: "ServicesList",
+        component: () =>
+          import(
+            /* webpackChunkName: "services-list" */ "../views/admin/ServicesList.vue"
+          )
+      },
+      {
+        path: "service/:id?",
+        name: "Service",
+        component: () =>
+          import(/* webpackChunkName: "service" */ "../views/admin/Service.vue")
       }
     ]
   },

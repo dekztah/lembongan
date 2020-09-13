@@ -1,5 +1,5 @@
 <template lang="pug">
-  .activities.main
+  .services.main
     .filter-control(:class="{'active': mobileNavOpen}")
       .filter.text-input
         input(type="text" v-model="search"  placeholder="search by name...")
@@ -11,50 +11,35 @@
         .text open places only
 
       .filter.checkbox
-        input(type="checkbox" v-model="yoga" id="yoga")
-        label(for="yoga")
-        .text yoga
+        input(type="checkbox" v-model="spa" id="spa")
+        label(for="spa")
+        .text spa
 
       .filter.checkbox
-        input(type="checkbox" v-model="freediving" id="freediving")
-        label(for="freediving")
-        .text freediving
+        input(type="checkbox" v-model="barber" id="barber")
+        label(for="barber")
+        .text barber
 
       .filter.checkbox
-        input(type="checkbox" v-model="scubaDiving" id="scubaDiving")
-        label(for="scubaDiving")
-        .text scuba diving
+        input(type="checkbox" v-model="hairdresser" id="hairdresser")
+        label(for="hairdresser")
+        .text hairdresser
 
       .filter.checkbox
-        input(type="checkbox" v-model="surf" id="surf")
-        label(for="surf")
-        .text surf
+        input(type="checkbox" v-model="tailor" id="tailor")
+        label(for="tailor")
+        .text tailor
 
-      .filter.checkbox
-        input(type="checkbox" v-model="snorkeling" id="snorkeling")
-        label(for="snorkeling")
-        .text snorkeling
+      .count(v-if="!loading") {{ filteredServices.length }} results
 
-      //- .filter.checkbox
-      //-   input(type="checkbox" v-model="fishing" id="fishing")
-      //-   label(for="fishing")
-      //-   .text fishing
-
-      .filter.checkbox
-        input(type="checkbox" v-model="tour" id="tour")
-        label(for="tour")
-        .text tour
-
-      .count(v-if="!loading") {{ filteredActivities.length }} results
-
-    isotope.tile-list.activities-list(
+    isotope.tile-list.services-list(
       v-if="!loading"
-      :list="filteredActivities"
+      :list="filteredServices"
       :options="isotopeOptions"
       ref="isotope"
     )
-      .tile.activity(
-        v-for="(place, index) in filteredActivities"
+      .tile.service(
+        v-for="(place, index) in filteredServices"
         :class="{'open': place.isOpen, 'double': isDouble === index, 'reservation' : place.reservation,'warn': (place.opensIn !== null && place.opensIn >= 0) || (place.closesIn !== null && place.closesIn >= 1) }"
         :key="`place-${index}`"
       )
@@ -73,13 +58,10 @@
                 .text Closed today
 
           .info
-            span.chip.yoga(v-if="place.yoga") yoga
-            span.chip.freediving(v-if="place.freediving") freediving
-            span.chip.scuba-diving(v-if="place.scubaDiving") scuba diving
-            span.chip.surf(v-if="place.surf") surf
-            span.chip.snorkeling(v-if="place.snorkeling") snorkeling
-            span.chip.fishing(v-if="place.fishing") fishing
-            span.chip.tour(v-if="place.tour") tour
+            span.chip.spa(v-if="place.spa") spa
+            span.chip.barber(v-if="place.barber") barber
+            span.chip.hairdresser(v-if="place.hairdresser") hairdresser
+            span.chip.tailor(v-if="place.tailor") tailor
 
         .footer(:class="{'reservation': place.reservation}")
           .status
@@ -117,7 +99,7 @@ export default {
     };
   },
   computed: {
-    ...mapState(["activities"]),
+    ...mapState(["services"]),
     loading() {
       return this.$store.state.loading;
     },
@@ -143,27 +125,20 @@ export default {
         }
       };
     },
-    filteredActivities() {
-      return this.activities
+    filteredServices() {
+      return this.services
         .filter(place => place.active === true)
         .filter(place =>
           this.status
             ? (place.isOpen || place.reservation) === this.status
             : true
         )
-        .filter(place => (this.yoga ? place.yoga === this.yoga : true))
+        .filter(place => (this.spa ? place.spa === this.spa : true))
+        .filter(place => (this.barber ? place.barber === this.barber : true))
         .filter(place =>
-          this.freediving ? place.freediving === this.freediving : true
+          this.hairdresser ? place.hairdresser === this.hairdresser : true
         )
-        .filter(place =>
-          this.scubaDiving ? place.scubaDiving === this.scubaDiving : true
-        )
-        .filter(place => (this.surf ? place.surf === this.surf : true))
-        .filter(place =>
-          this.snorkeling ? place.snorkeling === this.snorkeling : true
-        )
-        .filter(place => (this.fishing ? place.fishing === this.fishing : true))
-        .filter(place => (this.tour ? place.tour === this.tour : true))
+        .filter(place => (this.tailor ? place.tailor === this.tailor : true))
         .filter(place =>
           this.search
             ? place.name.toLowerCase().includes(this.search.toLowerCase())
@@ -192,72 +167,48 @@ export default {
         });
       }
     },
-    yoga: {
+    spa: {
       get() {
-        return this.tags ? this.tags.includes("yoga") : false;
+        return this.tags ? this.tags.includes("spa") : false;
       },
       set(val) {
-        this.setQuery("yoga", val);
+        this.setQuery("spa", val);
       }
     },
-    freediving: {
+    barber: {
       get() {
-        return this.tags ? this.tags.includes("freediving") : false;
+        return this.tags ? this.tags.includes("barber") : false;
       },
       set(val) {
-        this.setQuery("freediving", val);
+        this.setQuery("barber", val);
       }
     },
-    scubaDiving: {
+    hairdresser: {
       get() {
-        return this.tags ? this.tags.includes("scubaDiving") : false;
+        return this.tags ? this.tags.includes("hairdresser") : false;
       },
       set(val) {
-        this.setQuery("scubaDiving", val);
+        this.setQuery("hairdresser", val);
       }
     },
-    surf: {
+    tailor: {
       get() {
-        return this.tags ? this.tags.includes("surf") : false;
+        return this.tags ? this.tags.includes("tailor") : false;
       },
       set(val) {
-        this.setQuery("surf", val);
-      }
-    },
-    snorkeling: {
-      get() {
-        return this.tags ? this.tags.includes("snorkeling") : false;
-      },
-      set(val) {
-        this.setQuery("snorkeling", val);
-      }
-    },
-    fishing: {
-      get() {
-        return this.tags ? this.tags.includes("fishing") : false;
-      },
-      set(val) {
-        this.setQuery("fishing", val);
-      }
-    },
-    tour: {
-      get() {
-        return this.tags ? this.tags.includes("tour") : false;
-      },
-      set(val) {
-        this.setQuery("tour", val);
+        this.setQuery("tailor", val);
       }
     }
   },
   created() {
-    this.$store.dispatch("fetchActivities");
+    this.$store.dispatch("fetchServices");
 
     if (window.innerWidth < 576)
       this.columnWidth = (window.innerWidth - 30) / 2;
   },
   methods: {
     setIsOpen() {
-      this.activities.forEach(place => {
+      this.services.forEach(place => {
         const today = this.today;
         const time = this.$moment(this.timestamp, "HH:mm");
         place.isOpen = false;
@@ -314,7 +265,7 @@ export default {
     }
   },
   watch: {
-    activities(val) {
+    services(val) {
       if (val.length) {
         this.setIsOpen();
       }

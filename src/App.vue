@@ -13,10 +13,11 @@
                 .hamburger-inner
 
           #nav(:class="{'active': mobileNavOpen}")
-            router-link(to="/food-and-drink") Food and Drink
+            router-link(to="/food-and-drink") Food & Drink
             router-link(to="/boats") Boats
             router-link(to="/activities") Activities
-            a(v-if="userProfile.email" @click="logout") logout
+            router-link(to="/services") Services
+
 
           .greeting
             h1 Selamat {{ partOfTheDay }}!
@@ -27,11 +28,13 @@
             br
             | {{ time }}
 
+
         router-view
 
         footer
           span Wrong data? Contact me on:&nbsp;
           a.wa(href="https://wa.me/6282144453436" target="_blank") WA
+          a(v-if="userProfile.email" @click="logout") logout
 
 </template>
 
