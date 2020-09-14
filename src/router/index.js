@@ -68,7 +68,7 @@ const routes = [
 
     children: [
       {
-        path: "/places-list",
+        path: "places-list",
         name: "PlacesList",
         component: () =>
           import(

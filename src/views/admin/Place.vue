@@ -42,6 +42,10 @@
         label Coffee
 
       .checkbox
+        input(type="checkbox" v-model="form.rendang")
+        label Rendang
+
+      .checkbox
         input(type="checkbox" v-model="form.drinks")
         label Drinks
 
@@ -123,7 +127,7 @@ export default {
       db.ref().update(updates, error => {
         console.log("error", error);
         this.saveDisabled = false;
-        this.$router.push("/admin");
+        this.$router.push("/admin/places-list");
       });
     }
   }
