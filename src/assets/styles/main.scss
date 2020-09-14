@@ -192,6 +192,23 @@ footer {
   background: darken($base-color, 60);
   color: white;
   padding: 10px;
+
+  .contact-me {
+    @media only screen and (max-width: $breakpoint-small) {
+      max-width: 96px;
+    }
+  }
+
+  .kofi-btn-container {
+    margin-left: auto;
+    min-width: 0 !important;
+
+    a.kofi-button {
+      background: darken($base-color, 20) !important;
+      padding: 0 8px !important;
+      font-size: 12px !important;
+    }
+  }
 }
 
 .hamburger {

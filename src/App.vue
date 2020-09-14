@@ -33,16 +33,25 @@
         router-view
 
         footer
-          span Wrong data? Contact me on:&nbsp;
+          span.contact-me Wrong data? Contact me on:&nbsp;
           a.wa(href="https://wa.me/6282144453436" target="_blank") WA
-          a(v-if="userProfile.email" @click="logout") logout
+          //- a(v-if="userProfile.email" @click="logout") logout
+          KoFiButton(
+            username="dekztah"
+            title="Buy me a coffee"
+            target="_blank"
+          )
 
 </template>
 
 <script>
 import { mapState } from "vuex";
+import KoFiButton from "@linusborg/vue-ko-fi-button";
 
 export default {
+  components: {
+    KoFiButton
+  },
   data() {
     return {};
   },
