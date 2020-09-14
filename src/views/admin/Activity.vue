@@ -53,6 +53,10 @@
         input(type="checkbox" v-model="form.tour")
         label Tour
 
+      .checkbox
+        input(type="checkbox" v-model="form.miniGolf")
+        label Mini golf
+
     .form-element
       .checkbox
         input(type="checkbox" v-model="form.reservation")

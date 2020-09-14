@@ -79,6 +79,7 @@
             span.chip.surf(v-if="place.surf") surf
             span.chip.snorkeling(v-if="place.snorkeling") snorkeling
             span.chip.fishing(v-if="place.fishing") fishing
+            span.chip.mini-golf(v-if="place.miniGolf") mini golf
             span.chip.tour(v-if="place.tour") tour
 
         .footer(:class="{'reservation': place.reservation}")
