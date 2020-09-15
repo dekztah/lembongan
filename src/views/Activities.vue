@@ -243,7 +243,7 @@ export default {
     }
   },
   created() {
-    this.$store.dispatch("fetchActivities");
+    this.$store.dispatch("fetchCollection", "activities");
 
     if (window.innerWidth < 576)
       this.columnWidth = (window.innerWidth - 30) / 2;

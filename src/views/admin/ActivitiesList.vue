@@ -36,7 +36,7 @@ export default {
     }
   },
   created() {
-    this.$store.dispatch("fetchActivities");
+    this.$store.dispatch("fetchCollection", "activities");
   },
   methods: {
     addNew() {

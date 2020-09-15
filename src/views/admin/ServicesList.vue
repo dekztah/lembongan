@@ -36,7 +36,7 @@ export default {
     }
   },
   created() {
-    this.$store.dispatch("fetchServices");
+    this.$store.dispatch("fetchCollection", "services");
   },
   methods: {
     addNew() {

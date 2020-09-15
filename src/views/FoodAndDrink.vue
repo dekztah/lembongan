@@ -237,7 +237,7 @@ export default {
     }
   },
   created() {
-    this.$store.dispatch("fetchPlaces");
+    this.$store.dispatch("fetchCollection", "places");
 
     if (window.innerWidth < 576)
       this.columnWidth = (window.innerWidth - 30) / 2;

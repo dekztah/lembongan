@@ -97,7 +97,7 @@ export default {
     }
   },
   created() {
-    this.$store.dispatch("fetchBoats");
+    this.$store.dispatch("fetchCollection", "boats");
     if (this.boats.length) {
       this.destination("departToSanur");
       this.destination("departToLembongan");

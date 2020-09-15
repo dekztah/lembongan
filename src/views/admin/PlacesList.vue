@@ -36,7 +36,7 @@ export default {
     }
   },
   created() {
-    this.$store.dispatch("fetchPlaces");
+    this.$store.dispatch("fetchCollection", "places");
   },
   methods: {
     addNew() {
