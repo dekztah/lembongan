@@ -55,7 +55,7 @@
           h2.name {{ place.name }}
 
           .weekdays
-            .wd(v-for="(weekday, wid) in place.openingHours" :class="{'closed': typeof weekday === 'string', 'today' : wid === today}")
+            .wd(v-for="(weekday, wid) in place.openingHours" :class="{'closed': typeof weekday === 'string' || weekday[0].start === '', 'today' : wid === today}")
               div.day-names {{ weekArray[wid] }}
               span(v-if="typeof weekday === 'object' && weekday[0].start !== ''")
                 div.interval(v-for="time in weekday")
