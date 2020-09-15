@@ -7,43 +7,35 @@
 
       .filter.checkbox
         input(type="checkbox" v-model="status" id="open")
-        label(for="open")
-        .text open places only
+        label.open(:class="{'chip': status}" for="open") open places only
 
       .filter.checkbox
         input(type="checkbox" v-model="yoga" id="yoga")
-        label(for="yoga")
-        .text yoga
+        label.yoga(:class="{'chip': yoga}" for="yoga") yoga
 
       .filter.checkbox
         input(type="checkbox" v-model="freediving" id="freediving")
-        label(for="freediving")
-        .text freediving
+        label.freediving(:class="{'chip': freediving}" for="freediving") freediving
 
       .filter.checkbox
         input(type="checkbox" v-model="scubaDiving" id="scubaDiving")
-        label(for="scubaDiving")
-        .text scuba diving
+        label.scuba-diving(:class="{'chip': scubaDiving}" for="scubaDiving") scuba diving
 
       .filter.checkbox
         input(type="checkbox" v-model="surf" id="surf")
-        label(for="surf")
-        .text surf
+        label.surf(:class="{'chip': surf}" for="surf") surf
 
       .filter.checkbox
         input(type="checkbox" v-model="snorkeling" id="snorkeling")
-        label(for="snorkeling")
-        .text snorkeling
+        label.snorkeling(:class="{'chip': snorkeling}" for="snorkeling") snorkeling
 
       //- .filter.checkbox
       //-   input(type="checkbox" v-model="fishing" id="fishing")
       //-   label(for="fishing")
-      //-   .text fishing
 
       .filter.checkbox
         input(type="checkbox" v-model="tour" id="tour")
-        label(for="tour")
-        .text tour
+        label.tour(:class="{'chip': tour}" for="tour") tour
 
       .count(v-if="!loading") {{ filteredActivities.length }} results
 

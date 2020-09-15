@@ -1,72 +1,76 @@
 .chip {
   display: inline-block;
-  border-radius: 10px;
+  border-radius: 20px;
   padding: 2px 8px;
   background: #ccc;
   margin: 6px 6px 0 0;
   font-size: 12px;
   color: white;
 
+  &.open {
+    background: #00ff00 !important;
+  }
+
   // food & drink
   &.dine-in {
-    background: #ff00b0;
+    background: #ff00b0 !important;
   }
   &.preorder {
-    background: #0066ff;
+    background: #0066ff !important;
   }
   &.delivery {
-    background: #990099;
+    background: #990099 !important;
   }
   &.local-dishes {
-    background: #52eaab;
+    background: #52eaab !important;
   }
   &.coffee {
-    background: #a24011;
+    background: #a24011 !important;
   }
   &.rendang {
-    background: #654321;
+    background: #654321 !important;
   }
   &.drinks {
-    background: #fdd92b;
+    background: #fdd92b !important;
   }
 
   // activities
   &.yoga {
-    background: #f3a8ea;
+    background: #f3a8ea !important;
   }
   &.reservation {
-    background: $wa-color;
+    background: $wa-color !important;
   }
   &.freediving {
-    background: #999;
+    background: #999 !important;
   }
   &.scuba-diving {
-    background: #042e79;
+    background: #042e79 !important;
   }
   &.surf {
-    background: #00dcff;
+    background: #00dcff !important;
   }
   &.snorkeling {
-    background: #ffb101;
+    background: #ffb101 !important;
   }
   &.mini-golf {
-    background: #ec6a6a;
+    background: #ec6a6a !important;
   }
   &.tour {
-    background: #458c0f;
+    background: #458c0f !important;
   }
 
   // services
   &.spa {
-    background: #a3c1da;
+    background: #a3c1da !important;
   }
   &.barber {
-    background: #333;
+    background: #333 !important;
   }
   &.hairdresser {
-    background: #e1d8ad;
+    background: #e1d8ad !important;
   }
   &.handcraft {
-    background: #cd853f;
+    background: #cd853f !important;
   }
 }

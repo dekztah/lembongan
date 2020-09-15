@@ -8,43 +8,35 @@
 
       .filter.checkbox
         input(type="checkbox" v-model="status" id="open")
-        label(for="open")
-        .text open places only
+        label.open(:class="{'chip': status}" for="open") open places only
 
       .filter.checkbox
         input(type="checkbox" v-model="dineIn" id="dineIn")
-        label(for="dineIn")
-        .text dine-in only
+        label.dine-in(:class="{'chip': dineIn}" for="dineIn") dine-in
 
       .filter.checkbox
         input(type="checkbox" v-model="delivery" id="delivery")
-        label(for="delivery")
-        .text delivery only
+        label.delivery(:class="{'chip': delivery}" for="delivery") delivery
 
       .filter.checkbox
         input(type="checkbox" v-model="noPreorder" id="noPreorder")
-        label(for="noPreorder")
-        .text no preorder
+        label.preorder(:class="{'chip': noPreorder}" for="noPreorder") no preorder
 
       .filter.checkbox
         input(type="checkbox" v-model="localDishes" id="localDishes")
-        label(for="localDishes")
-        .text local dishes
+        label.local-dishes(:class="{'chip': localDishes}" for="localDishes") local dishes
 
       .filter.checkbox
         input(type="checkbox" v-model="coffee" id="coffee")
-        label(for="coffee")
-        .text coffee
+        label.coffee(:class="{'chip': coffee}" for="coffee") coffee
 
       .filter.checkbox
         input(type="checkbox" v-model="rendang" id="rendang")
-        label(for="rendang")
-        .text rendang
+        label.rendang(:class="{'chip': rendang}" for="rendang") rendang
 
       .filter.checkbox
         input(type="checkbox" v-model="drinks" id="drinks")
-        label(for="drinks")
-        .text drinks
+        label.drinks(:class="{'chip': drinks}" for="drinks") drinks
 
       .count(v-if="!loading") {{ filteredPlaces.length }} results
 

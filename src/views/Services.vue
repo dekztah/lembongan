@@ -7,33 +7,27 @@
 
       .filter.checkbox
         input(type="checkbox" v-model="status" id="open")
-        label(for="open")
-        .text open places only
+        label.open(:class="{'chip': status}" for="open") open places only
 
       .filter.checkbox
         input(type="checkbox" v-model="spa" id="spa")
-        label(for="spa")
-        .text spa
+        label.spa(:class="{'chip': spa}" for="spa") spa
 
       .filter.checkbox
         input(type="checkbox" v-model="barber" id="barber")
-        label(for="barber")
-        .text barber
+        label.barber(:class="{'chip': barber}" for="barber") barber
 
       .filter.checkbox
         input(type="checkbox" v-model="hairdresser" id="hairdresser")
-        label(for="hairdresser")
-        .text hairdresser
+        label.hairdresser(:class="{'chip': hairdresser}" for="hairdresser") hairdresser
 
       .filter.checkbox
         input(type="checkbox" v-model="tailor" id="tailor")
-        label(for="tailor")
-        .text tailor
+        label.tailor(:class="{'chip': tailor}" for="tailor") tailor
 
       .filter.checkbox
         input(type="checkbox" v-model="handcraft" id="handcraft")
-        label(for="handcraft")
-        .text handcraft
+        label.handcraft(:class="{'chip': handcraft}" for="handcraft") handcraft
 
       .count(v-if="!loading") {{ filteredServices.length }} results
 
