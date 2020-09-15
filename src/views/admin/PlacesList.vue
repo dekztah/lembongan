@@ -1,31 +1,33 @@
 <template lang="pug">
-  .admin-place-list.admin-list.main
+  .admin-place-list.admin-list
     .form
       input(type="text" v-model="search")
+      | {{ filteredPlaces.length }}
 
-    .place.list-item(v-if="!loading" v-for="(place, key) in places")
+      button.button(@click="addNew") add new place
+
+    .place.list-item(v-if="!loading" v-for="place in filteredPlaces")
       input(type="checkbox" v-model="place.active")
       .name {{ place.name }}
-      router-link.button(:to="{ name: 'Place', params: { id: key }}") edit
+      router-link.button(:to="{ name: 'Place', params: { id: place.key }}") edit
 
 </template>
 
 <script>
-import { db } from "@/firebase";
+import { mapState } from "vuex";
 
 export default {
   data() {
     return {
-      search: "",
-      places: []
+      search: ""
     };
   },
   computed: {
+    ...mapState(["places"]),
     loading() {
       return this.$store.state.loading;
     },
     filteredPlaces() {
-      console.log("m", this.places);
       return this.places.filter(place =>
         this.search
           ? place.name.toLowerCase().includes(this.search.toLowerCase())
@@ -33,13 +35,13 @@ export default {
       );
     }
   },
-  mounted() {
-    db.ref("places")
-      .once("value")
-      .then(snapshot => {
-        this.places = snapshot.val();
-        this.$store.commit("toggleLoading", false);
-      });
+  created() {
+    this.$store.dispatch("fetchPlaces");
+  },
+  methods: {
+    addNew() {
+      this.$router.push("/admin/place");
+    }
   }
 };
 </script>

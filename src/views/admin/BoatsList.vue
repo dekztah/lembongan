@@ -1,28 +1,47 @@
 <template lang="pug">
-  .admin-boats-list.admin-list.main
-    .boat.list-item(v-for="(boat, key) in boats")
+  .admin-boats-list.admin-list
+    .form
+      input(type="text" v-model="search")
+      | {{ filteredBoats.length }}
+
+      button.button(@click="addNew") add new boat
+
+    .boat.list-item(v-for="boat in filteredBoats")
       input(type="checkbox" v-model="boat.active")
       .name {{ boat.name }}
-      router-link.button(:to="{ name: 'Boat', params: { id: key }}") edit
+      router-link.button(:to="{ name: 'Boat', params: { id: boat.key }}") edit
 
 </template>
 
 <script>
-import { db } from "@/firebase";
+import { mapState } from "vuex";
 
 export default {
   data() {
     return {
-      boats: []
+      search: ""
     };
   },
-  mounted() {
-    db.ref("boats")
-      .once("value")
-      .then(snapshot => {
-        this.boats = snapshot.val();
-        this.$store.commit("toggleLoading", false);
-      });
+  computed: {
+    ...mapState(["boats"]),
+    loading() {
+      return this.$store.state.loading;
+    },
+    filteredBoats() {
+      return this.boats.filter(boat =>
+        this.search
+          ? boat.name.toLowerCase().includes(this.search.toLowerCase())
+          : true
+      );
+    }
+  },
+  created() {
+    this.$store.dispatch("fetchBoats");
+  },
+  methods: {
+    addNew() {
+      this.$router.push("/admin/boat");
+    }
   }
 };
 </script>

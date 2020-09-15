@@ -10,6 +10,18 @@
 * {
   box-sizing: border-box;
 }
+
+// html {
+//   margin-left: calc(100vw - 100%);
+//   &::-webkit-scrollbar {
+//     width: 10px;
+//     background-color: white;
+//   }
+//   &::-webkit-scrollbar-thumb {
+//     background-color: black;
+//   }
+// }
+
 body {
   background: $base-color;
   margin: 0;
@@ -36,8 +48,10 @@ body {
 header {
   position: fixed;
   z-index: 2;
-  width: 100%;
+  width: 100vw;
   top: 0;
+  left: 0;
+  right: 0;
   height: 85px;
   background-color: white;
   display: flex;
@@ -166,6 +180,10 @@ header {
 .main {
   margin-top: 85px;
   margin-bottom: 52px;
+  // margin-left: auto;
+  // margin-right: auto;
+  // width: 100%;
+  // max-width: calc(100vw - 20px);
 }
 
 .mobile-nav-open {
@@ -183,6 +201,7 @@ header {
 }
 footer {
   position: fixed;
+  width: 100vw;
   bottom: 0;
   left: 0;
   right: 0;

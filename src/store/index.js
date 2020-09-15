@@ -75,7 +75,9 @@ export default new Vuex.Store({
           .once("value")
           .then(snapshot => {
             snapshot.forEach(child => {
-              places.push(child.val());
+              let place = child.val();
+              place.key = child.key;
+              places.push(place);
             });
             commit("toggleLoading", false);
           });
@@ -92,7 +94,9 @@ export default new Vuex.Store({
           .once("value")
           .then(snapshot => {
             snapshot.forEach(child => {
-              activities.push(child.val());
+              let activity = child.val();
+              activity.key = child.key;
+              activities.push(activity);
             });
             commit("toggleLoading", false);
           });
@@ -109,7 +113,9 @@ export default new Vuex.Store({
           .once("value")
           .then(snapshot => {
             snapshot.forEach(child => {
-              services.push(child.val());
+              let service = child.val();
+              service.key = child.key;
+              services.push(service);
             });
             commit("toggleLoading", false);
           });
@@ -126,7 +132,9 @@ export default new Vuex.Store({
           .once("value")
           .then(snapshot => {
             snapshot.forEach(child => {
-              boats.push(child.val());
+              let boat = child.val();
+              boat.key = child.key;
+              boats.push(boat);
             });
             commit("toggleLoading", false);
           });

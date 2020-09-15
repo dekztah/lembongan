@@ -1,5 +1,5 @@
 <template lang="pug">
-  .admin-form-place.main
+  .admin-form-place
     .form-element
       label Place name
       input(type="text" v-model="form.name")
