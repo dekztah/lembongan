@@ -29,6 +29,10 @@
         input(type="checkbox" v-model="handcraft" id="handcraft")
         label.handcraft(:class="{'chip': handcraft}" for="handcraft") handcraft
 
+      .filter.checkbox
+        input(type="checkbox" v-model="motorRepair" id="motorRepair")
+        label.motor-repair(:class="{'chip': motorRepair}" for="motorRepair") motor repair
+
       .count(v-if="!loading") {{ filteredServices.length }} results
 
     isotope.tile-list.services-list(
@@ -61,6 +65,7 @@
             span.chip.barber(v-if="place.barber") barber
             span.chip.hairdresser(v-if="place.hairdresser") hairdresser
             span.chip.tailor(v-if="place.tailor") tailor
+            span.chip.motor-repair(v-if="place.motorRepair") motor repair
             span.chip.handcraft(v-if="place.handcraft") handcraft
             span.chip.preorder(v-if="place.preorder") preorder
 
@@ -141,6 +146,9 @@ export default {
         )
         .filter(place => (this.tailor ? place.tailor === this.tailor : true))
         .filter(place =>
+          this.motorRepair ? place.motorRepair === this.motorRepair : true
+        )
+        .filter(place =>
           this.handcraft ? place.handcraft === this.handcraft : true
         )
         .filter(place =>
@@ -201,6 +209,14 @@ export default {
       },
       set(val) {
         this.setQuery("tailor", val);
+      }
+    },
+    motorRepair: {
+      get() {
+        return this.tags ? this.tags.includes("motorRepair") : false;
+      },
+      set(val) {
+        this.setQuery("motorRepair", val);
       }
     },
     handcraft: {
