@@ -83,7 +83,7 @@ export default {
       this.form[destination][day].push("");
     },
     removeDepartureTime(destination, index, day) {
-      this.form.[destination][day].splice(index, 1);
+      this.form[destination][day].splice(index, 1);
     },
     insert() {
       this.saveDisabled = true;
