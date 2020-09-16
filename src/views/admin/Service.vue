@@ -1,5 +1,5 @@
 <template lang="pug">
-  .admin-form-service.main
+  .admin-form-service
     .form-element
       label Place name
       input(type="text" v-model="form.name")
@@ -45,6 +45,10 @@
         input(type="checkbox" v-model="form.preorder")
         label Preorder
 
+      .checkbox
+        input(type="checkbox" v-model="form.motorRepair")
+        label Motor repair
+
     .form-element
       .checkbox
         input(type="checkbox" v-model="form.reservation")
@@ -59,10 +63,6 @@
           label {{ weekArray[day] }}
           button.button(@click="addOpeningHourSet(day)") +
 
-          //- pre {{ openingHours }}
-          //- .y(v-for="openingHour in openingHours")
-          //-   | {{ openingHour }}
-
           .form-element(v-for="(openingHour, index) in openingHours")
             .items
               .item
@@ -73,7 +73,7 @@
                 label closes
                 input(type="time" v-model="openingHour.end")
 
-            button.button(@click="removeOpeningHourSet(index, day)") x
+            button.button(v-if="index !== 0" @click="removeOpeningHourSet(index, day)") x
 
     .form-element
       label Active
@@ -85,31 +85,39 @@
 
 <script>
 import { db } from "@/firebase";
+import { mapState } from "vuex";
 import schema from "@/assets/services-schema.json";
 
 export default {
   data() {
     return {
       form: schema,
-      key: null,
+      key: this.$route.params.id,
       saveDisabled: false
     };
   },
   computed: {
+    ...mapState(["document"]),
+    loading() {
+      return this.$store.state.loading;
+    },
     weekArray() {
       return this.$store.state.weekArray;
     }
   },
   mounted() {
-    if (this.$route.params.id !== undefined) {
-      db.ref(`services/${this.$route.params.id}`)
-        .once("value")
-        .then(snapshot => {
-          this.form = snapshot.val();
-          this.key = snapshot.key;
+    if (this.key !== undefined) {
+      this.$store
+        .dispatch("fetchDocument", {
+          collectionName: "services",
+          id: this.key
+        })
+        .then(() => {
+          this.$set(this, "form", this.document);
         });
+    } else {
+      this.$store.commit("toggleLoading", false);
     }
-    this.$store.commit("toggleLoading", false);
   },
   methods: {
     addOpeningHourSet(day) {
@@ -120,16 +128,16 @@ export default {
     },
     insert() {
       this.saveDisabled = true;
-      this.key = this.key === null ? db.ref("services").push().key : this.key;
+      this.key =
+        this.key === undefined ? db.ref("services").push().key : this.key;
 
       let updates = {};
       updates["/services/" + this.key] = this.form;
 
-      db.ref().update(updates, error => {
-        console.log("error", error);
+      this.$store.dispatch("update", updates).then(() => {
         this.saveDisabled = false;
-        // this.form = this.key === null ? {} : this.form;
-        this.$router.push("/admin/services-list");
+        if (!this.$route.params.id)
+          this.$router.push({ params: { id: this.key } });
       });
     }
   }

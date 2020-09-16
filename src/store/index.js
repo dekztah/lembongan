@@ -19,7 +19,8 @@ export default new Vuex.Store({
     places: [],
     activities: [],
     services: [],
-    boats: []
+    boats: [],
+    document: {}
   },
   mutations: {
     setUserProfile(state, val) {
@@ -39,6 +40,9 @@ export default new Vuex.Store({
     },
     setCollection(state, { collectionName, collection }) {
       state[collectionName] = collection;
+    },
+    setDocument(state, val) {
+      state.document = val;
     }
   },
   actions: {
@@ -61,7 +65,8 @@ export default new Vuex.Store({
       let collection = [];
 
       if (!state[collectionName].length) {
-        db.ref(collectionName)
+        await db
+          .ref(collectionName)
           .orderByChild("name")
           .once("value")
           .then(snapshot => {
@@ -75,6 +80,29 @@ export default new Vuex.Store({
 
         commit("setCollection", { collectionName, collection });
       }
+    },
+    async fetchDocument({ commit }, { collectionName, id }) {
+      let document = {};
+
+      await db
+        .ref(`${collectionName}/${id}`)
+        .once("value")
+        .then(snapshot => {
+          document = snapshot.val();
+          document.key = snapshot.key;
+          commit("setDocument", document);
+          commit("toggleLoading", false);
+        });
+    },
+    async update({ commit }, updates) {
+      commit("toggleLoading", true);
+      await db
+        .ref()
+        .update(updates)
+        .then(x => {
+          console.log("x", x);
+          commit("toggleLoading", false);
+        });
     }
   },
   modules: {}
