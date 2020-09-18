@@ -15,6 +15,7 @@
           .boat(v-for="boat in allDepartures[dest]" :class="{'has-left': boat.hasLeft, 'warn': boat.leavingSoon }")
             .time {{ boat[dest][today]}} {{ boat.name }}
               br
+              span.location(v-if="dest === 'departToSanur'") from {{ boat.lembonganLocation}}
               span.leaving(v-if="boat.leavingIn") departs in:&nbsp;
                 strong {{ boat.leavingIn}}
 
@@ -33,6 +34,7 @@
 
                 .footer
                   .status
+                    div(v-if="dest === 'departToSanur'") {{ boat.lembonganLocation}}
                     span(v-if="boat.leavingIn") departs in:&nbsp;
                       strong {{ boat.leavingIn}}
 
@@ -49,6 +51,7 @@
 
                 .footer
                   .status
+                    div(v-if="dest === 'departToSanur'") {{ boat.lembonganLocation}}
                     span(v-if="boat.leavingIn") departs in:&nbsp;
                       strong {{ boat.leavingIn }}
 
@@ -273,6 +276,12 @@ export default {
       vertical-align: middle;
       margin: 0 6px 2px 0;
     }
+  }
+  .location {
+    font-weight: 400;
+    font-size: 12px;
+    display: block;
+    margin-top: 8px;
   }
   .name {
     font-size: 16px;

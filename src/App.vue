@@ -33,7 +33,7 @@
         router-view
 
         footer
-          span.contact-me Wrong data? Contact me on:&nbsp;
+          span.contact-me Incorrect data? Contact me on:&nbsp;
           a.wa(href="https://wa.me/6282144453436" target="_blank") WA
           //- a(v-if="userProfile.email" @click="logout") logout
           KoFiButton(

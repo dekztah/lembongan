@@ -3,12 +3,18 @@
     .form-element
       label Boat company name
       input(type="text" v-model="form.name")
+
     .form-element
       label Contact
       input(type="number" v-model="form.contact")
+
     .form-element
       label Maps link
       input(type="text" v-model="form.gMapsLink")
+
+    .form-element
+      label Lembongan departure location
+      input(type="text" v-model="form.lembonganLocation")
 
     .form-element
       label To Sanur
