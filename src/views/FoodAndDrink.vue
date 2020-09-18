@@ -35,6 +35,10 @@
         label.rendang(:class="{'chip': rendang}" for="rendang") rendang
 
       .filter.checkbox
+        input(type="checkbox" v-model="desserts" id="desserts")
+        label.desserts(:class="{'chip': desserts}" for="desserts") desserts
+
+      .filter.checkbox
         input(type="checkbox" v-model="drinks" id="drinks")
         label.drinks(:class="{'chip': drinks}" for="drinks") drinks
 
@@ -72,6 +76,7 @@
             span.chip.local-dishes(v-if="place.localDishes") local dishes
             span.chip.coffee(v-if="place.coffee") coffee
             span.chip.rendang(v-if="place.rendang") rendang
+            span.chip.desserts(v-if="place.desserts") desserts
             span.chip.drinks(v-if="place.drinks") drinks
 
         .footer
@@ -150,6 +155,9 @@ export default {
         )
         .filter(place => (this.coffee ? place.coffee === this.coffee : true))
         .filter(place => (this.rendang ? place.rendang === this.rendang : true))
+        .filter(place =>
+          this.desserts ? place.desserts === this.desserts : true
+        )
         .filter(place => (this.drinks ? place.drinks === this.drinks : true))
         .filter(place =>
           this.search
@@ -225,6 +233,14 @@ export default {
       },
       set(val) {
         this.setQuery("rendang", val);
+      }
+    },
+    desserts: {
+      get() {
+        return this.tags ? this.tags.includes("desserts") : false;
+      },
+      set(val) {
+        this.setQuery("desserts", val);
       }
     },
     drinks: {

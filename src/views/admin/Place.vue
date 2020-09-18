@@ -1,5 +1,5 @@
 <template lang="pug">
-  .admin-form-place
+  .admin-form.admin-form-place
     .form-element
       label Place name
       input(type="text" v-model="form.name")
@@ -44,6 +44,10 @@
       .checkbox
         input(type="checkbox" v-model="form.rendang")
         label Rendang
+
+      .checkbox
+        input(type="checkbox" v-model="form.desserts")
+        label Desserts
 
       .checkbox
         input(type="checkbox" v-model="form.drinks")

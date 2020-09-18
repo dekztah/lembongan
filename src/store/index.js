@@ -99,8 +99,7 @@ export default new Vuex.Store({
       await db
         .ref()
         .update(updates)
-        .then(x => {
-          console.log("x", x);
+        .then(() => {
           commit("toggleLoading", false);
         });
     }

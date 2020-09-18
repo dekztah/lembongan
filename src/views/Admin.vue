@@ -10,7 +10,7 @@
 <script>
 export default {
   mounted() {
-    // this.$store.commit("toggleLoading", false);
+    this.$store.commit("toggleLoading", false);
   }
 };
 </script>

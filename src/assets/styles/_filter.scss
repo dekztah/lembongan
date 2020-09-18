@@ -20,21 +20,6 @@
       margin-right: 0;
     }
 
-    input[type="text"] {
-      border: none;
-      border-radius: 12px;
-      height: 24px;
-      padding: 4px 28px 4px 8px;
-      vertical-align: middle;
-
-      @media only screen and (max-width: $breakpoint-small) {
-        width: 100%;
-      }
-
-      &:focus {
-        outline: none;
-      }
-    }
     .clear {
       border: none;
       width: 16px;

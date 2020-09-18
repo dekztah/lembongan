@@ -79,22 +79,6 @@
 
   .weekdays {
     display: flex;
-
-    &.reservation {
-      .button {
-        background: $wa-color;
-        color: white;
-        display: flex;
-        width: 100%;
-        justify-content: space-between;
-        align-items: center;
-        padding: 4px 8px;
-
-        span {
-          font-size: 12px;
-        }
-      }
-    }
   }
   .wd {
     display: none;
