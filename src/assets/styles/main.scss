@@ -183,6 +183,7 @@ header {
 
   @media only screen and (max-width: $breakpoint-small) {
     margin-bottom: 0;
+    min-height: calc(100vh - 85px - 54px);
   }
 }
 
@@ -201,7 +202,6 @@ header {
 }
 footer {
   position: fixed;
-  width: 100vw;
   bottom: 0;
   left: 0;
   right: 0;
@@ -214,6 +214,7 @@ footer {
 
   @media only screen and (max-width: $breakpoint-small) {
     position: static;
+    height: 54px;
   }
 
   .contact-me {
