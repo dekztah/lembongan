@@ -14,6 +14,10 @@
         label.yoga(:class="{'chip': yoga}" for="yoga") yoga
 
       .filter.checkbox
+        input(type="checkbox" v-model="gym" id="gym")
+        label.gym(:class="{'chip': gym}" for="gym") gym
+
+      .filter.checkbox
         input(type="checkbox" v-model="freediving" id="freediving")
         label.freediving(:class="{'chip': freediving}" for="freediving") freediving
 
@@ -66,6 +70,7 @@
 
           .info
             span.chip.yoga(v-if="place.yoga") yoga
+            span.chip.gym(v-if="place.gym") gym
             span.chip.freediving(v-if="place.freediving") freediving
             span.chip.scuba-diving(v-if="place.scubaDiving") scuba diving
             span.chip.surf(v-if="place.surf") surf
@@ -145,6 +150,7 @@ export default {
             : true
         )
         .filter(place => (this.yoga ? place.yoga === this.yoga : true))
+        .filter(place => (this.gym ? place.gym === this.gym : true))
         .filter(place =>
           this.freediving ? place.freediving === this.freediving : true
         )
@@ -191,6 +197,14 @@ export default {
       },
       set(val) {
         this.setQuery("yoga", val);
+      }
+    },
+    gym: {
+      get() {
+        return this.tags ? this.tags.includes("gym") : false;
+      },
+      set(val) {
+        this.setQuery("gym", val);
       }
     },
     freediving: {
