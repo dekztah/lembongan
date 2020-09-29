@@ -1,8 +1,8 @@
 <template lang="pug">
   .boats-list.main
     .title
-      button.button(@click="dest = 'departToSanur'" :class="{'active': dest === 'departToSanur'}") Lembongan to Sanur
       button.button(@click="dest = 'departToLembongan'" :class="{'active': dest === 'departToLembongan'}") Sanur to Lembongan
+      button.button(@click="dest = 'departToSanur'" :class="{'active': dest === 'departToSanur'}") Lembongan to Sanur
 
     .daily-schedule
       .direction(v-if="!loading")
@@ -78,7 +78,7 @@ export default {
         departToLembongan: [],
         departToSanur: []
       },
-      dest: "departToSanur"
+      dest: "departToLembongan"
     };
   },
   computed: {

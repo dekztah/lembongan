@@ -38,7 +38,7 @@
           //- a(v-if="userProfile.email" @click="logout") logout
           KoFiButton(
             username="dekztah"
-            title="Buy me a coffee"
+            title=""
             target="_blank"
           )
 
