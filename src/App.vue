@@ -36,22 +36,14 @@
           span.contact-me Incorrect data? Contact me on:&nbsp;
           a.wa(href="https://wa.me/6282144453436" target="_blank") WA
           //- a(v-if="userProfile.email" @click="logout") logout
-          KoFiButton(
-            username="dekztah"
-            title=""
-            target="_blank"
-          )
+          a.kofi(href="https://ko-fi.com/dekztah" target="_blacnk")
 
 </template>
 
 <script>
 import { mapState } from "vuex";
-import KoFiButton from "@linusborg/vue-ko-fi-button";
 
 export default {
-  components: {
-    KoFiButton
-  },
   data() {
     return {};
   },

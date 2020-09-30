@@ -188,7 +188,8 @@ header {
 }
 
 .mobile-nav-open {
-  .tile-list {
+  .tile-list,
+  footer {
     transform: translateY(247px);
   }
 }
@@ -211,6 +212,7 @@ footer {
   background: darken($base-color, 60);
   color: white;
   padding: 10px;
+  transition: transform 0.3s ease-out;
 
   @media only screen and (max-width: $breakpoint-small) {
     position: static;
@@ -220,24 +222,6 @@ footer {
   .contact-me {
     @media only screen and (max-width: $breakpoint-small) {
       max-width: 96px;
-    }
-  }
-
-  .kofi-btn-container {
-    margin-left: auto;
-    min-width: 0 !important;
-
-    a.kofi-button {
-      background: darken($base-color, 20) !important;
-      padding: 0 8px !important;
-      font-size: 12px !important;
-      min-width: 0;
-      height: 36px;
-      border-radius: 50%;
-
-      img {
-        margin: 0;
-      }
     }
   }
 }
@@ -460,6 +444,18 @@ footer {
   background-image: url(../Instagram.svg);
   text-indent: -9999px;
   background-size: 28px 28px;
+}
+.kofi {
+  background-color: darken($base-color, 20) !important;
+  background-image: url(../Kofi.svg);
+  background-size: 20px 20px;
+  background-repeat: no-repeat;
+  background-position: 7px 7px;
+  display: inline-block;
+  margin-left: auto;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
 }
 
 .admin-list {
