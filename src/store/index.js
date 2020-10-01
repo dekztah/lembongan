@@ -20,7 +20,8 @@ export default new Vuex.Store({
     activities: [],
     services: [],
     boats: [],
-    document: {}
+    document: {},
+    warnDisabled: localStorage.getItem("boatWarnDisabled") || false
   },
   mutations: {
     setUserProfile(state, val) {
@@ -43,9 +44,16 @@ export default new Vuex.Store({
     },
     setDocument(state, val) {
       state.document = val;
+    },
+    setWarnDisabled(state, bool) {
+      state.warnDisabled = bool;
     }
   },
   actions: {
+    setWarnDisabled({ commit }, bool) {
+      localStorage.setItem("boatWarnDisabled", bool);
+      commit("setWarnDisabled", bool);
+    },
     async login({ commit }, form) {
       const { user } = await auth.signInWithEmailAndPassword(
         form.email,

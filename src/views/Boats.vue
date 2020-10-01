@@ -6,6 +6,13 @@
 
     .daily-schedule
       .direction(v-if="!loading")
+        .warning(v-if="!warnDisabled")
+          button.clear(@click="disableWarning")
+          .icon
+          .text
+            span &bull; All boats are operating on the same schedule everyday
+            span &bull; This schedule is for information only, please always contact the boat company before travelling
+
         .next
           span(v-if="nextBoat[dest]") next boat to {{ dest === 'departToSanur' ? 'Sanur' : 'Lembongan'}} in:&nbsp;
             strong {{ nextBoat[dest].leavingIn}}
@@ -82,7 +89,7 @@ export default {
     };
   },
   computed: {
-    ...mapState(["boats"]),
+    ...mapState(["boats", "warnDisabled"]),
     loading() {
       return this.$store.state.loading;
     },
@@ -157,6 +164,9 @@ export default {
     },
     waUrl(contact) {
       return `https://wa.me/${contact}`;
+    },
+    disableWarning() {
+      this.$store.dispatch("setWarnDisabled", true);
     }
   },
   watch: {
@@ -331,6 +341,60 @@ export default {
     border-bottom: 1px solid black;
     border-left: 1px solid black;
     font-size: 12px;
+  }
+}
+.warning {
+  border-radius: 4px;
+  padding: 10px;
+  background: #ffcc00;
+  color: black;
+  border: 2px solid black;
+  display: flex;
+  align-items: center;
+  font-size: 12px;
+  position: relative;
+
+  @media only screen and (max-width: $breakpoint-small) {
+    margin: 0 5px 10px 5px;
+  }
+
+  .icon {
+    display: inline-block;
+    width: 32px;
+    height: 32px;
+    background-image: url(../assets/Warning.svg);
+    text-indent: -9999px;
+    background-size: 32px 32px;
+    margin-right: 10px;
+    flex-shrink: 0;
+
+    @media only screen and (max-width: $breakpoint-small) {
+      width: 64px;
+      height: 64px;
+      background-size: 64px 64px;
+    }
+  }
+
+  span {
+    display: block;
+  }
+}
+.clear {
+  border: none;
+  width: 16px;
+  height: 16px;
+  vertical-align: middle;
+  background: none;
+  display: inline-block;
+  background-image: url(../assets/Clear.svg);
+  background-size: 16px 16px;
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  cursor: pointer;
+
+  &:focus {
+    outline: none;
   }
 }
 </style>
