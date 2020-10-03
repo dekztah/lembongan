@@ -22,6 +22,10 @@
         label.hairdresser(:class="{'chip': hairdresser}" for="hairdresser") hairdresser
 
       .filter.checkbox
+        input(type="checkbox" v-model="laundry" id="laundry")
+        label.laundry(:class="{'chip': laundry}" for="laundry") laundry
+
+      .filter.checkbox
         input(type="checkbox" v-model="tailor" id="tailor")
         label.tailor(:class="{'chip': tailor}" for="tailor") tailor
 
@@ -64,6 +68,7 @@
             span.chip.spa(v-if="place.spa") spa
             span.chip.barber(v-if="place.barber") barber
             span.chip.hairdresser(v-if="place.hairdresser") hairdresser
+            span.chip.laundry(v-if="place.laundry") laundry
             span.chip.tailor(v-if="place.tailor") tailor
             span.chip.motor-repair(v-if="place.motorRepair") motor repair
             span.chip.handcraft(v-if="place.handcraft") handcraft
@@ -144,6 +149,7 @@ export default {
         .filter(place =>
           this.hairdresser ? place.hairdresser === this.hairdresser : true
         )
+        .filter(place => (this.laundry ? place.laundry === this.laundry : true))
         .filter(place => (this.tailor ? place.tailor === this.tailor : true))
         .filter(place =>
           this.motorRepair ? place.motorRepair === this.motorRepair : true
@@ -201,6 +207,14 @@ export default {
       },
       set(val) {
         this.setQuery("hairdresser", val);
+      }
+    },
+    laundry: {
+      get() {
+        return this.tags ? this.tags.includes("laundry") : false;
+      },
+      set(val) {
+        this.setQuery("laundry", val);
       }
     },
     tailor: {

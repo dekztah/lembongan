@@ -34,6 +34,10 @@
         label Barber
 
       .checkbox
+        input(type="checkbox" v-model="form.laundry")
+        label Laundry
+
+      .checkbox
         input(type="checkbox" v-model="form.tailor")
         label Tailor
 

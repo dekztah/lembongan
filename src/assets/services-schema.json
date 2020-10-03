@@ -49,6 +49,7 @@
   "barber": false,
   "hairdresser": false,
   "tailor": false,
+  "laundry": false,
   "handcraft": false,
   "preorder": false,
   "contact": "",
