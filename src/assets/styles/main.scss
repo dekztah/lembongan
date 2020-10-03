@@ -196,6 +196,14 @@ header {
   footer {
     transform: translateY(247px);
   }
+  .food-and-drink {
+    .tile-list {
+      transform: translateY(281px);
+    }
+  }
+  .food-and-drink + footer {
+    transform: translateY(281px);
+  }
 }
 .fade-enter-active,
 .fade-leave-active {
