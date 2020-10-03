@@ -65,7 +65,7 @@
                   a.maps(v-if="boat.gMapsLink" :href="boat.gMapsLink" target="_blank")
                   a.wa(v-if="boat.contact" :href="waUrl(boat.contact)" target="_blank") WA
 
-    .none
+    .none(v-else)
       | ¯\_(ツ)_/¯ No boats today
 
 </template>
