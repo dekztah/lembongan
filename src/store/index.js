@@ -54,20 +54,29 @@ export default new Vuex.Store({
       localStorage.setItem("boatWarnDisabled", bool);
       commit("setWarnDisabled", bool);
     },
-    async login({ commit }, form) {
+    async login({ dispatch }, form) {
       const { user } = await auth.signInWithEmailAndPassword(
         form.email,
         form.password
       );
 
-      commit("setUserProfile", user);
-      router.push("/admin");
+      dispatch("fetchUserProfile", user);
     },
+
     async logout({ commit }) {
       await auth.signOut();
 
       commit("setUserProfile", {});
       router.push("/login");
+    },
+    async fetchUserProfile({ commit }, user) {
+      const userProfile = await db.ref(`users/${user.uid}`).once("value");
+
+      commit("setUserProfile", userProfile.val());
+
+      if (router.currentRoute.path === "/login") {
+        router.push("/");
+      }
     },
     async fetchCollection({ commit, state }, collectionName) {
       let collection = [];

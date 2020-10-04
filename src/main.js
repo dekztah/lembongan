@@ -28,6 +28,6 @@ auth.onAuthStateChanged(user => {
   }
 
   if (user) {
-    store.commit("setUserProfile", user);
+    store.dispatch("fetchUserProfile", user);
   }
 });

@@ -59,10 +59,15 @@ header {
   height: 85px;
   background-color: white;
   display: flex;
+  flex-wrap: wrap;
   justify-content: space-between;
   align-items: center;
   padding: 10px;
   box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.2);
+
+  &.admin-bar {
+    height: 107px;
+  }
 
   .current-page {
     display: none;

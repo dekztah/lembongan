@@ -6,7 +6,11 @@
 
     transition(name="fade")
       .wrapper(v-show="!loading" :class="{'mobile-nav-open': mobileNavOpen}")
-        header
+        header(:class="{'admin-bar': userProfile.name }")
+          .admin-header
+            span {{ userProfile.name }}
+            a.button(v-if="userProfile.name" @click="logout") logout
+
           #nav-mobile
             .hamburger.hamburger--emphatic(type="button" @click="toggleMobileNav" :class="{'is-active': mobileNavOpen}")
               .hamburger-box
@@ -35,7 +39,7 @@
         footer
           span.contact-me Incorrect data? Contact me on:&nbsp;
           a.wa(href="https://wa.me/6282144453436" target="_blank") WA
-          //- a(v-if="userProfile.email" @click="logout") logout
+
           a.kofi(href="https://ko-fi.com/dekztah" target="_blacnk")
 
 </template>
