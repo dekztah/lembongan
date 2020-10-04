@@ -54,9 +54,9 @@
           h2.name {{ place.name }}
 
           .weekdays(v-if="!place.reservation")
-            .wd(v-for="(weekday, wid) in place.openingHours" :class="{'closed': typeof weekday === 'string', 'today' : wid === today}")
+            .wd(v-for="(weekday, wid) in place.openingHours" :class="{'closed': weekday[0].start === '', 'today' : wid === today}")
               div.day-names {{ weekArray[wid] }}
-              span(v-if="typeof weekday === 'object' && weekday[0].start !== ''")
+              span(v-if="weekday[0].start !== ''")
                 div.interval(v-for="time in weekday")
                   | {{ time.start }}-{{ time.end }}
 
@@ -257,30 +257,25 @@ export default {
         place.opensIn = null;
         place.closesIn = null;
 
-        if (typeof place.openingHours[today] === "object") {
-          place.openingHours[today].forEach(element => {
-            const startTime = this.$moment(element.start, "HH:mm");
-            const endTime = this.$moment(element.end, "HH:mm");
+        place.openingHours[today].forEach(element => {
+          const startTime = this.$moment(element.start, "HH:mm");
+          const endTime = this.$moment(element.end, "HH:mm");
 
-            if (this.$moment(time, "HH:mm").isBetween(startTime, endTime)) {
-              place.isOpen = true;
-            }
+          if (this.$moment(time, "HH:mm").isBetween(startTime, endTime)) {
+            place.isOpen = true;
+          }
 
-            if (
-              startTime.diff(time, "s") < 1800 &&
-              startTime.diff(time, "s") >= 0
-            ) {
-              place.opensIn = startTime.diff(time, "m");
-            }
+          if (
+            startTime.diff(time, "s") < 1800 &&
+            startTime.diff(time, "s") >= 0
+          ) {
+            place.opensIn = startTime.diff(time, "m");
+          }
 
-            if (
-              endTime.diff(time, "s") < 1800 &&
-              endTime.diff(time, "s") >= 0
-            ) {
-              place.closesIn = endTime.diff(time, "m");
-            }
-          });
-        }
+          if (endTime.diff(time, "s") < 1800 && endTime.diff(time, "s") >= 0) {
+            place.closesIn = endTime.diff(time, "m");
+          }
+        });
       });
     },
     toggleDouble(index) {

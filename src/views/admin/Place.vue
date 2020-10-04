@@ -57,7 +57,6 @@
       label Opening hours
 
       .weekdays
-
         .weekday(v-for="(openingHours, day) in form.openingHours")
           label {{ weekArray[day] }}
           button.button(@click="addOpeningHourSet(day)") +
