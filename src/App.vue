@@ -7,13 +7,13 @@
     transition(name="fade")
       .wrapper(v-show="!loading" :class="{'mobile-nav-open': mobileNavOpen}")
         header(:class="{'admin-bar': userProfile.name }")
-          .admin-header
+          .admin-header(v-if="userProfile.name")
             router-link.button(to="/admin/places-list") Places
             router-link.button(to="/admin/boats-list") Boats
             router-link.button(to="/admin/activities-list") Activities
             router-link.button(to="/admin/services-list") Services
             span {{ userProfile.name }}
-            a.button(v-if="userProfile.name" @click="logout") logout
+            a.button(@click="logout") logout
 
           #nav-mobile
             .hamburger.hamburger--emphatic(type="button" @click="toggleMobileNav" :class="{'is-active': mobileNavOpen}")

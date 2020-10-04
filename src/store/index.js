@@ -12,6 +12,7 @@ const currentTime = Vue.moment();
 export default new Vuex.Store({
   state: {
     timestamp: currentTime,
+    today: currentTime.isoWeekday() - 1,
     weekArray: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
     mobileNavOpen: false,
     loading: true,
@@ -82,6 +83,7 @@ export default new Vuex.Store({
       let collection = [];
 
       if (!state[collectionName].length) {
+        commit("toggleLoading", true);
         await db
           .ref(collectionName)
           .orderByChild("name")

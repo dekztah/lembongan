@@ -81,9 +81,9 @@
 
         .footer(:class="{'reservation': place.reservation}")
           .status
-            span(v-if="place.opensIn !== null") Opens in:&nbsp;
+            span(v-if="place.opensIn && place.opensIn !== null") Opens in:&nbsp;
               strong {{ place.opensIn + 1 }}m
-            span(v-if="place.closesIn !== null") Closes in:&nbsp;
+            span(v-if="place.closesIn && place.closesIn !== null") Closes in:&nbsp;
               strong {{ place.closesIn + 1 }}m
             span(v-if="place.reservation") Contact for details
 
@@ -96,6 +96,7 @@
 </template>
 
 <script>
+import store from "@/store";
 import { mapState } from "vuex";
 import isotope from "vueisotope";
 
@@ -115,22 +116,14 @@ export default {
     };
   },
   computed: {
-    ...mapState(["activities"]),
-    loading() {
-      return this.$store.state.loading;
-    },
-    mobileNavOpen() {
-      return this.$store.state.mobileNavOpen;
-    },
-    timestamp() {
-      return this.$store.state.timestamp;
-    },
-    weekArray() {
-      return this.$store.state.weekArray;
-    },
-    today() {
-      return this.$store.state.timestamp.isoWeekday() - 1;
-    },
+    ...mapState([
+      "activities",
+      "loading",
+      "mobileNavOpen",
+      "timestamp",
+      "weekArray",
+      "today"
+    ]),
     isotopeOptions() {
       return {
         transitionDuration: "0.3s",
@@ -256,26 +249,32 @@ export default {
       }
     }
   },
+  beforeRouteEnter(to, from, next) {
+    store.dispatch("fetchCollection", "activities").then(() => {
+      next(vm => {
+        vm.setIsOpen();
+      });
+    });
+  },
   created() {
-    this.$store.dispatch("fetchCollection", "activities");
-
     if (window.innerWidth < 576)
       this.columnWidth = (window.innerWidth - 30) / 2;
   },
   methods: {
     setIsOpen() {
-      this.activities.forEach(place => {
-        const today = this.today;
-        const time = this.$moment(this.timestamp, "HH:mm");
-        place.isOpen = false;
-        place.opensIn = null;
-        place.closesIn = null;
+      const today = this.today;
+      const time = this.$moment(this.timestamp, "HH:mm");
+
+      this.activities.forEach((place, index) => {
+        this.$set(this.activities[index], "isOpen", false);
+        this.$set(this.activities[index], "opensIn", null);
+        this.$set(this.activities[index], "closesIn", null);
 
         place.openingHours[today].forEach(element => {
           const startTime = this.$moment(element.start, "HH:mm");
           const endTime = this.$moment(element.end, "HH:mm");
 
-          if (this.$moment(time, "HH:mm").isBetween(startTime, endTime)) {
+          if (time.isBetween(startTime, endTime)) {
             place.isOpen = true;
           }
 
@@ -297,7 +296,6 @@ export default {
       this.$nextTick(() => {
         this.$refs.isotope.layout("masonry");
       });
-      this.$store.commit("toggleLoading", false);
       if (this.mobileNavOpen) this.$store.commit("toggleMobileNav");
     },
     setQuery(queryKey, val) {
@@ -316,10 +314,8 @@ export default {
     }
   },
   watch: {
-    activities(val) {
-      if (val.length) {
-        this.setIsOpen();
-      }
+    timestamp() {
+      this.setIsOpen();
     }
   }
 };

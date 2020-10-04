@@ -71,6 +71,7 @@
 </template>
 
 <script>
+import store from "@/store";
 import { mapState } from "vuex";
 
 export default {
@@ -92,29 +93,23 @@ export default {
     };
   },
   computed: {
-    ...mapState(["boats", "warnDisabled"]),
-    loading() {
-      return this.$store.state.loading;
-    },
-    timestamp() {
-      return this.$store.state.timestamp;
-    },
-    mobileNavOpen() {
-      return this.$store.state.mobileNavOpen;
-    },
-    weekArray() {
-      return this.$store.state.weekArray;
-    },
-    today() {
-      return this.$store.state.timestamp.isoWeekday() - 1;
-    }
+    ...mapState([
+      "boats",
+      "warnDisabled",
+      "loading",
+      "timestamp",
+      "mobileNavOpen",
+      "weekArray",
+      "today"
+    ])
   },
-  created() {
-    this.$store.dispatch("fetchCollection", "boats");
-    if (this.boats.length) {
-      this.destination("departToSanur");
-      this.destination("departToLembongan");
-    }
+  beforeRouteEnter(to, from, next) {
+    store.dispatch("fetchCollection", "boats").then(() => {
+      next(vm => {
+        vm.destination("departToSanur");
+        vm.destination("departToLembongan");
+      });
+    });
   },
   methods: {
     destination(dest) {
@@ -176,12 +171,6 @@ export default {
     timestamp() {
       this.destination("departToSanur");
       this.destination("departToLembongan");
-    },
-    boats(val) {
-      if (val.length) {
-        this.destination("departToSanur");
-        this.destination("departToLembongan");
-      }
     }
   }
 };
