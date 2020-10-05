@@ -3,6 +3,7 @@
   "departToSanur": [[""], [""], [""], [""], [""], [""], [""]],
   "departToLembongan": [[""], [""], [""], [""], [""], [""], [""]],
   "active": false,
+  "activeDates": [""],
   "lembonganLocation": "",
   "contact": "",
   "gMapsLink": ""

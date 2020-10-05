@@ -19,10 +19,11 @@
           span(v-else) All boats to {{ dest === 'departToSanur' ? 'Sanur' : 'Lembongan'}} have left today
 
         .wrap
-          .boat(v-for="boat in allDepartures[dest]" :class="{'has-left': boat.hasLeft, 'warn': boat.leavingSoon }")
+          .boat(v-for="boat in allDepartures[dest]" :class="{'has-left': boat.hasLeft, 'noop': !boat.operating, 'warn': boat.leavingSoon }")
             .time {{ boat[dest][today]}} {{ boat.name }}
               br
               span.location(v-if="dest === 'departToSanur'") from {{ boat.lembonganLocation}}
+              .not-operating(v-if="!boat.operating") Not operating today
               span.leaving(v-if="boat.leavingIn") departs in:&nbsp;
                 strong {{ boat.leavingIn}}
 
@@ -34,14 +35,15 @@
           .before-noon
             .segment(v-for="segment in hoursArray['beforeNoon']")
               .hour {{ segment }}:00
-              .boat(v-for="boat in allDepartures[dest]" v-if="compareTime(boat[dest][today], segment)" :class="{'has-left': boat.hasLeft, 'warn': boat.leavingSoon}")
+              .boat(v-for="boat in allDepartures[dest]" v-if="compareTime(boat[dest][today], segment)" :class="{'has-left': boat.hasLeft, 'noop': !boat.operating, 'warn': boat.leavingSoon}")
                 .content
                   h2.time {{boat[dest][today]}}
-                  .name {{ boat.name}}
+                  .name {{ boat.name }}
 
                 .footer
                   .status
                     div(v-if="dest === 'departToSanur'") {{ boat.lembonganLocation}}
+                    .not-operating(v-if="!boat.operating") Not operating today
                     span(v-if="boat.leavingIn") departs in:&nbsp;
                       strong {{ boat.leavingIn}}
 
@@ -51,7 +53,7 @@
           .after-noon
             .segment(v-for="segment in hoursArray['afterNoon']")
               .hour {{ segment }}:00
-              .boat(v-for="boat in allDepartures[dest]" v-if="compareTime(boat[dest][today], segment)" :class="{'has-left': boat.hasLeft, 'warn': boat.leavingSoon }")
+              .boat(v-for="boat in allDepartures[dest]" v-if="compareTime(boat[dest][today], segment)" :class="{'has-left': boat.hasLeft, 'noop': !boat.operating, 'warn': boat.leavingSoon }")
                 .content
                   h2.time {{boat[dest][today]}}
                   .name {{ boat.name }}
@@ -59,6 +61,7 @@
                 .footer
                   .status
                     div(v-if="dest === 'departToSanur'") {{ boat.lembonganLocation}}
+                    .not-operating(v-if="!boat.operating") Not operating today
                     span(v-if="boat.leavingIn") departs in:&nbsp;
                       strong {{ boat.leavingIn }}
 
@@ -132,30 +135,39 @@ export default {
           let bTime = this.$moment(b[dest][this.today], "HH:mm");
           return aTime.diff(bTime, "m");
         })
-        .forEach((dep, index) => {
+        .forEach(dep => {
           const leaveTime = this.$moment(dep[dest][this.today], "HH:mm");
           const timeDiff = leaveTime.diff(this.timestamp, "s");
 
-          if (timeDiff >= 0) {
-            dep.leavingIn = this.$moment
-              .utc((timeDiff + 60) * 1000)
-              .format("HH:mm");
+          dep.operating = true;
+
+          if (dep.activeDates) {
+            let dates = dep.activeDates.split(", ");
+            let formattedDate = this.timestamp.format("YYYY-MM-DD");
+            dep.operating = dates.includes(formattedDate);
           }
 
-          if (timeDiff < 1800 && timeDiff >= 0) {
-            dep.leavingSoon = true;
-          }
-
-          if (this.timestamp.isAfter(leaveTime)) {
-            dep.hasLeft = true;
-
-            if (index === this.allDepartures[dest].length - 1) {
-              this.nextBoat[dest] = false;
+          if (dep.operating) {
+            if (this.timestamp.isAfter(leaveTime)) {
+              dep.hasLeft = true;
             } else {
-              this.nextBoat[dest] = this.allDepartures[dest][index + 1];
+              if (timeDiff >= 0) {
+                dep.leavingIn = this.$moment
+                  .utc((timeDiff + 60) * 1000)
+                  .format("HH:mm");
+              }
+
+              if (timeDiff < 1800 && timeDiff >= 0) {
+                dep.leavingSoon = true;
+              }
             }
           }
         });
+
+      this.nextBoat[dest] = this.allDepartures[dest].find(item => {
+        const leaveTime = this.$moment(item[dest][this.today], "HH:mm");
+        return leaveTime.isAfter(this.timestamp) && item.operating;
+      });
     },
     compareTime(a, b) {
       return this.$moment(a, "HH:mm").hour() === b;

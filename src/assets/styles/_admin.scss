@@ -6,6 +6,10 @@
   margin-top: 107px;
 }
 
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
 .admin-form-activity {
   padding: 10px;
 

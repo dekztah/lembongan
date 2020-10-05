@@ -55,6 +55,11 @@
       margin-top: 8px;
       font-weight: 400;
     }
+    .not-operating {
+      margin-top: 8px;
+      color: red;
+      font-weight: 600;
+    }
   }
 }
 .boat {
@@ -63,6 +68,7 @@
   background: white;
   border-radius: 4px;
   margin: 5px;
+  overflow: hidden;
   box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.2);
 
   .content {
@@ -109,6 +115,12 @@
     font-size: 16px;
   }
 
+  .not-operating {
+    // font-weight: 600;
+    font-size: 16px;
+    color: white;
+  }
+
   &.warn {
     .time {
       &:before {
@@ -125,6 +137,15 @@
       &:before {
         background: red;
       }
+    }
+  }
+  &.noop {
+    opacity: 0.5;
+    // font-weight: 400;
+
+    .footer {
+      color: white;
+      background: red;
     }
   }
 }

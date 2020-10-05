@@ -1,23 +1,28 @@
 <template lang="pug">
   .admin-form-boats
-    .form-element
-      label Boat company name
-      input(type="text" v-model="form.name")
+    .grid
+      .col-1
+        .form-element
+          label Boat company name
+          input(type="text" v-model="form.name")
+
+        .form-element
+          label Contact
+          input(type="number" v-model="form.contact")
+
+        .form-element
+          label Maps link
+          input(type="text" v-model="form.gMapsLink")
+
+        .form-element
+          label Lembongan departure location
+          input(type="text" v-model="form.lembonganLocation")
+
+      .col-2
+        flat-pickr(v-model="form.activeDates" :config="config")
 
     .form-element
-      label Contact
-      input(type="number" v-model="form.contact")
-
-    .form-element
-      label Maps link
-      input(type="text" v-model="form.gMapsLink")
-
-    .form-element
-      label Lembongan departure location
-      input(type="text" v-model="form.lembonganLocation")
-
-    .form-element
-      label To Sanur
+      label To Sanur x
 
       .weekdays
         .weekday(v-for="(departure, day) in form.departToSanur" :key="`departure${day}${form.departToSanur.length}`")
@@ -51,15 +56,25 @@
 <script>
 import { db } from "@/firebase";
 import { mapState } from "vuex";
+import flatPickr from "vue-flatpickr-component";
+// import "flatpickr/dist/flatpickr.css";
+import "flatpickr/dist/themes/material_blue.css";
 import schema from "@/assets/boats-schema.json";
 
 export default {
   data() {
     return {
+      config: {
+        mode: "multiple",
+        inline: true
+      },
       form: schema,
       key: this.$route.params.id,
       saveDisabled: false
     };
+  },
+  components: {
+    flatPickr
   },
   computed: {
     ...mapState(["document"]),
