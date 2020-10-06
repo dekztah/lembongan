@@ -42,9 +42,15 @@
   }
   .boat {
     padding: 10px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+
+    .generic {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .cal-wrapper {
+      margin-top: 8px;
+    }
 
     .other {
       display: flex;
@@ -88,6 +94,10 @@
     }
   }
 
+  .flatpickr-days {
+    pointer-events: none;
+  }
+
   .time {
     font-size: 16px;
     font-weight: 600;
@@ -113,6 +123,7 @@
   }
   .name {
     font-size: 16px;
+    margin-bottom: 8px;
   }
 
   .not-operating {
@@ -130,8 +141,7 @@
   }
 
   &.has-left {
-    opacity: 0.5;
-    font-weight: 400;
+    background: rgba(white, 50%);
 
     .time {
       &:before {
@@ -140,12 +150,68 @@
     }
   }
   &.noop {
-    opacity: 0.5;
-    // font-weight: 400;
+    background: rgba(white, 50%);
+
+    .time {
+      &:before {
+        background: #ccc;
+      }
+    }
 
     .footer {
       color: white;
       background: red;
+    }
+  }
+  .weekdays {
+    display: flex;
+  }
+  .wd {
+    display: flex;
+    flex-direction: column;
+    font-size: 14px;
+    padding: 8px 0;
+
+    @media only screen and (max-width: $breakpoint-small) {
+      font-size: 12px;
+    }
+
+    &:not(:last-child) {
+      border-right: 1px solid #ccc;
+    }
+
+    &.today {
+      background: #f1f1f1;
+    }
+  }
+  .wd {
+    // display: none;
+    align-items: center;
+    flex: 1;
+
+    hr {
+      margin: 2px 0;
+    }
+
+    &.today {
+      display: flex;
+    }
+
+    &.closed {
+      &.today {
+        display: flex;
+        font-weight: 600;
+      }
+
+      .closed-icon-text {
+        align-items: center;
+        display: flex;
+        flex: 1;
+
+        .text {
+          color: #ff0000;
+        }
+      }
     }
   }
 }
@@ -235,4 +301,16 @@
   font-weight: 600;
   text-align: center;
   margin-top: 20px;
+}
+.cal-container {
+  // background: red;
+}
+.cal-day {
+  background: $base-color;
+  border-radius: 50%;
+  font-size: 12px;
+}
+.cal-disabled-day {
+  opacity: 0.2;
+  color: white;
 }

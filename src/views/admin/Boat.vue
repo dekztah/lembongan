@@ -22,7 +22,7 @@
         flat-pickr(v-model="form.activeDates" :config="config")
 
     .form-element
-      label To Sanur x
+      label To Sanur
 
       .weekdays
         .weekday(v-for="(departure, day) in form.departToSanur" :key="`departure${day}${form.departToSanur.length}`")
@@ -57,8 +57,6 @@
 import { db } from "@/firebase";
 import { mapState } from "vuex";
 import flatPickr from "vue-flatpickr-component";
-// import "flatpickr/dist/flatpickr.css";
-import "flatpickr/dist/themes/material_blue.css";
 import schema from "@/assets/boats-schema.json";
 
 export default {
@@ -66,7 +64,10 @@ export default {
     return {
       config: {
         mode: "multiple",
-        inline: true
+        inline: true,
+        locale: {
+          firstDayOfWeek: 1
+        }
       },
       form: schema,
       key: this.$route.params.id,

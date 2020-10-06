@@ -19,26 +19,34 @@
           span(v-else) All boats to {{ dest === 'departToSanur' ? 'Sanur' : 'Lembongan'}} have left today
 
         .wrap
-          .boat(v-for="boat in allDepartures[dest]" :class="{'has-left': boat.hasLeft, 'noop': !boat.operating, 'warn': boat.leavingSoon }")
-            .time {{ boat[dest][today]}} {{ boat.name }}
-              br
-              span.location(v-if="dest === 'departToSanur'") from {{ boat.lembonganLocation}}
-              .not-operating(v-if="!boat.operating") Not operating today
-              span.leaving(v-if="boat.leavingIn") departs in:&nbsp;
-                strong {{ boat.leavingIn}}
+          .boat(v-for="(boat, index) in allDepartures[dest]" :class="{'has-left': boat.hasLeft, 'noop': !boat.operating, 'warn': boat.leavingSoon }")
+            .generic
+              .time(@click="toggleCalendar(index)") {{ boat[dest][today]}} {{ boat.name }}
 
-            .other
-              a.maps(v-if="boat.gMapsLink" :href="boat.gMapsLink" target="_blank")
-              a.wa(v-if="boat.contact" :href="waUrl(boat.contact)" target="_blank") WA
+                br
+                span.location(v-if="dest === 'departToSanur'") from {{ boat.lembonganLocation}}
+                .not-operating(v-if="!boat.operating") Not operating today
+
+                span.leaving(v-if="boat.leavingIn") departs in:&nbsp;
+                  strong {{ boat.leavingIn}}
+
+              .other
+                a.maps(v-if="boat.gMapsLink" :href="boat.gMapsLink" target="_blank")
+                a.wa(v-if="boat.contact" :href="waUrl(boat.contact)" target="_blank") WA
+
+            .cal-wrapper(v-show="calOpen === index")
+              flat-pickr(v-model="boat.opDays" :config="config")
 
         .line
           .before-noon
             .segment(v-for="segment in hoursArray['beforeNoon']")
               .hour {{ segment }}:00
-              .boat(v-for="boat in allDepartures[dest]" v-if="compareTime(boat[dest][today], segment)" :class="{'has-left': boat.hasLeft, 'noop': !boat.operating, 'warn': boat.leavingSoon}")
+              .boat(v-for="(boat, index) in allDepartures[dest]" v-if="compareTime(boat[dest][today], segment)" :class="{'has-left': boat.hasLeft, 'noop': !boat.operating, 'warn': boat.leavingSoon}")
                 .content
                   h2.time {{boat[dest][today]}}
-                  .name {{ boat.name }}
+                  .name(@click="toggleCalendar(index)") {{ boat.name }}
+                  .cal-wrapper(v-show="calOpen === index")
+                    flat-pickr(v-model="boat.opDays" :config="config")
 
                 .footer
                   .status
@@ -53,10 +61,12 @@
           .after-noon
             .segment(v-for="segment in hoursArray['afterNoon']")
               .hour {{ segment }}:00
-              .boat(v-for="boat in allDepartures[dest]" v-if="compareTime(boat[dest][today], segment)" :class="{'has-left': boat.hasLeft, 'noop': !boat.operating, 'warn': boat.leavingSoon }")
+              .boat(v-for="(boat, index) in allDepartures[dest]" v-if="compareTime(boat[dest][today], segment)" :class="{'has-left': boat.hasLeft, 'noop': !boat.operating, 'warn': boat.leavingSoon }")
                 .content
                   h2.time {{boat[dest][today]}}
-                  .name {{ boat.name }}
+                  .name(@click="toggleCalendar(index)") {{ boat.name }}
+                  .cal-wrapper(v-show="calOpen === index")
+                    flat-pickr(v-model="boat.opDays" :config="config")
 
                 .footer
                   .status
@@ -76,8 +86,12 @@
 <script>
 import store from "@/store";
 import { mapState } from "vuex";
+import flatPickr from "vue-flatpickr-component";
 
 export default {
+  components: {
+    flatPickr
+  },
   data() {
     return {
       allDepartures: {
@@ -92,7 +106,15 @@ export default {
         departToLembongan: [],
         departToSanur: []
       },
-      dest: "departToLembongan"
+      dest: "departToLembongan",
+      calOpen: false,
+      config: {
+        mode: "multiple",
+        inline: true,
+        locale: {
+          firstDayOfWeek: 1
+        }
+      }
     };
   },
   computed: {
@@ -104,7 +126,16 @@ export default {
       "mobileNavOpen",
       "weekArray",
       "today"
-    ])
+    ]),
+    calendarAttrs() {
+      return [
+        {
+          key: "today",
+          bar: true,
+          dates: this.timestamp.format("YYYY-MM-DD")
+        }
+      ];
+    }
   },
   beforeRouteEnter(to, from, next) {
     store.dispatch("fetchCollection", "boats").then(() => {
@@ -145,6 +176,7 @@ export default {
             let dates = dep.activeDates.split(", ");
             let formattedDate = this.timestamp.format("YYYY-MM-DD");
             dep.operating = dates.includes(formattedDate);
+            dep.opDays = dates;
           }
 
           if (dep.operating) {
@@ -177,6 +209,10 @@ export default {
     },
     disableWarning() {
       this.$store.dispatch("setWarnDisabled", true);
+    },
+    toggleCalendar(index) {
+      this.calOpen = this.calOpen === index ? null : index;
+      // if (this.mobileNavOpen) this.$store.commit("toggleMobileNav");
     }
   },
   watch: {
