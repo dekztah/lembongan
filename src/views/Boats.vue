@@ -10,7 +10,6 @@
           button.clear(@click="disableWarning")
           .icon
           .text
-            span &bull; All boats are operating on the same schedule everyday
             span &bull; This schedule is for information only, please always contact the boat company before travelling
 
         .next
@@ -126,16 +125,7 @@ export default {
       "mobileNavOpen",
       "weekArray",
       "today"
-    ]),
-    calendarAttrs() {
-      return [
-        {
-          key: "today",
-          bar: true,
-          dates: this.timestamp.format("YYYY-MM-DD")
-        }
-      ];
-    }
+    ])
   },
   beforeRouteEnter(to, from, next) {
     store.dispatch("fetchCollection", "boats").then(() => {
