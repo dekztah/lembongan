@@ -10,7 +10,7 @@
           button.clear(@click="disableWarning")
           .icon
           .text
-            span &bull; This schedule is for information only, please always contact the boat company before travelling
+            span This schedule is for information only, please always contact the boat company before travelling
 
         .next
           span(v-if="nextBoat[dest]") next boat to {{ dest === 'departToSanur' ? 'Sanur' : 'Lembongan'}} in:&nbsp;
