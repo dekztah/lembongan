@@ -82,7 +82,7 @@
 </template>
 
 <script>
-import { db } from "@/firebase";
+import { db } from "@/firebase/firebase";
 import { mapState } from "vuex";
 import schema from "@/assets/places-schema.json";
 

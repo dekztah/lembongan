@@ -1,7 +1,7 @@
 import Vue from "vue";
 import Vuex from "vuex";
 import VueMoment from "vue-moment";
-import { auth, db } from "@/firebase";
+import { auth, db } from "@/firebase/firebase";
 import router from "../router/index";
 
 Vue.use(Vuex);

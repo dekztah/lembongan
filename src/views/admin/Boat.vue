@@ -54,7 +54,7 @@
 </template>
 
 <script>
-import { db } from "@/firebase";
+import { db } from "@/firebase/firebase";
 import { mapState } from "vuex";
 import flatPickr from "vue-flatpickr-component";
 import schema from "@/assets/boats-schema.json";

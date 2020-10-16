@@ -2,16 +2,30 @@ import Vue from "vue";
 import VueRouter from "vue-router";
 import qs from "qs";
 
+import FoodAndDrink from "../views/FoodAndDrink.vue";
+import Activities from "../views/Activities.vue";
+import Services from "../views/Services.vue";
+import Boats from "../views/Boats.vue";
+
+import Login from "../views/Login.vue";
+import Admin from "../views/Admin.vue";
+
+import PlacesList from "../views/admin/PlacesList.vue";
+import Place from "../views/admin/Place.vue";
+import BoatsList from "../views/admin/BoatsList.vue";
+import Boat from "../views/admin/Boat.vue";
+import ActivitiesList from "../views/admin/ActivitiesList.vue";
+import Activity from "../views/admin/Activity.vue";
+import ServicesList from "../views/admin/ServicesList.vue";
+import Service from "../views/admin/Service.vue";
+
 Vue.use(VueRouter);
 
 const routes = [
   {
     path: "/food-and-drink",
     name: "Food & Drink",
-    component: () =>
-      import(
-        /* webpackChunkName: "food-and-drink" */ "../views/FoodAndDrink.vue"
-      ),
+    component: FoodAndDrink,
     props: route => ({
       tags: route.query.tags,
       q: route.query.q,
@@ -21,8 +35,7 @@ const routes = [
   {
     path: "/activities",
     name: "Activities",
-    component: () =>
-      import(/* webpackChunkName: "activities" */ "../views/Activities.vue"),
+    component: Activities,
     props: route => ({
       tags: route.query.tags,
       q: route.query.q,
@@ -32,8 +45,7 @@ const routes = [
   {
     path: "/services",
     name: "Services",
-    component: () =>
-      import(/* webpackChunkName: "services" */ "../views/Services.vue"),
+    component: Services,
     props: route => ({
       tags: route.query.tags,
       q: route.query.q,
@@ -43,87 +55,59 @@ const routes = [
   {
     path: "/boats",
     name: "Boats",
-    component: () =>
-      import(/* webpackChunkName: "boats" */ "../views/Boats.vue")
+    component: Boats
   },
-  // {
-  //   path: '/contact',
-  //   name: 'Contact',
-  //   component: () =>
-  //     import(/* webpackChunkName: "contact" */ '../views/Contact.vue'),
-  // },
   {
     path: "/login",
     name: "Login",
-    component: () =>
-      import(/* webpackChunkName: "login" */ "../views/Login.vue")
+    component: Login
   },
   {
     path: "/admin",
     meta: {
       requiresAuth: true
     },
-    component: () =>
-      import(/* webpackChunkName: "admin" */ "../views/Admin.vue"),
-
+    component: Admin,
     children: [
       {
         path: "places-list",
         name: "PlacesList",
-        component: () =>
-          import(
-            /* webpackChunkName: "places-list" */ "../views/admin/PlacesList.vue"
-          )
+        component: PlacesList
       },
       {
         path: "place/:id?",
         name: "Place",
-        component: () =>
-          import(/* webpackChunkName: "place" */ "../views/admin/Place.vue")
+        component: Place
       },
       {
         path: "boats-list",
         name: "BoatsList",
-        component: () =>
-          import(
-            /* webpackChunkName: "boats-list" */ "../views/admin/BoatsList.vue"
-          )
+        component: BoatsList
       },
       {
         path: "boat/:id?",
         name: "Boat",
-        component: () =>
-          import(/* webpackChunkName: "boat" */ "../views/admin/Boat.vue")
+        component: Boat
       },
       {
         path: "activities-list",
         name: "ActivitiesList",
-        component: () =>
-          import(
-            /* webpackChunkName: "activities-list" */ "../views/admin/ActivitiesList.vue"
-          )
+        component: ActivitiesList
       },
       {
         path: "activity/:id?",
         name: "Activity",
-        component: () =>
-          import(
-            /* webpackChunkName: "activity" */ "../views/admin/Activity.vue"
-          )
+        component: Activity
       },
       {
         path: "services-list",
         name: "ServicesList",
-        component: () =>
-          import(
-            /* webpackChunkName: "services-list" */ "../views/admin/ServicesList.vue"
-          )
+        component: ServicesList
       },
       {
         path: "service/:id?",
         name: "Service",
-        component: () =>
-          import(/* webpackChunkName: "service" */ "../views/admin/Service.vue")
+        component: Service
       }
     ]
   },
