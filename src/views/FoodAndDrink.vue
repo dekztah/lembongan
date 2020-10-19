@@ -42,6 +42,10 @@
         input(type="checkbox" v-model="drinks" id="drinks")
         label.drinks(:class="{'chip': drinks}" for="drinks") drinks
 
+      .filter.checkbox
+        input(type="checkbox" v-model="winesAndSpirits" id="winesAndSpirits")
+        label.wines-spirits(:class="{'chip': winesAndSpirits}" for="winesAndSpirits") wines & spirits
+
       .count(v-if="!loading") {{ filteredPlaces.length }} results
 
     isotope.tile-list.places-list(
@@ -78,6 +82,7 @@
             span.chip.rendang(v-if="place.rendang") rendang
             span.chip.desserts(v-if="place.desserts") desserts
             span.chip.drinks(v-if="place.drinks") drinks
+            span.chip.wines-spirits(v-if="place.winesAndSpirits") wines & spirits
 
         .footer
           .status
@@ -152,6 +157,11 @@ export default {
           this.desserts ? place.desserts === this.desserts : true
         )
         .filter(place => (this.drinks ? place.drinks === this.drinks : true))
+        .filter(place =>
+          this.winesAndSpirits
+            ? place.winesAndSpirits === this.winesAndSpirits
+            : true
+        )
         .filter(place =>
           this.search
             ? place.name.toLowerCase().includes(this.search.toLowerCase())
@@ -242,6 +252,14 @@ export default {
       },
       set(val) {
         this.setQuery("drinks", val);
+      }
+    },
+    winesAndSpirits: {
+      get() {
+        return this.tags ? this.tags.includes("winesAndSpirits") : false;
+      },
+      set(val) {
+        this.setQuery("winesAndSpirits", val);
       }
     }
   },

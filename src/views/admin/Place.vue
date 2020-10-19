@@ -53,6 +53,10 @@
         input(type="checkbox" v-model="form.drinks")
         label Drinks
 
+      .checkbox
+        input(type="checkbox" v-model="form.winesAndSpirits")
+        label Wines & Spirits
+
     .form-element
       label Opening hours
 
