@@ -11,7 +11,7 @@
 
 @import "admin";
 
-@import url("https://fonts.googleapis.com/css2?family=Raleway&display=swap");
+// @import url("https://fonts.googleapis.com/css2?family=Raleway&display=swap");
 
 * {
   box-sizing: border-box;
@@ -45,10 +45,11 @@ body {
 }
 #app {
   font-family: "Raleway", sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  // -webkit-font-smoothing: antialiased;
+  // -moz-osx-font-smoothing: grayscale;
   text-align: left;
   color: #2c3e50;
+  // color: darken($base-color, 65);
 }
 
 header {

@@ -17,6 +17,16 @@ router.beforeEach((to, from, next) => {
   }
 });
 
+let ralewayFontFace = new FontFace(
+  "Raleway",
+  "url(https://fonts.gstatic.com/s/raleway/v18/1Ptxg8zYS_SKggPN4iEgvnHyvveLxVvaorCIPrE.woff2",
+  { style: "normal", weight: 400 }
+);
+
+ralewayFontFace.loaded.then(font => {
+  document.fonts.add(font);
+});
+
 let app;
 auth.onAuthStateChanged(user => {
   if (!app) {

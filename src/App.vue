@@ -37,7 +37,6 @@
             br
             | {{ time }}
 
-
         router-view
 
         footer
