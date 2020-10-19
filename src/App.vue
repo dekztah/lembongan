@@ -55,79 +55,57 @@ export default {
     return {};
   },
   computed: {
-    ...mapState(["userProfile"]),
+    ...mapState(["userProfile", "loading", "mobileNavOpen", "timestamp"]),
     showLogout() {
       return Object.keys(this.userProfile).length > 1;
     },
-    mobileNavOpen() {
-      return this.$store.state.mobileNavOpen;
-    },
     dayOfTheWeek() {
-      return this.$store.state.timestamp.format("dddd");
+      return this.timestamp.format("dddd");
     },
     date() {
-      return this.$store.state.timestamp.format("YYYY-MM-DD");
+      return this.timestamp.format("YYYY-MM-DD");
     },
     time() {
-      return this.$store.state.timestamp.format("HH:mm");
-    },
-    loading() {
-      return this.$store.state.loading;
+      return this.timestamp.format("HH:mm");
     },
     partOfTheDay() {
       let parts = ["pagi", "siang", "sore", "malam"];
-
-      let greeting;
       let time = this.$moment(this.time, "HH:mm");
 
       if (
         this.$moment(time, "HH:mm").isBetween(
-          this.toMoment("0:00"),
-          this.toMoment("11:59"),
+          this.toMoment("4:00"),
+          this.toMoment("9:59"),
           undefined,
           "[]"
         )
       ) {
-        greeting = parts[0];
+        return parts[0];
       }
 
       if (
         this.$moment(time, "HH:mm").isBetween(
-          this.toMoment("12:00"),
-          this.toMoment("14:59"),
+          this.toMoment("10:00"),
+          this.toMoment("13:59"),
           undefined,
           "[]"
         )
       ) {
-        greeting = parts[1];
+        return parts[1];
       }
 
       if (
         this.$moment(time, "HH:mm").isBetween(
-          this.toMoment("15:00"),
+          this.toMoment("14:00"),
           this.toMoment("18:29"),
           undefined,
           "[]"
         )
       ) {
-        greeting = parts[2];
+        return parts[2];
       }
 
-      if (
-        time.isBetween(
-          this.$moment("18:30", "HH:mm"),
-          this.$moment("23:59", "HH:mm"),
-          undefined,
-          "[]"
-        )
-      ) {
-        greeting = parts[3];
-      }
-
-      return greeting;
-    },
-    devWidth() {
-      return window.innerWidth;
+      return parts[3];
     }
   },
   mounted() {
