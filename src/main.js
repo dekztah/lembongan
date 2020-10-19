@@ -23,9 +23,15 @@ let ralewayFontFace = new FontFace(
   { style: "normal", weight: 400 }
 );
 
-ralewayFontFace.loaded.then(font => {
-  document.fonts.add(font);
-});
+ralewayFontFace
+  .load()
+  .then(font => {
+    document.fonts.add(font);
+    document.body.style.fontFamily = '"Raleway", sans-serif';
+  })
+  .catch(error => {
+    console.log("e", error);
+  });
 
 let app;
 auth.onAuthStateChanged(user => {
