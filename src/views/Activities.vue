@@ -97,7 +97,7 @@
 
 <script>
 import store from "@/store";
-import { mapState } from "vuex";
+import { mapState, mapActions } from "vuex";
 import isotope from "vueisotope";
 
 export default {
@@ -111,8 +111,7 @@ export default {
   },
   data() {
     return {
-      isDouble: false,
-      columnWidth: 180
+      isDouble: false
     };
   },
   computed: {
@@ -122,7 +121,8 @@ export default {
       "mobileNavOpen",
       "timestamp",
       "weekArray",
-      "today"
+      "today",
+      "columnWidth"
     ]),
     isotopeOptions() {
       return {
@@ -256,11 +256,8 @@ export default {
       });
     });
   },
-  created() {
-    if (window.innerWidth < 576)
-      this.columnWidth = (window.innerWidth - 30) / 2;
-  },
   methods: {
+    ...mapActions(["toggleMobileNav"]),
     setIsOpen() {
       const today = this.today;
       const time = this.$moment(this.timestamp, "HH:mm");
@@ -296,7 +293,7 @@ export default {
       this.$nextTick(() => {
         this.$refs.isotope.layout("masonry");
       });
-      if (this.mobileNavOpen) this.$store.commit("toggleMobileNav");
+      if (this.mobileNavOpen) this.toggleMobileNav();
     },
     setQuery(queryKey, val) {
       let queryPush = JSON.parse(JSON.stringify(this.$route.query));

@@ -9,6 +9,9 @@ Vue.use(VueMoment);
 
 const currentTime = Vue.moment();
 
+const columnWidth =
+  window.innerWidth < 576 ? (window.innerWidth - 30) / 2 : 180;
+
 export default new Vuex.Store({
   state: {
     timestamp: currentTime,
@@ -22,6 +25,7 @@ export default new Vuex.Store({
     services: [],
     boats: [],
     document: {},
+    columnWidth: columnWidth,
     warnDisabled: localStorage.getItem("boatWarnDisabled") || false
   },
   mutations: {
@@ -51,9 +55,18 @@ export default new Vuex.Store({
     }
   },
   actions: {
-    setWarnDisabled({ commit }, bool) {
-      localStorage.setItem("boatWarnDisabled", bool);
-      commit("setWarnDisabled", bool);
+    setWarnDisabled({ commit }) {
+      localStorage.setItem("boatWarnDisabled", true);
+      commit("setWarnDisabled", true);
+    },
+    toggleMobileNav({ commit }) {
+      commit("toggleMobileNav");
+    },
+    closeMobileNav({ commit }) {
+      commit("closeMobileNav");
+    },
+    updateTimeStamp({ commit }) {
+      commit("updateTimeStamp");
     },
     async login({ dispatch }, form) {
       const { user } = await auth.signInWithEmailAndPassword(

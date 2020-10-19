@@ -48,7 +48,7 @@
 </template>
 
 <script>
-import { mapState } from "vuex";
+import { mapState, mapActions } from "vuex";
 
 export default {
   data() {
@@ -110,21 +110,18 @@ export default {
   },
   mounted() {
     setInterval(() => {
-      this.$store.commit("updateTimeStamp");
+      this.updateTimeStamp();
     }, 30000);
   },
   methods: {
+    ...mapActions([
+      "toggleMobileNav",
+      "logout",
+      "closeMobileNav",
+      "updateTimeStamp"
+    ]),
     toMoment(time) {
       return this.$moment(time, "HH:mm");
-    },
-    toggleMobileNav() {
-      this.$store.commit("toggleMobileNav");
-    },
-    closeMobileNav() {
-      this.$store.commit("closeMobileNav");
-    },
-    logout() {
-      this.$store.dispatch("logout");
     }
   },
   watch: {

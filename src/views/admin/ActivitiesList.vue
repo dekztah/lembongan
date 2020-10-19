@@ -23,10 +23,7 @@ export default {
     };
   },
   computed: {
-    ...mapState(["activities"]),
-    loading() {
-      return this.$store.state.loading;
-    },
+    ...mapState(["activities", "loading"]),
     filteredActivities() {
       return this.activities.filter(activity =>
         this.search

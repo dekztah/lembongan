@@ -7,7 +7,7 @@
     .daily-schedule(v-if="allDepartures[dest].length")
       .direction(v-if="!loading")
         .warning(v-if="!warnDisabled")
-          button.clear(@click="disableWarning")
+          button.clear(@click="setWarnDisabled")
           .icon
           .text
             span This schedule is for information only, please always contact the boat company before travelling
@@ -84,7 +84,7 @@
 
 <script>
 import store from "@/store";
-import { mapState } from "vuex";
+import { mapState, mapActions } from "vuex";
 import flatPickr from "vue-flatpickr-component";
 
 export default {
@@ -136,6 +136,7 @@ export default {
     });
   },
   methods: {
+    ...mapActions(["setWarnDisabled", "toggleMobileNav"]),
     destination(dest) {
       this.allDepartures[dest] = [];
       this.boats
@@ -197,12 +198,9 @@ export default {
     waUrl(contact) {
       return `https://wa.me/${contact}`;
     },
-    disableWarning() {
-      this.$store.dispatch("setWarnDisabled", true);
-    },
     toggleCalendar(index) {
       this.calOpen = this.calOpen === index ? null : index;
-      // if (this.mobileNavOpen) this.$store.commit("toggleMobileNav");
+      if (this.mobileNavOpen) this.toggleMobileNav();
     }
   },
   watch: {
