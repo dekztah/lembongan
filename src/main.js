@@ -19,7 +19,7 @@ router.beforeEach((to, from, next) => {
 
 let ralewayFontFace = new FontFace(
   "Raleway",
-  "url(https://fonts.gstatic.com/s/raleway/v18/1Ptxg8zYS_SKggPN4iEgvnHyvveLxVvaorCIPrE.woff2",
+  "url(https://fonts.gstatic.com/s/raleway/v18/1Ptxg8zYS_SKggPN4iEgvnHyvveLxVvaorCIPrE.woff2)",
   { style: "normal", weight: 400 }
 );
 
