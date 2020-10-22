@@ -8,6 +8,7 @@ firebase.initializeApp(firebaseConfig);
 
 const auth = firebase.auth();
 const db = firebase.database();
+
 firebase.analytics();
 
 export { db, auth };
