@@ -17,6 +17,7 @@ export default {
       return `https://wa.me/${contact}`;
     },
     chipVisible(place, key) {
+      if (key === "noPreorder") key = "preorder";
       return place[key] && key !== "openNow";
     },
     toggleDouble(index) {
