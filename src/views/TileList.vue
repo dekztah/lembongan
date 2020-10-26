@@ -128,7 +128,7 @@ export default {
       const time = this.$moment(this.timestamp, "HH:mm");
 
       this.collection.forEach((item, index) => {
-        this.$set(this.collection[index], "openNow", false);
+        this.$set(this.collection[index], "openNow", item.reservation || false);
         this.$set(this.collection[index], "opensIn", null);
         this.$set(this.collection[index], "closesIn", null);
 
