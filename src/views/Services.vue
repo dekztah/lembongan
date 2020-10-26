@@ -71,6 +71,7 @@ import { mapState, mapActions } from "vuex";
 import isotope from "vueisotope";
 import checkbox from "@/components/Checkbox";
 import chip from "@/components/Chip";
+import generic from "@/mixins/generic";
 
 export default {
   components: {
@@ -83,6 +84,7 @@ export default {
     q: String,
     open: String
   },
+  mixins: [generic],
   data() {
     return {
       isDouble: false,
@@ -142,17 +144,6 @@ export default {
           });
           return boolArr.every(f => f === true);
         });
-    },
-    search: {
-      get() {
-        return this.q ? this.q : "";
-      },
-      set(val) {
-        if (val === "") val = undefined;
-        this.$router.replace({
-          query: { q: val, tags: this.tags, open: this.status || undefined }
-        });
-      }
     }
   },
   beforeRouteEnter(to, from, next) {
@@ -200,40 +191,6 @@ export default {
         });
         this.init = false;
       }
-    },
-    toggleDouble(index) {
-      this.isDouble = this.isDouble === index ? null : index;
-      this.$nextTick(() => {
-        this.$refs.isotope.arrange();
-      });
-      if (this.mobileNavOpen) this.toggleMobileNav();
-    },
-    setQuery(key, val) {
-      this.setFilter({ key, val });
-
-      if (key === "openNow") {
-        if (!val) val = undefined;
-        this.$router.replace({
-          query: { q: this.q, tags: this.tags, open: val }
-        });
-      } else {
-        let queryPush = JSON.parse(JSON.stringify(this.$route.query));
-        if (!queryPush.tags) queryPush.tags = [];
-
-        if (val) {
-          queryPush.tags.push(key);
-        } else {
-          queryPush.tags.splice(this.tags.indexOf(key), 1);
-        }
-        this.$router.push({ query: queryPush });
-      }
-    },
-    chipVisible(place, key) {
-      if (key === "noPreorder") key = "preorder";
-      return place[key] && key !== "openNow";
-    },
-    waUrl(contact) {
-      return `https://wa.me/${contact}`;
     }
   },
   watch: {
