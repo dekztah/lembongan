@@ -7,7 +7,7 @@
   font-size: 12px;
   color: white;
 
-  &.open {
+  &.open-now {
     background: #00ff00 !important;
   }
 
@@ -15,7 +15,8 @@
   &.dine-in {
     background: #ff00b0 !important;
   }
-  &.preorder {
+  &.preorder,
+  &.no-preorder {
     background: #0066ff !important;
   }
   &.delivery {
@@ -36,7 +37,7 @@
   &.drinks {
     background: #52dd88 !important;
   }
-  &.wines-spirits {
+  &.wines-and-spirits {
     background: #fdd92b !important;
   }
 

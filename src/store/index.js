@@ -20,6 +20,7 @@ export default new Vuex.Store({
     mobileNavOpen: false,
     loading: true,
     userProfile: {},
+    filters: {},
     places: [],
     activities: [],
     services: [],
@@ -52,6 +53,12 @@ export default new Vuex.Store({
     },
     setWarnDisabled(state, bool) {
       state.warnDisabled = bool;
+    },
+    setFilters(state, filters) {
+      state.filters = filters;
+    },
+    setFilter(state, { key, val }) {
+      state.filters[key] = val;
     }
   },
   actions: {
@@ -67,6 +74,12 @@ export default new Vuex.Store({
     },
     updateTimeStamp({ commit }) {
       commit("updateTimeStamp");
+    },
+    setFilters({ commit }, filters) {
+      commit("setFilters", filters);
+    },
+    setFilter({ commit }, obj) {
+      commit("setFilter", obj);
     },
     async login({ dispatch }, form) {
       const { user } = await auth.signInWithEmailAndPassword(

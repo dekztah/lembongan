@@ -6,45 +6,14 @@
         input(type="text" v-model="search"  placeholder="search by name...")
         button.clear(v-if="search !== ''" @click="search = undefined")
 
-      .filter.checkbox
-        input(type="checkbox" v-model="status" id="open")
-        label.open(:class="{'chip': status}" for="open") open places only
-
-      .filter.checkbox
-        input(type="checkbox" v-model="dineIn" id="dineIn")
-        label.dine-in(:class="{'chip': dineIn}" for="dineIn") dine-in
-
-      .filter.checkbox
-        input(type="checkbox" v-model="delivery" id="delivery")
-        label.delivery(:class="{'chip': delivery}" for="delivery") delivery
-
-      .filter.checkbox
-        input(type="checkbox" v-model="noPreorder" id="noPreorder")
-        label.preorder(:class="{'chip': noPreorder}" for="noPreorder") no preorder
-
-      .filter.checkbox
-        input(type="checkbox" v-model="localDishes" id="localDishes")
-        label.local-dishes(:class="{'chip': localDishes}" for="localDishes") local dishes
-
-      .filter.checkbox
-        input(type="checkbox" v-model="coffee" id="coffee")
-        label.coffee(:class="{'chip': coffee}" for="coffee") coffee
-
-      .filter.checkbox
-        input(type="checkbox" v-model="rendang" id="rendang")
-        label.rendang(:class="{'chip': rendang}" for="rendang") rendang
-
-      .filter.checkbox
-        input(type="checkbox" v-model="desserts" id="desserts")
-        label.desserts(:class="{'chip': desserts}" for="desserts") desserts
-
-      .filter.checkbox
-        input(type="checkbox" v-model="drinks" id="drinks")
-        label.drinks(:class="{'chip': drinks}" for="drinks") drinks
-
-      .filter.checkbox
-        input(type="checkbox" v-model="winesAndSpirits" id="winesAndSpirits")
-        label.wines-spirits(:class="{'chip': winesAndSpirits}" for="winesAndSpirits") wines & spirits
+      checkbox(
+        v-for="(cb, key) in filters"
+        :key="`filter-${key}`"
+        :name="key"
+        :tags="tags"
+        :open="open"
+        @input="setQuery(key, $event)"
+      )
 
       .count(v-if="!loading") {{ filteredPlaces.length }} results
 
@@ -56,7 +25,7 @@
     )
       .tile.place(
         v-for="(place, index) in filteredPlaces"
-        :class="{'open': place.isOpen, 'double': isDouble === index, 'warn': (place.opensIn !== null && place.opensIn >= 0) || (place.closesIn !== null && place.closesIn >= 1) }"
+        :class="{'open': place.openNow, 'double': isDouble === index, 'warn': (place.opensIn !== null && place.opensIn >= 0) || (place.closesIn !== null && place.closesIn >= 1) }"
         :key="`place-${index}`"
       )
         .content(@click="toggleDouble(index)")
@@ -74,15 +43,12 @@
                 .text Closed today
 
           .info
-            span.chip.dine-in(v-if="place.dineIn") dine-in
-            span.chip.preorder(v-if="place.preorder") preorder
-            span.chip.delivery(v-if="place.delivery") delivery
-            span.chip.local-dishes(v-if="place.localDishes") local dishes
-            span.chip.coffee(v-if="place.coffee") coffee
-            span.chip.rendang(v-if="place.rendang") rendang
-            span.chip.desserts(v-if="place.desserts") desserts
-            span.chip.drinks(v-if="place.drinks") drinks
-            span.chip.wines-spirits(v-if="place.winesAndSpirits") wines & spirits
+            chip(
+              v-if="chipVisible(place, key)"
+              v-for="(cb, key) in filters"
+              :key="`chip-${key}`"
+              :name="key"
+            ) {{ key }}
 
         .footer
           .status
@@ -102,10 +68,14 @@
 import store from "@/store";
 import { mapState, mapActions } from "vuex";
 import isotope from "vueisotope";
+import checkbox from "@/components/Checkbox";
+import chip from "@/components/Chip";
 
 export default {
   components: {
-    isotope
+    isotope,
+    checkbox,
+    chip
   },
   props: {
     tags: Array,
@@ -114,11 +84,25 @@ export default {
   },
   data() {
     return {
-      isDouble: false
+      isDouble: false,
+      init: true,
+      filterArray: {
+        openNow: false,
+        dineIn: false,
+        delivery: false,
+        noPreorder: false,
+        localDishes: false,
+        coffee: false,
+        rendang: false,
+        desserts: false,
+        drinks: false,
+        winesAndSpirits: false
+      }
     };
   },
   computed: {
     ...mapState([
+      "filters",
       "places",
       "timestamp",
       "today",
@@ -131,6 +115,7 @@ export default {
       return {
         transitionDuration: "0.3s",
         layoutMode: "masonry",
+        initLayout: false,
         masonry: {
           columnWidth: this.columnWidth,
           gutter: 10
@@ -138,46 +123,25 @@ export default {
       };
     },
     filteredPlaces() {
+      const filterKeys = Object.entries(this.filters);
+
       return this.places
         .filter(place => place.active === true)
-        .filter(place => (this.status ? place.isOpen === this.status : true))
-        .filter(place => (this.dineIn ? place.dineIn === this.dineIn : true))
-        .filter(place =>
-          this.delivery ? place.delivery === this.delivery : true
-        )
-        .filter(place =>
-          this.noPreorder ? place.preorder !== this.noPreorder : true
-        )
-        .filter(place =>
-          this.localDishes ? place.localDishes === this.localDishes : true
-        )
-        .filter(place => (this.coffee ? place.coffee === this.coffee : true))
-        .filter(place => (this.rendang ? place.rendang === this.rendang : true))
-        .filter(place =>
-          this.desserts ? place.desserts === this.desserts : true
-        )
-        .filter(place => (this.drinks ? place.drinks === this.drinks : true))
-        .filter(place =>
-          this.winesAndSpirits
-            ? place.winesAndSpirits === this.winesAndSpirits
-            : true
-        )
         .filter(place =>
           this.search
             ? place.name.toLowerCase().includes(this.search.toLowerCase())
             : true
-        );
-    },
-    status: {
-      get() {
-        return this.open == "true";
-      },
-      set(val) {
-        if (!val) val = undefined;
-        this.$router.replace({
-          query: { q: this.q, tags: this.tags, open: val }
+        )
+        .filter((place, index) => {
+          const boolArr = filterKeys.map(key => {
+            if (key[0] === "noPreorder") {
+              return key[1] ? place.preorder !== key[1] : true;
+            } else {
+              return key[1] ? place[key[0]] === key[1] : true;
+            }
+          });
+          return boolArr.every(f => f === true);
         });
-      }
     },
     search: {
       get() {
@@ -186,97 +150,26 @@ export default {
       set(val) {
         if (val === "") val = undefined;
         this.$router.replace({
-          query: { q: val, tags: this.tags, open: this.status || undefined }
+          query: { q: val, tags: this.tags, open: this.open || undefined }
         });
-      }
-    },
-    dineIn: {
-      get() {
-        return this.tags ? this.tags.includes("dineIn") : false;
-      },
-      set(val) {
-        this.setQuery("dineIn", val);
-      }
-    },
-    delivery: {
-      get() {
-        return this.tags ? this.tags.includes("delivery") : false;
-      },
-      set(val) {
-        this.setQuery("delivery", val);
-      }
-    },
-    noPreorder: {
-      get() {
-        return this.tags ? this.tags.includes("noPreorder") : false;
-      },
-      set(val) {
-        this.setQuery("noPreorder", val);
-      }
-    },
-    localDishes: {
-      get() {
-        return this.tags ? this.tags.includes("localDishes") : false;
-      },
-      set(val) {
-        this.setQuery("localDishes", val);
-      }
-    },
-    coffee: {
-      get() {
-        return this.tags ? this.tags.includes("coffee") : false;
-      },
-      set(val) {
-        this.setQuery("coffee", val);
-      }
-    },
-    rendang: {
-      get() {
-        return this.tags ? this.tags.includes("rendang") : false;
-      },
-      set(val) {
-        this.setQuery("rendang", val);
-      }
-    },
-    desserts: {
-      get() {
-        return this.tags ? this.tags.includes("desserts") : false;
-      },
-      set(val) {
-        this.setQuery("desserts", val);
-      }
-    },
-    drinks: {
-      get() {
-        return this.tags ? this.tags.includes("drinks") : false;
-      },
-      set(val) {
-        this.setQuery("drinks", val);
-      }
-    },
-    winesAndSpirits: {
-      get() {
-        return this.tags ? this.tags.includes("winesAndSpirits") : false;
-      },
-      set(val) {
-        this.setQuery("winesAndSpirits", val);
       }
     }
   },
   beforeRouteEnter(to, from, next) {
     store.dispatch("fetchCollection", "places").then(() => {
       next(vm => {
-        vm.setIsOpen();
+        vm.setFilters(vm.filterArray);
+        vm.setOpenNow();
       });
     });
   },
   methods: {
-    ...mapActions(["toggleMobileNav"]),
-    setIsOpen() {
+    ...mapActions(["toggleMobileNav", "setFilters", "setFilter"]),
+    setOpenNow() {
       const today = this.today;
       const time = this.$moment(this.timestamp, "HH:mm");
       this.places.forEach((place, index) => {
-        this.$set(this.places[index], "isOpen", false);
+        this.$set(this.places[index], "openNow", false);
         this.$set(this.places[index], "opensIn", null);
         this.$set(this.places[index], "closesIn", null);
 
@@ -285,7 +178,7 @@ export default {
           const endTime = this.$moment(element.end, "HH:mm");
 
           if (time.isBetween(startTime, endTime)) {
-            place.isOpen = true;
+            place.openNow = true;
           }
 
           if (
@@ -300,24 +193,43 @@ export default {
           }
         });
       });
+      if (this.init) {
+        this.$nextTick(() => {
+          this.$refs.isotope.arrange();
+        });
+        this.init = false;
+      }
     },
     toggleDouble(index) {
       this.isDouble = this.isDouble === index ? null : index;
       this.$nextTick(() => {
-        this.$refs.isotope.layout("masonry");
+        this.$refs.isotope.arrange();
       });
       if (this.mobileNavOpen) this.toggleMobileNav();
     },
-    setQuery(queryKey, val) {
-      let queryPush = JSON.parse(JSON.stringify(this.$route.query));
-      if (!queryPush.tags) queryPush.tags = [];
+    setQuery(key, val) {
+      this.setFilter({ key, val });
 
-      if (val) {
-        queryPush.tags.push(queryKey);
+      if (key === "openNow") {
+        if (!val) val = undefined;
+        this.$router.replace({
+          query: { q: this.q, tags: this.tags, open: val }
+        });
       } else {
-        queryPush.tags.splice(this.tags.indexOf(queryKey), 1);
+        let queryPush = JSON.parse(JSON.stringify(this.$route.query));
+        if (!queryPush.tags) queryPush.tags = [];
+
+        if (val) {
+          queryPush.tags.push(key);
+        } else {
+          queryPush.tags.splice(this.tags.indexOf(key), 1);
+        }
+        this.$router.push({ query: queryPush });
       }
-      this.$router.push({ query: queryPush });
+    },
+    chipVisible(place, key) {
+      if (key === "noPreorder") key = "preorder";
+      return place[key] && key !== "openNow";
     },
     waUrl(contact) {
       return `https://wa.me/${contact}`;
@@ -325,7 +237,7 @@ export default {
   },
   watch: {
     timestamp() {
-      this.setIsOpen();
+      this.setOpenNow();
     }
   }
 };

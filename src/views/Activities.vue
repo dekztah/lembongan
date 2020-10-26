@@ -5,41 +5,14 @@
         input(type="text" v-model="search"  placeholder="search by name...")
         button.clear(v-if="search !== ''" @click="search = undefined")
 
-      .filter.checkbox
-        input(type="checkbox" v-model="status" id="open")
-        label.open(:class="{'chip': status}" for="open") open places only
-
-      .filter.checkbox
-        input(type="checkbox" v-model="yoga" id="yoga")
-        label.yoga(:class="{'chip': yoga}" for="yoga") yoga
-
-      .filter.checkbox
-        input(type="checkbox" v-model="gym" id="gym")
-        label.gym(:class="{'chip': gym}" for="gym") gym
-
-      .filter.checkbox
-        input(type="checkbox" v-model="freediving" id="freediving")
-        label.freediving(:class="{'chip': freediving}" for="freediving") freediving
-
-      .filter.checkbox
-        input(type="checkbox" v-model="scubaDiving" id="scubaDiving")
-        label.scuba-diving(:class="{'chip': scubaDiving}" for="scubaDiving") scuba diving
-
-      .filter.checkbox
-        input(type="checkbox" v-model="surf" id="surf")
-        label.surf(:class="{'chip': surf}" for="surf") surf
-
-      .filter.checkbox
-        input(type="checkbox" v-model="snorkeling" id="snorkeling")
-        label.snorkeling(:class="{'chip': snorkeling}" for="snorkeling") snorkeling
-
-      //- .filter.checkbox
-      //-   input(type="checkbox" v-model="fishing" id="fishing")
-      //-   label(for="fishing")
-
-      .filter.checkbox
-        input(type="checkbox" v-model="tour" id="tour")
-        label.tour(:class="{'chip': tour}" for="tour") tour
+      checkbox(
+        v-for="(cb, key) in filters"
+        :key="`filter-${key}`"
+        :name="key"
+        :tags="tags"
+        :open="open"
+        @input="setQuery(key, $event)"
+      )
 
       .count(v-if="!loading") {{ filteredActivities.length }} results
 
@@ -51,7 +24,7 @@
     )
       .tile.activity(
         v-for="(place, index) in filteredActivities"
-        :class="{'open': place.isOpen, 'double': isDouble === index, 'reservation' : place.reservation,'warn': (place.opensIn !== null && place.opensIn >= 0) || (place.closesIn !== null && place.closesIn >= 1) }"
+        :class="{'open': place.openNow, 'double': isDouble === index, 'reservation' : place.reservation,'warn': (place.opensIn !== null && place.opensIn >= 0) || (place.closesIn !== null && place.closesIn >= 1) }"
         :key="`place-${index}`"
       )
         .content(@click="toggleDouble(index)")
@@ -69,15 +42,12 @@
                 .text Closed today
 
           .info
-            span.chip.yoga(v-if="place.yoga") yoga
-            span.chip.gym(v-if="place.gym") gym
-            span.chip.freediving(v-if="place.freediving") freediving
-            span.chip.scuba-diving(v-if="place.scubaDiving") scuba diving
-            span.chip.surf(v-if="place.surf") surf
-            span.chip.snorkeling(v-if="place.snorkeling") snorkeling
-            span.chip.fishing(v-if="place.fishing") fishing
-            span.chip.mini-golf(v-if="place.miniGolf") mini golf
-            span.chip.tour(v-if="place.tour") tour
+            chip(
+              v-if="chipVisible(place, key)"
+              v-for="(cb, key) in filters"
+              :key="`chip-${key}`"
+              :name="key"
+            ) {{ key }}
 
         .footer(:class="{'reservation': place.reservation}")
           .status
@@ -99,10 +69,14 @@
 import store from "@/store";
 import { mapState, mapActions } from "vuex";
 import isotope from "vueisotope";
+import checkbox from "@/components/Checkbox";
+import chip from "@/components/Chip";
 
 export default {
   components: {
-    isotope
+    isotope,
+    checkbox,
+    chip
   },
   props: {
     tags: Array,
@@ -111,11 +85,23 @@ export default {
   },
   data() {
     return {
-      isDouble: false
+      isDouble: false,
+      init: true,
+      filterArray: {
+        openNow: false,
+        yoga: false,
+        gym: false,
+        freediving: false,
+        scubaDiving: false,
+        surf: false,
+        snorkeling: false,
+        tour: false
+      }
     };
   },
   computed: {
     ...mapState([
+      "filters",
       "activities",
       "loading",
       "mobileNavOpen",
@@ -128,6 +114,7 @@ export default {
       return {
         transitionDuration: "0.3s",
         layoutMode: "masonry",
+        initLayout: false,
         masonry: {
           columnWidth: this.columnWidth,
           gutter: 10
@@ -135,43 +122,21 @@ export default {
       };
     },
     filteredActivities() {
+      const filterKeys = Object.entries(this.filters);
+
       return this.activities
         .filter(place => place.active === true)
-        .filter(place =>
-          this.status
-            ? (place.isOpen || place.reservation) === this.status
-            : true
-        )
-        .filter(place => (this.yoga ? place.yoga === this.yoga : true))
-        .filter(place => (this.gym ? place.gym === this.gym : true))
-        .filter(place =>
-          this.freediving ? place.freediving === this.freediving : true
-        )
-        .filter(place =>
-          this.scubaDiving ? place.scubaDiving === this.scubaDiving : true
-        )
-        .filter(place => (this.surf ? place.surf === this.surf : true))
-        .filter(place =>
-          this.snorkeling ? place.snorkeling === this.snorkeling : true
-        )
-        .filter(place => (this.fishing ? place.fishing === this.fishing : true))
-        .filter(place => (this.tour ? place.tour === this.tour : true))
         .filter(place =>
           this.search
             ? place.name.toLowerCase().includes(this.search.toLowerCase())
             : true
-        );
-    },
-    status: {
-      get() {
-        return this.open == "true";
-      },
-      set(val) {
-        if (!val) val = undefined;
-        this.$router.replace({
-          query: { q: this.q, tags: this.tags, open: val }
+        )
+        .filter((place, index) => {
+          const boolArr = filterKeys.map(key => {
+            return key[1] ? place[key[0]] === key[1] : true;
+          });
+          return boolArr.every(f => f === true);
         });
-      }
     },
     search: {
       get() {
@@ -183,87 +148,28 @@ export default {
           query: { q: val, tags: this.tags, open: this.status || undefined }
         });
       }
-    },
-    yoga: {
-      get() {
-        return this.tags ? this.tags.includes("yoga") : false;
-      },
-      set(val) {
-        this.setQuery("yoga", val);
-      }
-    },
-    gym: {
-      get() {
-        return this.tags ? this.tags.includes("gym") : false;
-      },
-      set(val) {
-        this.setQuery("gym", val);
-      }
-    },
-    freediving: {
-      get() {
-        return this.tags ? this.tags.includes("freediving") : false;
-      },
-      set(val) {
-        this.setQuery("freediving", val);
-      }
-    },
-    scubaDiving: {
-      get() {
-        return this.tags ? this.tags.includes("scubaDiving") : false;
-      },
-      set(val) {
-        this.setQuery("scubaDiving", val);
-      }
-    },
-    surf: {
-      get() {
-        return this.tags ? this.tags.includes("surf") : false;
-      },
-      set(val) {
-        this.setQuery("surf", val);
-      }
-    },
-    snorkeling: {
-      get() {
-        return this.tags ? this.tags.includes("snorkeling") : false;
-      },
-      set(val) {
-        this.setQuery("snorkeling", val);
-      }
-    },
-    fishing: {
-      get() {
-        return this.tags ? this.tags.includes("fishing") : false;
-      },
-      set(val) {
-        this.setQuery("fishing", val);
-      }
-    },
-    tour: {
-      get() {
-        return this.tags ? this.tags.includes("tour") : false;
-      },
-      set(val) {
-        this.setQuery("tour", val);
-      }
     }
   },
   beforeRouteEnter(to, from, next) {
     store.dispatch("fetchCollection", "activities").then(() => {
       next(vm => {
-        vm.setIsOpen();
+        vm.setFilters(vm.filterArray);
+        vm.setopenNow();
       });
     });
   },
   methods: {
-    ...mapActions(["toggleMobileNav"]),
-    setIsOpen() {
+    ...mapActions(["toggleMobileNav", "setFilters", "setFilter"]),
+    setopenNow() {
       const today = this.today;
       const time = this.$moment(this.timestamp, "HH:mm");
 
       this.activities.forEach((place, index) => {
-        this.$set(this.activities[index], "isOpen", false);
+        this.$set(
+          this.activities[index],
+          "openNow",
+          place.reservation || false
+        );
         this.$set(this.activities[index], "opensIn", null);
         this.$set(this.activities[index], "closesIn", null);
 
@@ -272,7 +178,7 @@ export default {
           const endTime = this.$moment(element.end, "HH:mm");
 
           if (time.isBetween(startTime, endTime)) {
-            place.isOpen = true;
+            place.openNow = true;
           }
 
           if (
@@ -287,24 +193,42 @@ export default {
           }
         });
       });
+      if (this.init) {
+        this.$nextTick(() => {
+          this.$refs.isotope.arrange();
+        });
+        this.init = false;
+      }
     },
     toggleDouble(index) {
       this.isDouble = this.isDouble === index ? null : index;
       this.$nextTick(() => {
-        this.$refs.isotope.layout("masonry");
+        this.$refs.isotope.arrange();
       });
       if (this.mobileNavOpen) this.toggleMobileNav();
     },
-    setQuery(queryKey, val) {
-      let queryPush = JSON.parse(JSON.stringify(this.$route.query));
-      if (!queryPush.tags) queryPush.tags = [];
+    setQuery(key, val) {
+      this.setFilter({ key, val });
 
-      if (val) {
-        queryPush.tags.push(queryKey);
+      if (key === "openNow") {
+        if (!val) val = undefined;
+        this.$router.replace({
+          query: { q: this.q, tags: this.tags, open: val }
+        });
       } else {
-        queryPush.tags.splice(this.tags.indexOf(queryKey), 1);
+        let queryPush = JSON.parse(JSON.stringify(this.$route.query));
+        if (!queryPush.tags) queryPush.tags = [];
+
+        if (val) {
+          queryPush.tags.push(key);
+        } else {
+          queryPush.tags.splice(this.tags.indexOf(key), 1);
+        }
+        this.$router.push({ query: queryPush });
       }
-      this.$router.push({ query: queryPush });
+    },
+    chipVisible(place, key) {
+      return place[key] && key !== "openNow";
     },
     waUrl(contact) {
       return `https://wa.me/${contact}`;
@@ -312,7 +236,7 @@ export default {
   },
   watch: {
     timestamp() {
-      this.setIsOpen();
+      this.setopenNow();
     }
   }
 };

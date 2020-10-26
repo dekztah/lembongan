@@ -5,37 +5,14 @@
         input(type="text" v-model="search"  placeholder="search by name...")
         button.clear(v-if="search !== ''" @click="search = undefined")
 
-      .filter.checkbox
-        input(type="checkbox" v-model="status" id="open")
-        label.open(:class="{'chip': status}" for="open") open places only
-
-      .filter.checkbox
-        input(type="checkbox" v-model="spa" id="spa")
-        label.spa(:class="{'chip': spa}" for="spa") spa
-
-      .filter.checkbox
-        input(type="checkbox" v-model="barber" id="barber")
-        label.barber(:class="{'chip': barber}" for="barber") barber
-
-      .filter.checkbox
-        input(type="checkbox" v-model="hairdresser" id="hairdresser")
-        label.hairdresser(:class="{'chip': hairdresser}" for="hairdresser") hairdresser
-
-      .filter.checkbox
-        input(type="checkbox" v-model="laundry" id="laundry")
-        label.laundry(:class="{'chip': laundry}" for="laundry") laundry
-
-      .filter.checkbox
-        input(type="checkbox" v-model="tailor" id="tailor")
-        label.tailor(:class="{'chip': tailor}" for="tailor") tailor
-
-      .filter.checkbox
-        input(type="checkbox" v-model="handcraft" id="handcraft")
-        label.handcraft(:class="{'chip': handcraft}" for="handcraft") handcraft
-
-      .filter.checkbox
-        input(type="checkbox" v-model="motorRepair" id="motorRepair")
-        label.motor-repair(:class="{'chip': motorRepair}" for="motorRepair") motor repair
+      checkbox(
+        v-for="(cb, key) in filters"
+        :key="`filter-${key}`"
+        :name="key"
+        :tags="tags"
+        :open="open"
+        @input="setQuery(key, $event)"
+      )
 
       .count(v-if="!loading") {{ filteredServices.length }} results
 
@@ -47,7 +24,7 @@
     )
       .tile.service(
         v-for="(place, index) in filteredServices"
-        :class="{'open': place.isOpen, 'double': isDouble === index, 'reservation' : place.reservation,'warn': (place.opensIn !== null && place.opensIn >= 0) || (place.closesIn !== null && place.closesIn >= 1) }"
+        :class="{'open': place.openNow, 'double': isDouble === index, 'reservation' : place.reservation,'warn': (place.opensIn !== null && place.opensIn >= 0) || (place.closesIn !== null && place.closesIn >= 1) }"
         :key="`place-${index}`"
       )
         .content(@click="toggleDouble(index)")
@@ -65,14 +42,12 @@
                 .text Closed today
 
           .info
-            span.chip.spa(v-if="place.spa") spa
-            span.chip.barber(v-if="place.barber") barber
-            span.chip.hairdresser(v-if="place.hairdresser") hairdresser
-            span.chip.laundry(v-if="place.laundry") laundry
-            span.chip.tailor(v-if="place.tailor") tailor
-            span.chip.motor-repair(v-if="place.motorRepair") motor repair
-            span.chip.handcraft(v-if="place.handcraft") handcraft
-            span.chip.preorder(v-if="place.preorder") preorder
+            chip(
+              v-if="chipVisible(place, key)"
+              v-for="(cb, key) in filters"
+              :key="`chip-${key}`"
+              :name="key"
+            ) {{ key }}
 
         .footer(:class="{'reservation': place.reservation}")
           .status
@@ -94,10 +69,14 @@
 import store from "@/store";
 import { mapState, mapActions } from "vuex";
 import isotope from "vueisotope";
+import checkbox from "@/components/Checkbox";
+import chip from "@/components/Chip";
 
 export default {
   components: {
-    isotope
+    isotope,
+    checkbox,
+    chip
   },
   props: {
     tags: Array,
@@ -106,11 +85,24 @@ export default {
   },
   data() {
     return {
-      isDouble: false
+      isDouble: false,
+      init: true,
+      filterArray: {
+        openNow: false,
+        noPreorder: false,
+        spa: false,
+        barber: false,
+        hairdresser: false,
+        laundry: false,
+        // tailor: false,
+        handcraft: false,
+        motorRepair: false
+      }
     };
   },
   computed: {
     ...mapState([
+      "filters",
       "services",
       "loading",
       "mobileNavOpen",
@@ -123,6 +115,7 @@ export default {
       return {
         transitionDuration: "0.3s",
         layoutMode: "masonry",
+        initLayout: false,
         masonry: {
           columnWidth: this.columnWidth,
           gutter: 10
@@ -130,42 +123,25 @@ export default {
       };
     },
     filteredServices() {
+      const filterKeys = Object.entries(this.filters);
+
       return this.services
         .filter(place => place.active === true)
-        .filter(place =>
-          this.status
-            ? (place.isOpen || place.reservation) === this.status
-            : true
-        )
-        .filter(place => (this.spa ? place.spa === this.spa : true))
-        .filter(place => (this.barber ? place.barber === this.barber : true))
-        .filter(place =>
-          this.hairdresser ? place.hairdresser === this.hairdresser : true
-        )
-        .filter(place => (this.laundry ? place.laundry === this.laundry : true))
-        .filter(place => (this.tailor ? place.tailor === this.tailor : true))
-        .filter(place =>
-          this.motorRepair ? place.motorRepair === this.motorRepair : true
-        )
-        .filter(place =>
-          this.handcraft ? place.handcraft === this.handcraft : true
-        )
         .filter(place =>
           this.search
             ? place.name.toLowerCase().includes(this.search.toLowerCase())
             : true
-        );
-    },
-    status: {
-      get() {
-        return this.open == "true";
-      },
-      set(val) {
-        if (!val) val = undefined;
-        this.$router.replace({
-          query: { q: this.q, tags: this.tags, open: val }
+        )
+        .filter((place, index) => {
+          const boolArr = filterKeys.map(key => {
+            if (key[0] === "noPreorder") {
+              return key[1] ? place.preorder !== key[1] : true;
+            } else {
+              return key[1] ? place[key[0]] === key[1] : true;
+            }
+          });
+          return boolArr.every(f => f === true);
         });
-      }
     },
     search: {
       get() {
@@ -177,79 +153,24 @@ export default {
           query: { q: val, tags: this.tags, open: this.status || undefined }
         });
       }
-    },
-    spa: {
-      get() {
-        return this.tags ? this.tags.includes("spa") : false;
-      },
-      set(val) {
-        this.setQuery("spa", val);
-      }
-    },
-    barber: {
-      get() {
-        return this.tags ? this.tags.includes("barber") : false;
-      },
-      set(val) {
-        this.setQuery("barber", val);
-      }
-    },
-    hairdresser: {
-      get() {
-        return this.tags ? this.tags.includes("hairdresser") : false;
-      },
-      set(val) {
-        this.setQuery("hairdresser", val);
-      }
-    },
-    laundry: {
-      get() {
-        return this.tags ? this.tags.includes("laundry") : false;
-      },
-      set(val) {
-        this.setQuery("laundry", val);
-      }
-    },
-    tailor: {
-      get() {
-        return this.tags ? this.tags.includes("tailor") : false;
-      },
-      set(val) {
-        this.setQuery("tailor", val);
-      }
-    },
-    motorRepair: {
-      get() {
-        return this.tags ? this.tags.includes("motorRepair") : false;
-      },
-      set(val) {
-        this.setQuery("motorRepair", val);
-      }
-    },
-    handcraft: {
-      get() {
-        return this.tags ? this.tags.includes("handcraft") : false;
-      },
-      set(val) {
-        this.setQuery("handcraft", val);
-      }
     }
   },
   beforeRouteEnter(to, from, next) {
     store.dispatch("fetchCollection", "services").then(() => {
       next(vm => {
-        vm.setIsOpen();
+        vm.setFilters(vm.filterArray);
+        vm.setOpenNow();
       });
     });
   },
   methods: {
-    ...mapActions(["toggleMobileNav"]),
-    setIsOpen() {
+    ...mapActions(["toggleMobileNav", "setFilters", "setFilter"]),
+    setOpenNow() {
       const today = this.today;
       const time = this.$moment(this.timestamp, "HH:mm");
 
       this.services.forEach((place, index) => {
-        this.$set(this.services[index], "isOpen", false);
+        this.$set(this.services[index], "openNow", place.reservation || false);
         this.$set(this.services[index], "opensIn", null);
         this.$set(this.services[index], "closesIn", null);
 
@@ -258,7 +179,7 @@ export default {
           const endTime = this.$moment(element.end, "HH:mm");
 
           if (time.isBetween(startTime, endTime)) {
-            place.isOpen = true;
+            place.openNow = true;
           }
 
           if (
@@ -273,24 +194,43 @@ export default {
           }
         });
       });
+      if (this.init) {
+        this.$nextTick(() => {
+          this.$refs.isotope.arrange();
+        });
+        this.init = false;
+      }
     },
     toggleDouble(index) {
       this.isDouble = this.isDouble === index ? null : index;
       this.$nextTick(() => {
-        this.$refs.isotope.layout("masonry");
+        this.$refs.isotope.arrange();
       });
       if (this.mobileNavOpen) this.toggleMobileNav();
     },
-    setQuery(queryKey, val) {
-      let queryPush = JSON.parse(JSON.stringify(this.$route.query));
-      if (!queryPush.tags) queryPush.tags = [];
+    setQuery(key, val) {
+      this.setFilter({ key, val });
 
-      if (val) {
-        queryPush.tags.push(queryKey);
+      if (key === "openNow") {
+        if (!val) val = undefined;
+        this.$router.replace({
+          query: { q: this.q, tags: this.tags, open: val }
+        });
       } else {
-        queryPush.tags.splice(this.tags.indexOf(queryKey), 1);
+        let queryPush = JSON.parse(JSON.stringify(this.$route.query));
+        if (!queryPush.tags) queryPush.tags = [];
+
+        if (val) {
+          queryPush.tags.push(key);
+        } else {
+          queryPush.tags.splice(this.tags.indexOf(key), 1);
+        }
+        this.$router.push({ query: queryPush });
       }
-      this.$router.push({ query: queryPush });
+    },
+    chipVisible(place, key) {
+      if (key === "noPreorder") key = "preorder";
+      return place[key] && key !== "openNow";
     },
     waUrl(contact) {
       return `https://wa.me/${contact}`;
@@ -298,7 +238,7 @@ export default {
   },
   watch: {
     timestamp() {
-      this.setIsOpen();
+      this.setOpenNow();
     }
   }
 };
