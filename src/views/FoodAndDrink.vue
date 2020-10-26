@@ -23,44 +23,12 @@
       :options="isotopeOptions"
       ref="isotope"
     )
-      .tile.place(
+      tile.place(
         v-for="(place, index) in filteredPlaces"
-        :class="{'open': place.openNow, 'double': isDouble === index, 'warn': (place.opensIn !== null && place.opensIn >= 0) || (place.closesIn !== null && place.closesIn >= 1) }"
+        :place="place"
         :key="`place-${index}`"
+        @arrange="arrange"
       )
-        .content(@click="toggleDouble(index)")
-          h2.name {{ place.name }}
-
-          .weekdays
-            .wd(v-for="(weekday, wid) in place.openingHours" :class="{'closed': weekday[0].start === '', 'today' : wid === today}")
-              div.day-names {{ weekArray[wid] }}
-              span(v-if="weekday[0].start !== ''")
-                div.interval(v-for="time in weekday")
-                  | {{ time.start }}-{{ time.end }}
-
-              span(v-else).closed-icon-text
-                .icon
-                .text Closed today
-
-          .info
-            chip(
-              v-if="chipVisible(place, key)"
-              v-for="(cb, key) in filters"
-              :key="`chip-${key}`"
-              :name="key"
-            ) {{ key }}
-
-        .footer
-          .status
-            span(v-if="place.opensIn && place.opensIn !== null") Opens in:&nbsp;
-              strong {{ place.opensIn + 1 }}m
-            span(v-if="place.closesIn && place.closesIn !== null") Closes in:&nbsp;
-              strong {{ place.closesIn + 1 }}m
-
-          a.maps(v-if="place.gMapsLink" :href="place.gMapsLink" target="_blank")
-          a.fb(v-if="place.facebookLink" :href="place.facebookLink" target="_blank")
-          a.insta(v-if="place.instagramLink" :href="place.instagramLink" target="_blank")
-          a.wa(v-if="place.contact" :href="waUrl(place.contact)" target="_blank")
 
 </template>
 
@@ -69,14 +37,14 @@ import store from "@/store";
 import { mapState, mapActions } from "vuex";
 import isotope from "vueisotope";
 import checkbox from "@/components/Checkbox";
-import chip from "@/components/Chip";
+import tile from "@/components/Tile";
 import generic from "@/mixins/generic";
 
 export default {
   components: {
     isotope,
     checkbox,
-    chip
+    tile
   },
   props: {
     tags: Array,
@@ -86,7 +54,6 @@ export default {
   mixins: [generic],
   data() {
     return {
-      isDouble: false,
       init: true,
       filterArray: {
         openNow: false,
@@ -159,6 +126,7 @@ export default {
     setOpenNow() {
       const today = this.today;
       const time = this.$moment(this.timestamp, "HH:mm");
+
       this.places.forEach((place, index) => {
         this.$set(this.places[index], "openNow", false);
         this.$set(this.places[index], "opensIn", null);
@@ -185,9 +153,7 @@ export default {
         });
       });
       if (this.init) {
-        this.$nextTick(() => {
-          this.$refs.isotope.arrange();
-        });
+        this.arrange();
         this.init = false;
       }
     }

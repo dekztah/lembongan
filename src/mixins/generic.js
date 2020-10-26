@@ -13,15 +13,7 @@ export default {
     }
   },
   methods: {
-    waUrl(contact) {
-      return `https://wa.me/${contact}`;
-    },
-    chipVisible(place, key) {
-      if (key === "noPreorder") key = "preorder";
-      return place[key] && key !== "openNow";
-    },
-    toggleDouble(index) {
-      this.isDouble = this.isDouble === index ? null : index;
+    arrange() {
       this.$nextTick(() => {
         this.$refs.isotope.arrange();
       });
