@@ -50,6 +50,17 @@
   "localDishes": false,
   "active": false,
   "reservation": false,
+  "tags": {
+    "dineIn": false,
+    "delivery": false,
+    "preorder": false,
+    "localDishes": false,
+    "coffee": false,
+    "rendang": false,
+    "desserts": false,
+    "drinks": false,
+    "winesAndSpirits": false
+  },
   "contact": "",
   "gMapsLink": "",
   "facebookLink": "",

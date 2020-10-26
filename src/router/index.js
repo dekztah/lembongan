@@ -2,10 +2,8 @@ import Vue from "vue";
 import VueRouter from "vue-router";
 import qs from "qs";
 
-import FoodAndDrink from "../views/FoodAndDrink.vue";
-import Activities from "../views/Activities.vue";
-import Services from "../views/Services.vue";
 import Boats from "../views/Boats.vue";
+import TileList from "../views/TileList.vue";
 
 import Login from "../views/Login.vue";
 import Admin from "../views/Admin.vue";
@@ -25,7 +23,21 @@ const routes = [
   {
     path: "/food-and-drink",
     name: "Food & Drink",
-    component: FoodAndDrink,
+    component: TileList,
+    meta: {
+      collection: "places",
+      filterProps: [
+        "dineIn",
+        "delivery",
+        "noPreorder",
+        "localDishes",
+        "coffee",
+        "rendang",
+        "desserts",
+        "drinks",
+        "winesAndSpirits"
+      ]
+    },
     props: route => ({
       tags: route.query.tags,
       q: route.query.q,
@@ -35,7 +47,19 @@ const routes = [
   {
     path: "/activities",
     name: "Activities",
-    component: Activities,
+    component: TileList,
+    meta: {
+      collection: "activities",
+      filterProps: [
+        "yoga",
+        "gym",
+        "freediving",
+        "scubaDiving",
+        "surf",
+        "snorkeling",
+        "tour"
+      ]
+    },
     props: route => ({
       tags: route.query.tags,
       q: route.query.q,
@@ -45,7 +69,19 @@ const routes = [
   {
     path: "/services",
     name: "Services",
-    component: Services,
+    component: TileList,
+    meta: {
+      collection: "services",
+      filterProps: [
+        "noPreorder",
+        "spa",
+        "barber",
+        "hairdresser",
+        "laundry",
+        "handcraft",
+        "motorRepair"
+      ]
+    },
     props: route => ({
       tags: route.query.tags,
       q: route.query.q,

@@ -1,5 +1,6 @@
 <template lang="pug">
-  .services.main
+  .food-and-drink.main
+
     .filter-control(:class="{'active': mobileNavOpen}")
       .filter.text-input
         input(type="text" v-model="search"  placeholder="search by name...")
@@ -14,18 +15,18 @@
         @input="setQuery(key, $event)"
       )
 
-      .count(v-if="!loading") {{ filteredServices.length }} results
+      .count(v-if="!loading") {{ filteredCollection.length }} results
 
-    isotope.tile-list.services-list(
+    isotope.tile-list(
       v-if="!loading"
-      :list="filteredServices"
+      :list="filteredCollection"
       :options="isotopeOptions"
       ref="isotope"
     )
-      tile.service(
-        v-for="(place, index) in filteredServices"
-        :place="place"
-        :key="`place-${index}`"
+      tile(
+        v-for="(item, index) in filteredCollection"
+        :item="item"
+        :key="`item-${index}`"
         @arrange="arrange"
       )
 
@@ -53,32 +54,30 @@ export default {
   mixins: [generic],
   data() {
     return {
-      isDouble: false,
-      init: true,
-      filterArray: {
-        openNow: false,
-        noPreorder: false,
-        spa: false,
-        barber: false,
-        hairdresser: false,
-        laundry: false,
-        // tailor: false,
-        handcraft: false,
-        motorRepair: false
-      }
+      init: true
     };
   },
   computed: {
     ...mapState([
       "filters",
-      "services",
+      "collections",
+      "timestamp",
+      "today",
       "loading",
       "mobileNavOpen",
-      "timestamp",
-      "weekArray",
-      "today",
       "columnWidth"
     ]),
+    collection() {
+      return this.collections[this.$route.meta.collection];
+    },
+    filterObject() {
+      const filterProps = this.$route.meta.filterProps;
+      const obj = {
+        ...{ openNow: false },
+        ...filterProps.reduce((o, key) => ({ ...o, [key]: false }), {})
+      };
+      return obj;
+    },
     isotopeOptions() {
       return {
         transitionDuration: "0.3s",
@@ -90,22 +89,23 @@ export default {
         }
       };
     },
-    filteredServices() {
+    filteredCollection() {
       const filterKeys = Object.entries(this.filters);
+      const collection = this.$route.meta.collection;
 
-      return this.services
-        .filter(place => place.active === true)
-        .filter(place =>
+      return this.collection
+        .filter(item => item.active === true)
+        .filter(item =>
           this.search
-            ? place.name.toLowerCase().includes(this.search.toLowerCase())
+            ? item.name.toLowerCase().includes(this.search.toLowerCase())
             : true
         )
-        .filter((place, index) => {
+        .filter((item, index) => {
           const boolArr = filterKeys.map(key => {
             if (key[0] === "noPreorder") {
-              return key[1] ? place.preorder !== key[1] : true;
+              return key[1] ? item.preorder !== key[1] : true;
             } else {
-              return key[1] ? place[key[0]] === key[1] : true;
+              return key[1] ? item[key[0]] === key[1] : true;
             }
           });
           return boolArr.every(f => f === true);
@@ -113,9 +113,10 @@ export default {
     }
   },
   beforeRouteEnter(to, from, next) {
-    store.dispatch("fetchCollection", "services").then(() => {
+    store.dispatch("fetchCollection", to.meta.collection).then(() => {
       next(vm => {
-        vm.setFilters(vm.filterArray);
+        vm.init = true;
+        vm.setFilters(vm.filterObject);
         vm.setOpenNow();
       });
     });
@@ -126,28 +127,28 @@ export default {
       const today = this.today;
       const time = this.$moment(this.timestamp, "HH:mm");
 
-      this.services.forEach((place, index) => {
-        this.$set(this.services[index], "openNow", place.reservation || false);
-        this.$set(this.services[index], "opensIn", null);
-        this.$set(this.services[index], "closesIn", null);
+      this.collection.forEach((item, index) => {
+        this.$set(this.collection[index], "openNow", false);
+        this.$set(this.collection[index], "opensIn", null);
+        this.$set(this.collection[index], "closesIn", null);
 
-        place.openingHours[today].forEach(element => {
+        item.openingHours[today].forEach(element => {
           const startTime = this.$moment(element.start, "HH:mm");
           const endTime = this.$moment(element.end, "HH:mm");
 
           if (time.isBetween(startTime, endTime)) {
-            place.openNow = true;
+            item.openNow = true;
           }
 
           if (
             startTime.diff(time, "s") < 1800 &&
             startTime.diff(time, "s") >= 0
           ) {
-            place.opensIn = startTime.diff(time, "m");
+            item.opensIn = startTime.diff(time, "m");
           }
 
           if (endTime.diff(time, "s") < 1800 && endTime.diff(time, "s") >= 0) {
-            place.closesIn = endTime.diff(time, "m");
+            item.closesIn = endTime.diff(time, "m");
           }
         });
       });

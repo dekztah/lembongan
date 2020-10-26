@@ -1,12 +1,12 @@
 <template lang="pug">
   .tile(
-    :class="{'open': place.openNow, 'double': isDouble, 'reservation' : place.reservation, 'warn': (place.opensIn !== null && place.opensIn >= 0) || (place.closesIn !== null && place.closesIn >= 1) }"
+    :class="{'open': item.openNow, 'double': isDouble, 'reservation' : item.reservation, 'warn': (item.opensIn !== null && item.opensIn >= 0) || (item.closesIn !== null && item.closesIn >= 1) }"
   )
     .content(@click="toggleDouble()")
-      h2.name {{ place.name }}
+      h2.name {{ item.name }}
 
-      .weekdays(v-if="!place.reservation")
-        .wd(v-for="(weekday, wid) in place.openingHours" :class="{'closed': weekday[0].start === '', 'today' : wid === today}")
+      .weekdays(v-if="!item.reservation")
+        .wd(v-for="(weekday, wid) in item.openingHours" :class="{'closed': weekday[0].start === '', 'today' : wid === today}")
           div.day-names {{ weekArray[wid] }}
           span(v-if="weekday[0].start !== ''")
             div.interval(v-for="time in weekday")
@@ -18,24 +18,24 @@
 
       .info
         chip(
-          v-if="chipVisible(place, key)"
+          v-if="chipVisible(item, key)"
           v-for="(cb, key) in filters"
           :key="`chip-${key}`"
           :name="key"
         ) {{ key }}
 
-    .footer(:class="{'reservation': place.reservation}")
+    .footer(:class="{'reservation': item.reservation}")
       .status
-        span(v-if="place.opensIn && place.opensIn !== null") Opens in:&nbsp;
-          strong {{ place.opensIn + 1 }}m
-        span(v-if="place.closesIn && place.closesIn !== null") Closes in:&nbsp;
-          strong {{ place.closesIn + 1 }}m
-        span(v-if="place.reservation") Contact for details
+        span(v-if="item.opensIn && item.opensIn !== null") Opens in:&nbsp;
+          strong {{ item.opensIn + 1 }}m
+        span(v-if="item.closesIn && item.closesIn !== null") Closes in:&nbsp;
+          strong {{ item.closesIn + 1 }}m
+        span(v-if="item.reservation") Contact for details
 
-      a.maps(v-if="place.gMapsLink" :href="place.gMapsLink" target="_blank")
-      a.fb(v-if="place.facebookLink" :href="place.facebookLink" target="_blank")
-      a.insta(v-if="place.instagramLink" :href="place.instagramLink" target="_blank")
-      a.wa(v-if="place.contact" :href="waUrl(place.contact)" target="_blank")
+      a.maps(v-if="item.gMapsLink" :href="item.gMapsLink" target="_blank")
+      a.fb(v-if="item.facebookLink" :href="item.facebookLink" target="_blank")
+      a.insta(v-if="item.instagramLink" :href="item.instagramLink" target="_blank")
+      a.wa(v-if="item.contact" :href="waUrl(item.contact)" target="_blank")
 
 </template>
 <script>
@@ -52,7 +52,7 @@ export default {
     chip
   },
   props: {
-    place: Object
+    item: Object
   },
   computed: {
     ...mapState(["filters", "weekArray", "today"])
@@ -62,9 +62,9 @@ export default {
       this.isDouble = !this.isDouble;
       this.$emit("arrange");
     },
-    chipVisible(place, key) {
+    chipVisible(item, key) {
       if (key === "noPreorder") key = "preorder";
-      return place[key] && key !== "openNow";
+      return item[key] && key !== "openNow";
     },
     waUrl(contact) {
       return `https://wa.me/${contact}`;

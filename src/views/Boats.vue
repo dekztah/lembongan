@@ -84,7 +84,7 @@
 
 <script>
 import store from "@/store";
-import { mapState, mapActions } from "vuex";
+import { mapState, mapActions, mapGetters } from "vuex";
 import flatPickr from "vue-flatpickr-component";
 
 export default {
@@ -118,14 +118,14 @@ export default {
   },
   computed: {
     ...mapState([
-      "boats",
       "warnDisabled",
       "loading",
       "timestamp",
       "mobileNavOpen",
       "weekArray",
       "today"
-    ])
+    ]),
+    ...mapGetters(["boats"])
   },
   beforeRouteEnter(to, from, next) {
     store.dispatch("fetchCollection", "boats").then(() => {

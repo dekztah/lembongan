@@ -21,10 +21,12 @@ export default new Vuex.Store({
     loading: true,
     userProfile: {},
     filters: {},
-    places: [],
-    activities: [],
-    services: [],
-    boats: [],
+    collections: {
+      places: [],
+      activities: [],
+      services: [],
+      boats: []
+    },
     document: {},
     columnWidth: columnWidth,
     warnDisabled: localStorage.getItem("boatWarnDisabled") || false
@@ -46,7 +48,7 @@ export default new Vuex.Store({
       state.loading = bool;
     },
     setCollection(state, { collectionName, collection }) {
-      state[collectionName] = collection;
+      state.collections[collectionName] = collection;
     },
     setDocument(state, val) {
       state.document = val;
@@ -108,7 +110,7 @@ export default new Vuex.Store({
     async fetchCollection({ commit, state }, collectionName) {
       let collection = [];
 
-      if (!state[collectionName].length) {
+      if (!state.collections[collectionName].length) {
         commit("toggleLoading", true);
         await db
           .ref(collectionName)
@@ -148,6 +150,9 @@ export default new Vuex.Store({
           commit("toggleLoading", false);
         });
     }
+  },
+  getters: {
+    boats: state => state.collections.boats
   },
   modules: {}
 });
