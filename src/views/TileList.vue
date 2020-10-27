@@ -91,7 +91,6 @@ export default {
     },
     filteredCollection() {
       const filterKeys = Object.entries(this.filters);
-      const collection = this.$route.meta.collection;
 
       return this.collection
         .filter(item => item.active === true)
