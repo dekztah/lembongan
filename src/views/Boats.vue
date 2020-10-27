@@ -39,8 +39,8 @@
               a.social.wa(v-if="boat.contact" :href="waUrl(boat.contact)" target="_blank") WA
 
         .line
-          .before-noon
-            .segment(v-for="segment in hoursArray['beforeNoon']")
+          .part-of-day(v-for="(partOfDay, key) in hoursArray")
+            .segment(v-for="segment in hoursArray[key]")
               .hour {{ segment }}:00
               .boat(v-for="(boat, index) in allDepartures[dest]" v-if="compareTime(boat[dest][today], segment)" :class="{'has-left': boat.hasLeft, 'noop': !boat.operating, 'warn': boat.leavingSoon}")
                 .content
@@ -55,26 +55,6 @@
                     .not-operating(v-if="!boat.operating") Not operating today
                     span(v-if="boat.leavingIn") departs in:&nbsp;
                       strong {{ boat.leavingIn}}
-
-                  a.social.maps(v-if="boat.gMapsLink" :href="boat.gMapsLink" target="_blank")
-                  a.social.wa(v-if="boat.contact" :href="waUrl(boat.contact)" target="_blank") WA
-
-          .after-noon
-            .segment(v-for="segment in hoursArray['afterNoon']")
-              .hour {{ segment }}:00
-              .boat(v-for="(boat, index) in allDepartures[dest]" v-if="compareTime(boat[dest][today], segment)" :class="{'has-left': boat.hasLeft, 'noop': !boat.operating, 'warn': boat.leavingSoon }")
-                .content
-                  h2.time {{boat[dest][today]}}
-                  .name(@click="toggleCalendar(index)") {{ boat.name }}
-                  .cal-wrapper(v-show="calOpen === index")
-                    flat-pickr(v-model="boat.opDays" :config="config")
-
-                .footer
-                  .status
-                    div(v-if="dest === 'departToSanur'") {{ boat.lembonganLocation}}
-                    .not-operating(v-if="!boat.operating") Not operating today
-                    span(v-if="boat.leavingIn") departs in:&nbsp;
-                      strong {{ boat.leavingIn }}
 
                   a.social.maps(v-if="boat.gMapsLink" :href="boat.gMapsLink" target="_blank")
                   a.social.wa(v-if="boat.contact" :href="waUrl(boat.contact)" target="_blank") WA

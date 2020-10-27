@@ -7,6 +7,10 @@
   font-size: 12px;
   color: white;
 
+  &:last-child {
+    margin-right: 0;
+  }
+
   &.open-now {
     background: #00ff00 !important;
   }
