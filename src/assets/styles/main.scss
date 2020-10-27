@@ -99,6 +99,7 @@ header {
       color: black;
       text-decoration: none;
       position: relative;
+      -webkit-tap-highlight-color: transparent;
 
       &:before {
         content: "";
@@ -176,9 +177,12 @@ header {
     display: none;
 
     @media only screen and (max-width: $breakpoint-small) {
-      margin-left: -15px;
       flex: 1;
       display: block;
+
+      .hamburger {
+        margin-left: -15px;
+      }
     }
   }
 }
@@ -263,6 +267,7 @@ footer {
   border: 0;
   margin: 8px 0 0 0;
   overflow: visible;
+  -webkit-tap-highlight-color: transparent;
 
   &:hover {
     @if $hamburger-hover-use-filter == true {

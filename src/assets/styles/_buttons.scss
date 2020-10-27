@@ -11,6 +11,7 @@
   border: none;
   cursor: pointer;
   font-family: "Raleway", sans-serif;
+  -webkit-tap-highlight-color: transparent;
 
   &.router-link-active {
     font-weight: 600;

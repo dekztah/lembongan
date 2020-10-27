@@ -121,6 +121,7 @@
 
   .content {
     padding: 15px;
+    -webkit-tap-highlight-color: transparent;
   }
   &.open {
     h2.name {
