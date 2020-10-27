@@ -15,16 +15,15 @@
   box-sizing: border-box;
 }
 
-// html {
-//   margin-left: calc(100vw - 100%);
-//   &::-webkit-scrollbar {
-//     width: 10px;
-//     background-color: white;
-//   }
-//   &::-webkit-scrollbar-thumb {
-//     background-color: black;
-//   }
-// }
+html {
+  &::-webkit-scrollbar {
+    width: 4px;
+    background-color: black;
+  }
+  &::-webkit-scrollbar-thumb {
+    background-color: white;
+  }
+}
 
 body {
   background: $base-color;
