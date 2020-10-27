@@ -113,9 +113,11 @@ header {
         transition: width 0.4s ease-in-out;
       }
 
+      &:active,
       &.router-link-active {
         font-weight: 600;
-
+      }
+      &.router-link-active {
         &:before {
           width: 100%;
         }
