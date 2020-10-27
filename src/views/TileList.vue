@@ -90,7 +90,7 @@ export default {
       };
     },
     filteredCollection() {
-      const filterKeys = Object.entries(this.filters);
+      const filterEntries = Object.entries(this.filters);
 
       return this.collection
         .filter(item => item.active === true)
@@ -100,14 +100,14 @@ export default {
             : true
         )
         .filter((item, index) => {
-          const boolArr = filterKeys.map(key => {
-            if (key[0] === "noPreorder") {
-              return key[1] ? item.preorder !== key[1] : true;
+          const boolArr = filterEntries.map(([filterKey, filterValue]) => {
+            if (filterKey === "noPreorder") {
+              return filterValue ? item.preorder !== filterValue : true;
             } else {
-              return key[1] ? item[key[0]] === key[1] : true;
+              return filterValue ? item[filterKey] === filterValue : true;
             }
           });
-          return boolArr.every(f => f === true);
+          return boolArr.every(filter => filter === true);
         });
     }
   },
