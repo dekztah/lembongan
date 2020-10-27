@@ -32,10 +32,10 @@
           strong {{ item.closesIn + 1 }}m
         span(v-if="item.reservation") Contact for details
 
-      a.maps(v-if="item.gMapsLink" :href="item.gMapsLink" target="_blank")
-      a.fb(v-if="item.facebookLink" :href="item.facebookLink" target="_blank")
-      a.insta(v-if="item.instagramLink" :href="item.instagramLink" target="_blank")
-      a.wa(v-if="item.contact" :href="waUrl(item.contact)" target="_blank")
+      a.social.maps(v-if="item.gMapsLink" :href="item.gMapsLink" target="_blank")
+      a.social.fb(v-if="item.facebookLink" :href="item.facebookLink" target="_blank")
+      a.social.insta(v-if="item.instagramLink" :href="item.instagramLink" target="_blank")
+      a.social.wa(v-if="item.contact" :href="waUrl(item.contact)" target="_blank")
 
 </template>
 <script>

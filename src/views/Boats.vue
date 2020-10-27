@@ -21,20 +21,22 @@
           .boat(v-for="(boat, index) in allDepartures[dest]" :class="{'has-left': boat.hasLeft, 'noop': !boat.operating, 'warn': boat.leavingSoon }")
             .generic
               .time(@click="toggleCalendar(index)") {{ boat[dest][today]}} {{ boat.name }}
-
-                br
-                span.location(v-if="dest === 'departToSanur'") from {{ boat.lembonganLocation}}
+              span.location(v-if="dest === 'departToSanur'") from {{ boat.lembonganLocation}}
                 .not-operating(v-if="!boat.operating") Not operating today
+
+            .cal-wrapper(v-show="calOpen === index")
+              flat-pickr(v-model="boat.opDays" :config="config")
+
+            .other
+              .status
 
                 span.leaving(v-if="boat.leavingIn") departs in:&nbsp;
                   strong {{ boat.leavingIn}}
 
-              .other
-                a.maps(v-if="boat.gMapsLink" :href="boat.gMapsLink" target="_blank")
-                a.wa(v-if="boat.contact" :href="waUrl(boat.contact)" target="_blank") WA
+                span(v-if="boat.hasLeft") already left
 
-            .cal-wrapper(v-show="calOpen === index")
-              flat-pickr(v-model="boat.opDays" :config="config")
+              a.social.maps(v-if="boat.gMapsLink" :href="boat.gMapsLink" target="_blank")
+              a.social.wa(v-if="boat.contact" :href="waUrl(boat.contact)" target="_blank") WA
 
         .line
           .before-noon
@@ -54,8 +56,8 @@
                     span(v-if="boat.leavingIn") departs in:&nbsp;
                       strong {{ boat.leavingIn}}
 
-                  a.maps(v-if="boat.gMapsLink" :href="boat.gMapsLink" target="_blank")
-                  a.wa(v-if="boat.contact" :href="waUrl(boat.contact)" target="_blank") WA
+                  a.social.maps(v-if="boat.gMapsLink" :href="boat.gMapsLink" target="_blank")
+                  a.social.wa(v-if="boat.contact" :href="waUrl(boat.contact)" target="_blank") WA
 
           .after-noon
             .segment(v-for="segment in hoursArray['afterNoon']")
@@ -74,8 +76,8 @@
                     span(v-if="boat.leavingIn") departs in:&nbsp;
                       strong {{ boat.leavingIn }}
 
-                  a.maps(v-if="boat.gMapsLink" :href="boat.gMapsLink" target="_blank")
-                  a.wa(v-if="boat.contact" :href="waUrl(boat.contact)" target="_blank") WA
+                  a.social.maps(v-if="boat.gMapsLink" :href="boat.gMapsLink" target="_blank")
+                  a.social.wa(v-if="boat.contact" :href="waUrl(boat.contact)" target="_blank") WA
 
     .none(v-else)
       | ¯\_(ツ)_/¯ No boats today

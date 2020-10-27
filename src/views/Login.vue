@@ -4,7 +4,8 @@
       input.text-input(type="email" v-model="form.email")
       input.text-input(type="password" v-model="form.password")
 
-    button.button(@click="login") login
+      button.button(@click="login") login
+
 </template>
 
 <script>

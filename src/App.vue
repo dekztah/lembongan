@@ -41,7 +41,7 @@
 
         footer
           span.contact-me Incorrect data? Contact me on:&nbsp;
-          a.wa(href="https://wa.me/6282144453436" target="_blank") WA
+          a.social.wa(href="https://wa.me/6282144453436" target="_blank") WA
 
           a.kofi(href="https://ko-fi.com/dekztah" target="_blacnk")
 

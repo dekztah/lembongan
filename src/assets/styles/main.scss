@@ -430,42 +430,33 @@ footer {
     cubic-bezier(0, 0.2, 0.8, 1) infinite;
   animation-delay: calc(var(--animation-duration, 2s) / 2);
 }
-
-.maps {
+.social {
+  margin-left: 6px;
   display: inline-block;
   width: 26px;
   height: 26px;
-  background-image: url(../GoogleMaps.svg);
   text-indent: -9999px;
   background-size: 26px 26px;
+}
+
+.maps {
+  background-image: url(../GoogleMaps.svg);
+  margin-left: 0;
+  margin-right: -4px;
 }
 
 .wa {
-  display: inline-block;
-  width: 32px;
-  height: 32px;
   background-image: url(../WhatsApp.svg);
-  text-indent: -9999px;
-  background-size: 32px 32px;
 }
 
 .fb {
-  display: inline-block;
-  width: 26px;
-  height: 26px;
   background-image: url(../Facebook.svg);
-  text-indent: -9999px;
-  background-size: 26px 26px;
 }
 
 .insta {
-  display: inline-block;
-  width: 28px;
-  height: 28px;
   background-image: url(../Instagram.svg);
-  text-indent: -9999px;
-  background-size: 28px 28px;
 }
+
 .kofi {
   background-color: darken($base-color, 20) !important;
   background-image: url(../Kofi.svg);

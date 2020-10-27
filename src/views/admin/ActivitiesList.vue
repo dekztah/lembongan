@@ -23,9 +23,9 @@ export default {
     };
   },
   computed: {
-    ...mapState(["activities", "loading"]),
+    ...mapState(["collections", "loading"]),
     filteredActivities() {
-      return this.activities.filter(activity =>
+      return this.collections.activities.filter(activity =>
         this.search
           ? activity.name.toLowerCase().includes(this.search.toLowerCase())
           : true

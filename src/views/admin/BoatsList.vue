@@ -23,12 +23,12 @@ export default {
     };
   },
   computed: {
-    ...mapState(["boats"]),
+    ...mapState(["collections"]),
     loading() {
       return this.$store.state.loading;
     },
     filteredBoats() {
-      return this.boats.filter(boat =>
+      return this.collections.boats.filter(boat =>
         this.search
           ? boat.name.toLowerCase().includes(this.search.toLowerCase())
           : true
