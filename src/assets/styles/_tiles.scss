@@ -126,14 +126,14 @@
   &.open {
     h2.name {
       &:after {
-        background: #00ff00;
+        background-color: #00ff00;
       }
     }
   }
   &.warn {
     h2.name {
       &:after {
-        background: #ff9900;
+        background-color: #ff9900;
       }
     }
   }
@@ -164,9 +164,10 @@
       width: 16px;
       height: 16px;
       border-radius: 100%;
-      background: red;
+      background-color: red;
       vertical-align: middle;
       margin: 0 0 2px 10px;
+      transition: background-color 0.3s;
     }
   }
   .info {

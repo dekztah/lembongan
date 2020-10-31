@@ -150,12 +150,13 @@ export default {
               item.openNow = true;
             }
 
-            if (startTimeDiff < 1800 && startTimeDiff >= 0) {
-              item.opensIn = Math.floor(startTimeDiff / 60);
+            if (startTimeDiff < 1800 && startTimeDiff > 0) {
+              console.log("x", startTimeDiff, startTimeDiff / 60);
+              item.opensIn = Math.ceil(startTimeDiff / 60);
             }
 
-            if (endTimeDiff < 1800 && endTimeDiff >= 0) {
-              item.closesIn = Math.floor(endTimeDiff / 60);
+            if (endTimeDiff < 1800 && endTimeDiff > 0) {
+              item.closesIn = Math.ceil(endTimeDiff / 60);
             }
           }
         });

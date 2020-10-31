@@ -26,10 +26,10 @@
 
     .footer(:class="{'reservation': item.reservation}")
       .status
-        span(v-if="item.opensIn && item.opensIn !== null") Opens in:&nbsp;
-          strong {{ item.opensIn + 1 }}m
-        span(v-if="item.closesIn && item.closesIn !== null") Closes in:&nbsp;
-          strong {{ item.closesIn + 1 }}m
+        span(v-if="item.opensIn !== null") Opens in:&nbsp;
+          strong {{ item.opensIn }}m
+        span(v-if="item.closesIn !== null") Closes in:&nbsp;
+          strong {{ item.closesIn }}m
         span(v-if="item.reservation") Contact for details
 
       a.social.maps(v-if="item.gMapsLink" :href="item.gMapsLink" target="_blank")
