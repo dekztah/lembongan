@@ -39,7 +39,12 @@ import isotope from "vueisotope";
 import checkbox from "@/components/Checkbox";
 import tile from "@/components/Tile";
 import generic from "@/mixins/generic";
-import { isWithinInterval, parse, differenceInSeconds } from "date-fns";
+import {
+  isWithinInterval,
+  parse,
+  differenceInSeconds,
+  differenceInDays
+} from "date-fns";
 
 export default {
   components: {
@@ -94,6 +99,7 @@ export default {
       const filterEntries = Object.entries(this.filters);
 
       return this.collection
+
         .filter(item => item.active === true)
         .filter(item =>
           this.search
@@ -109,6 +115,13 @@ export default {
             }
           });
           return boolArr.every(filter => filter === true);
+        })
+        .sort((a, b) => {
+          if (a.createdDate) {
+            a.new =
+              differenceInDays(new Date(a.createdDate), this.timestamp) < 3;
+          }
+          return a.createdDate && a.new ? -1 : 0;
         });
     }
   },
