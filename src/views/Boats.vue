@@ -1,8 +1,14 @@
 <template lang="pug">
   .boats-list.main
     .title
-      button.button(@click="dest = 'departToLembongan'" :class="{'active': dest === 'departToLembongan'}") Sanur to Lembongan
-      button.button(@click="dest = 'departToSanur'" :class="{'active': dest === 'departToSanur'}") Lembongan to Sanur
+      button.button(@click="dest = 'departToLembongan'" :class="{'active': dest === 'departToLembongan'}")
+        | Sanur to Lembongan
+        br
+        | Sanur to Ceningan
+      button.button(@click="dest = 'departToSanur'" :class="{'active': dest === 'departToSanur'}")
+        | Lembongan to Sanur
+        br
+        | Ceningan to Sanur
 
     .daily-schedule(v-if="allDepartures[dest].length")
       .direction(v-if="!loading")
@@ -13,7 +19,8 @@
             span This schedule is for information only, please always contact the boat company before travelling
 
         .next
-          span(v-if="nextBoat[dest]") next boat to {{ dest === 'departToSanur' ? 'Sanur' : 'Lembongan'}} in:&nbsp;
+          span(v-if="nextBoat[dest]") next boat to {{ dest === 'departToSanur' ? 'Sanur' : 'Lembongan / Ceningan'}} in:&nbsp;
+            br
             strong {{ nextBoat[dest].leavingIn}}
           span(v-else) All boats to {{ dest === 'departToSanur' ? 'Sanur' : 'Lembongan'}} have left today
 

@@ -151,7 +151,6 @@ export default {
             }
 
             if (startTimeDiff < 1800 && startTimeDiff > 0) {
-              console.log("x", startTimeDiff, startTimeDiff / 60);
               item.opensIn = Math.ceil(startTimeDiff / 60);
             }
 
