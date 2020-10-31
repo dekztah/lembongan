@@ -21,6 +21,7 @@
           .boat(v-for="(boat, index) in allDepartures[dest]" :class="{'has-left': boat.hasLeft, 'noop': !boat.operating, 'warn': boat.leavingSoon }")
             .generic
               .time(@click="toggleCalendar(index)") {{ boat[dest][today]}} {{ boat.name }}
+              span.location(v-if="dest === 'departToLembongan'") to {{ boat.lembonganLocation}}
               span.location(v-if="dest === 'departToSanur'") from {{ boat.lembonganLocation}}
                 .not-operating(v-if="!boat.operating") Not operating today
 
