@@ -51,10 +51,11 @@
 
                 .footer
                   .status
-                    div(v-if="dest === 'departToSanur'") {{ boat.lembonganLocation}}
                     .not-operating(v-if="!boat.operating") Not operating today
                     span(v-if="boat.leavingIn") departs in:&nbsp;
                       strong {{ boat.leavingIn}}
+                    div(v-if="dest === 'departToSanur'") from {{ boat.lembonganLocation}}
+                    div(v-if="dest === 'departToLembongan'") to {{ boat.lembonganLocation}}
 
                   a.social.maps(v-if="boat.gMapsLink" :href="boat.gMapsLink" target="_blank")
                   a.social.wa(v-if="boat.contact" :href="waUrl(boat.contact)" target="_blank") WA
@@ -68,6 +69,17 @@
 import store from "@/store";
 import { mapState, mapActions, mapGetters } from "vuex";
 import flatPickr from "vue-flatpickr-component";
+
+import {
+  differenceInMinutes,
+  differenceInSeconds,
+  format,
+  parse,
+  getHours,
+  isAfter,
+  intervalToDuration,
+  formatDuration
+} from "date-fns";
 
 export default {
   components: {
@@ -121,6 +133,9 @@ export default {
     ...mapActions(["setWarnDisabled", "toggleMobileNav"]),
     destination(dest) {
       this.allDepartures[dest] = [];
+      let formattedDate = format(this.timestamp, "yyyy-MM-dd");
+      let leaveTime, timeDiff;
+
       this.boats
         .filter(boat => boat.active === true)
         .forEach(boat => {
@@ -135,31 +150,35 @@ export default {
 
       this.allDepartures[dest]
         .sort((a, b) => {
-          let aTime = this.$moment(a[dest][this.today], "HH:mm");
-          let bTime = this.$moment(b[dest][this.today], "HH:mm");
-          return aTime.diff(bTime, "m");
+          let aTime = this.parseTime(a[dest][this.today]);
+          let bTime = this.parseTime(b[dest][this.today]);
+          return differenceInMinutes(aTime, bTime);
         })
         .forEach(dep => {
-          const leaveTime = this.$moment(dep[dest][this.today], "HH:mm");
-          const timeDiff = leaveTime.diff(this.timestamp, "s");
+          leaveTime = this.parseTime(dep[dest][this.today]);
+          timeDiff = differenceInSeconds(leaveTime, this.timestamp);
 
           dep.operating = true;
 
           if (dep.activeDates) {
             let dates = dep.activeDates.split(", ");
-            let formattedDate = this.timestamp.format("YYYY-MM-DD");
             dep.operating = dates.includes(formattedDate);
             dep.opDays = dates;
           }
 
           if (dep.operating) {
-            if (this.timestamp.isAfter(leaveTime)) {
+            if (isAfter(this.timestamp, leaveTime)) {
               dep.hasLeft = true;
             } else {
               if (timeDiff >= 0) {
-                dep.leavingIn = this.$moment
-                  .utc((timeDiff + 60) * 1000)
-                  .format("HH:mm");
+                let duration = intervalToDuration({
+                  start: this.timestamp,
+                  end: leaveTime
+                });
+
+                dep.leavingIn = formatDuration(duration, {
+                  format: ["hours", "minutes"]
+                });
               }
 
               if (timeDiff < 1800 && timeDiff >= 0) {
@@ -170,12 +189,15 @@ export default {
         });
 
       this.nextBoat[dest] = this.allDepartures[dest].find(item => {
-        const leaveTime = this.$moment(item[dest][this.today], "HH:mm");
-        return leaveTime.isAfter(this.timestamp) && item.operating;
+        const leaveTime = this.parseTime(item[dest][this.today]);
+        return isAfter(leaveTime, this.timestamp) && item.operating;
       });
     },
     compareTime(a, b) {
-      return this.$moment(a, "HH:mm").hour() === b;
+      return getHours(this.parseTime(a)) === b;
+    },
+    parseTime(time) {
+      return parse(time, "HH:mm", new Date());
     },
     waUrl(contact) {
       return `https://wa.me/${contact}`;

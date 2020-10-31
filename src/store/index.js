@@ -1,13 +1,12 @@
 import Vue from "vue";
 import Vuex from "vuex";
-import VueMoment from "vue-moment";
 import { auth, db } from "@/firebase/firebase";
 import router from "../router/index";
+import getISODay from "date-fns/getISODay";
 
 Vue.use(Vuex);
-Vue.use(VueMoment);
 
-const currentTime = Vue.moment();
+const currentTime = new Date();
 
 const columnWidth =
   window.innerWidth < 576 ? (window.innerWidth - 30) / 2 : 180;
@@ -15,7 +14,7 @@ const columnWidth =
 export default new Vuex.Store({
   state: {
     timestamp: currentTime,
-    today: currentTime.isoWeekday() - 1,
+    today: getISODay(currentTime) - 1,
     weekArray: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
     mobileNavOpen: false,
     loading: true,
@@ -36,7 +35,7 @@ export default new Vuex.Store({
       state.userProfile = val;
     },
     updateTimeStamp(state) {
-      state.timestamp = Vue.moment();
+      state.timestamp = new Date();
     },
     toggleMobileNav(state) {
       state.mobileNavOpen = !state.mobileNavOpen;

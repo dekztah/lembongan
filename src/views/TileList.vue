@@ -39,6 +39,7 @@ import isotope from "vueisotope";
 import checkbox from "@/components/Checkbox";
 import tile from "@/components/Tile";
 import generic from "@/mixins/generic";
+import { isWithinInterval, parse, differenceInSeconds } from "date-fns";
 
 export default {
   components: {
@@ -123,31 +124,39 @@ export default {
   methods: {
     ...mapActions(["toggleMobileNav", "setFilters", "setFilter"]),
     setOpenNow() {
-      const today = this.today;
-      const time = this.$moment(this.timestamp, "HH:mm");
+      let startTime, endTime;
+      let startTimeDiff, endTimeDiff;
 
       this.collection.forEach((item, index) => {
         this.$set(this.collection[index], "openNow", item.reservation || false);
         this.$set(this.collection[index], "opensIn", null);
         this.$set(this.collection[index], "closesIn", null);
 
-        item.openingHours[today].forEach(element => {
-          const startTime = this.$moment(element.start, "HH:mm");
-          const endTime = this.$moment(element.end, "HH:mm");
+        item.openingHours[this.today].forEach(element => {
+          if (element.start && element.end) {
+            startTime = this.parseTime(element.start);
+            endTime = this.parseTime(element.end);
 
-          if (time.isBetween(startTime, endTime)) {
-            item.openNow = true;
-          }
+            startTimeDiff = differenceInSeconds(startTime, this.timestamp);
+            endTimeDiff = differenceInSeconds(endTime, this.timestamp);
 
-          if (
-            startTime.diff(time, "s") < 1800 &&
-            startTime.diff(time, "s") >= 0
-          ) {
-            item.opensIn = startTime.diff(time, "m");
-          }
+            if (
+              element.start &&
+              isWithinInterval(this.timestamp, {
+                start: startTime,
+                end: endTime
+              })
+            ) {
+              item.openNow = true;
+            }
 
-          if (endTime.diff(time, "s") < 1800 && endTime.diff(time, "s") >= 0) {
-            item.closesIn = endTime.diff(time, "m");
+            if (startTimeDiff < 1800 && startTimeDiff >= 0) {
+              item.opensIn = Math.floor(startTimeDiff / 60);
+            }
+
+            if (endTimeDiff < 1800 && endTimeDiff >= 0) {
+              item.closesIn = Math.floor(endTimeDiff / 60);
+            }
           }
         });
       });
@@ -155,6 +164,9 @@ export default {
         this.arrange();
         this.init = false;
       }
+    },
+    parseTime(time) {
+      return parse(time, "HH:mm", new Date());
     }
   },
   watch: {

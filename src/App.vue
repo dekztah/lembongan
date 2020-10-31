@@ -49,6 +49,7 @@
 
 <script>
 import { mapState, mapActions } from "vuex";
+import { format, isWithinInterval, parse } from "date-fns";
 
 export default {
   data() {
@@ -60,47 +61,40 @@ export default {
       return Object.keys(this.userProfile).length > 1;
     },
     dayOfTheWeek() {
-      return this.timestamp.format("dddd");
+      return format(this.timestamp, "EEEE");
     },
     date() {
-      return this.timestamp.format("YYYY-MM-DD");
+      return format(this.timestamp, "yyyy-MM-dd");
     },
     time() {
-      return this.timestamp.format("HH:mm");
+      return format(this.timestamp, "HH:mm");
     },
     partOfTheDay() {
       let parts = ["pagi", "siang", "sore", "malam"];
-      let time = this.$moment(this.time, "HH:mm");
 
       if (
-        this.$moment(time, "HH:mm").isBetween(
-          this.toMoment("4:00"),
-          this.toMoment("9:59"),
-          undefined,
-          "[]"
-        )
+        isWithinInterval(this.timestamp, {
+          start: this.parseTime("4:00"),
+          end: this.parseTime("10:00")
+        })
       ) {
         return parts[0];
       }
 
       if (
-        this.$moment(time, "HH:mm").isBetween(
-          this.toMoment("10:00"),
-          this.toMoment("13:59"),
-          undefined,
-          "[]"
-        )
+        isWithinInterval(this.timestamp, {
+          start: this.parseTime("10:00"),
+          end: this.parseTime("14:00")
+        })
       ) {
         return parts[1];
       }
 
       if (
-        this.$moment(time, "HH:mm").isBetween(
-          this.toMoment("14:00"),
-          this.toMoment("18:29"),
-          undefined,
-          "[]"
-        )
+        isWithinInterval(this.timestamp, {
+          start: this.parseTime("14:00"),
+          end: this.parseTime("18:30")
+        })
       ) {
         return parts[2];
       }
@@ -120,8 +114,8 @@ export default {
       "closeMobileNav",
       "updateTimeStamp"
     ]),
-    toMoment(time) {
-      return this.$moment(time, "HH:mm");
+    parseTime(time) {
+      return parse(time, "HH:mm", new Date());
     }
   },
   watch: {
