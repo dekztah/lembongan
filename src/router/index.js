@@ -147,9 +147,8 @@ const routes = [
       }
     ]
   },
-
   {
-    path: "/",
+    path: "*",
     redirect: "/food-and-drink"
   }
 ];
