@@ -43,8 +43,8 @@
 
                 span(v-if="boat.hasLeft") already left
 
-              a.social.maps(v-if="boat.gMapsLink" :href="boat.gMapsLink" target="_blank")
-              a.social.wa(v-if="boat.contact" :href="waUrl(boat.contact)" target="_blank") WA
+              a.social.maps(v-if="boat.gMapsLink" :href="boat.gMapsLink" target="_blank" rel="noopener")
+              a.social.wa(v-if="boat.contact" :href="waUrl(boat.contact)" target="_blank" rel="noopener") WA
 
         .line
           .part-of-day(v-for="(partOfDay, key) in hoursArray")
@@ -65,8 +65,8 @@
                     div(v-if="dest === 'departToSanur'") from {{ boat.lembonganLocation}}
                     div(v-if="dest === 'departToLembongan'") to {{ boat.lembonganLocation}}
 
-                  a.social.maps(v-if="boat.gMapsLink" :href="boat.gMapsLink" target="_blank")
-                  a.social.wa(v-if="boat.contact" :href="waUrl(boat.contact)" target="_blank") WA
+                  a.social.maps(v-if="boat.gMapsLink" :href="boat.gMapsLink" target="_blank" rel="noopener")
+                  a.social.wa(v-if="boat.contact" :href="waUrl(boat.contact)" target="_blank" rel="noopener") WA
 
     .none(v-else)
       | ¯\_(ツ)_/¯ No boats today
