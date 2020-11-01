@@ -119,7 +119,7 @@ export default {
         .sort((a, b) => {
           if (a.createdDate) {
             a.new =
-              differenceInDays(new Date(a.createdDate), this.timestamp) < 3;
+              differenceInDays(this.timestamp, new Date(a.createdDate)) < 3;
           }
           return a.createdDate && a.new ? -1 : 0;
         });
