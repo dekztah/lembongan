@@ -48,7 +48,6 @@ body {
 header {
   position: fixed;
   z-index: 2;
-  // width: 100vw;
   top: 0;
   left: 0;
   right: 0;
@@ -217,9 +216,6 @@ header {
   transition: opacity 0.5s;
 }
 
-.fade-enter-active {
-  // transition-delay: 0.5s;
-}
 .fade-enter,
 .fade-leave-to {
   opacity: 0;
