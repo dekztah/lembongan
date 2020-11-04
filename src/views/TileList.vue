@@ -52,7 +52,6 @@ export default {
     ...mapState([
       "filters",
       "collections",
-      "timestamp",
       "today",
       "loading",
       "mobileNavOpen"

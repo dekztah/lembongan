@@ -41,7 +41,7 @@
 
 </template>
 <script>
-import { mapState, mapActions, mapGetters } from "vuex";
+import { mapState, mapGetters } from "vuex";
 import chip from "@/components/Chip";
 import { isWithinInterval, parse, differenceInSeconds } from "date-fns";
 
@@ -64,6 +64,7 @@ export default {
     ...mapState(["filters", "weekArray", "today"]),
     ...mapGetters(["timestamp"]),
     openNow() {
+      // ugly, and side effects
       return this.item.openingHours[this.today].find(element => {
         this.item.opensIn = null;
         this.item.closesIn = null;
