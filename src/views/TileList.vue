@@ -18,7 +18,7 @@
       .count(v-if="!loading") {{ filteredCollection.length }} results
 
     transition-group.tile-list(
-      tag="ul"
+      tag="div"
       name="tile"
     )
       tile(

@@ -1,5 +1,5 @@
 <template lang="pug">
-  li.tile(
+  .tile(
     :class="{'open': item.openNow, 'double': isDouble, 'reservation' : item.reservation, 'warn': (item.opensIn !== null && item.opensIn >= 0) || (item.closesIn !== null && item.closesIn >= 1), 'new': item.new}"
   )
     .content(@click="toggleDouble()")
