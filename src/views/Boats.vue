@@ -53,7 +53,6 @@
 <script>
 import store from "@/store";
 import { mapState, mapActions, mapGetters } from "vuex";
-import flatPickr from "vue-flatpickr-component";
 import scheduleEntry from "@/components/ScheduleEntry";
 
 import {
@@ -67,7 +66,6 @@ import {
 
 export default {
   components: {
-    flatPickr,
     scheduleEntry
   },
   data() {
@@ -80,15 +78,7 @@ export default {
         beforeNoon: [7, 8, 9, 10, 11],
         afterNoon: [12, 13, 14, 15, 16]
       },
-      dest: "departToLembongan",
-      calOpen: false,
-      config: {
-        mode: "multiple",
-        inline: true,
-        locale: {
-          firstDayOfWeek: 1
-        }
-      }
+      dest: "departToLembongan"
     };
   },
   computed: {
@@ -152,10 +142,6 @@ export default {
     },
     parseTime(time) {
       return parse(time, "HH:mm", new Date());
-    },
-    toggleCalendar(index) {
-      this.calOpen = this.calOpen === index ? null : index;
-      if (this.mobileNavOpen) this.toggleMobileNav();
     }
   }
 };
