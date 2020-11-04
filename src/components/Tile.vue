@@ -1,6 +1,6 @@
 <template lang="pug">
   .tile(
-    :class="{'open': item.openNow, 'double': isDouble, 'reservation' : item.reservation, 'warn': (item.opensIn !== null && item.opensIn >= 0) || (item.closesIn !== null && item.closesIn >= 1), 'new': item.new}"
+    :class="{'open': openNow, 'double': isDouble, 'reservation' : item.reservation, 'warn': (item.opensIn !== null && item.opensIn >= 0) || (item.closesIn !== null && item.closesIn >= 1), 'new': item.new}"
   )
     .content(@click="toggleDouble()")
       h2.name {{ item.name }}
@@ -41,8 +41,12 @@
 
 </template>
 <script>
-import { mapState, mapActions } from "vuex";
+import { mapState, mapActions, mapGetters } from "vuex";
 import chip from "@/components/Chip";
+import { isWithinInterval, parse, differenceInSeconds } from "date-fns";
+
+let startTime, endTime;
+let startTimeDiff, endTimeDiff;
 
 export default {
   data() {
@@ -57,7 +61,35 @@ export default {
     item: Object
   },
   computed: {
-    ...mapState(["filters", "weekArray", "today"])
+    ...mapState(["filters", "weekArray", "today"]),
+    ...mapGetters(["timestamp"]),
+    openNow() {
+      return this.item.openingHours[this.today].find(element => {
+        this.item.opensIn = null;
+        this.item.closesIn = null;
+
+        if (element.start && element.end) {
+          startTime = this.parseTime(element.start);
+          endTime = this.parseTime(element.end);
+
+          startTimeDiff = differenceInSeconds(startTime, this.timestamp);
+          endTimeDiff = differenceInSeconds(endTime, this.timestamp);
+
+          if (startTimeDiff < 1800 && startTimeDiff > 0) {
+            this.item.opensIn = Math.ceil(startTimeDiff / 60);
+          }
+
+          if (endTimeDiff < 1800 && endTimeDiff > 0) {
+            this.item.closesIn = Math.ceil(endTimeDiff / 60);
+          }
+
+          return (this.item.openNow = isWithinInterval(this.timestamp, {
+            start: startTime,
+            end: endTime
+          }));
+        }
+      });
+    }
   },
   methods: {
     toggleDouble() {
@@ -69,6 +101,9 @@ export default {
     },
     waUrl(contact) {
       return `https://wa.me/${contact}`;
+    },
+    parseTime(time) {
+      return parse(time, "HH:mm", new Date());
     }
   }
 };

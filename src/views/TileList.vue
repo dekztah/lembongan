@@ -35,12 +35,7 @@ import { mapState, mapActions, mapGetters } from "vuex";
 import checkbox from "@/components/Checkbox";
 import tile from "@/components/Tile";
 import generic from "@/mixins/generic";
-import {
-  isWithinInterval,
-  parse,
-  differenceInSeconds,
-  differenceInDays
-} from "date-fns";
+import { differenceInDays } from "date-fns";
 
 export default {
   components: {
@@ -76,47 +71,8 @@ export default {
     },
     filteredCollection() {
       const filterEntries = Object.entries(this.filters);
-      let startTime, endTime;
-      let startTimeDiff, endTimeDiff;
 
       return this.collection
-
-        .map((item, index) => {
-          item.openNow = item.reservation || false;
-          item.opensIn = null;
-          item.closesIn = null;
-
-          item.openingHours[this.today].forEach(element => {
-            if (element.start && element.end) {
-              startTime = this.parseTime(element.start);
-              endTime = this.parseTime(element.end);
-
-              startTimeDiff = differenceInSeconds(startTime, this.timestamp);
-              endTimeDiff = differenceInSeconds(endTime, this.timestamp);
-
-              if (
-                element.start &&
-                isWithinInterval(this.timestamp, {
-                  start: startTime,
-                  end: endTime
-                })
-              ) {
-                item.openNow = true;
-              }
-
-              if (startTimeDiff < 1800 && startTimeDiff > 0) {
-                item.opensIn = Math.ceil(startTimeDiff / 60);
-              }
-
-              if (endTimeDiff < 1800 && endTimeDiff > 0) {
-                item.closesIn = Math.ceil(endTimeDiff / 60);
-              }
-            }
-          });
-
-          return item;
-        })
-
         .filter(item => item.active === true)
         .filter(item =>
           this.search
@@ -150,10 +106,7 @@ export default {
     });
   },
   methods: {
-    ...mapActions(["toggleMobileNav", "setFilters", "setFilter"]),
-    parseTime(time) {
-      return parse(time, "HH:mm", new Date());
-    }
+    ...mapActions(["toggleMobileNav", "setFilters", "setFilter"])
   }
 };
 </script>
