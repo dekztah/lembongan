@@ -17,25 +17,21 @@
 
       .count(v-if="!loading") {{ filteredCollection.length }} results
 
-    isotope.tile-list(
-      v-if="!loading"
-      :list="filteredCollection"
-      :options="isotopeOptions"
-      ref="isotope"
+    transition-group.tile-list(
+      tag="ul"
+      name="tile"
     )
       tile(
-        v-for="(item, index) in filteredCollection"
+        v-for="item in filteredCollection"
         :item="item"
-        :key="`item-${index}`"
-        @arrange="arrange"
+        :key="item.name"
       )
 
 </template>
 
 <script>
 import store from "@/store";
-import { mapState, mapActions } from "vuex";
-import isotope from "vueisotope";
+import { mapState, mapActions, mapGetters } from "vuex";
 import checkbox from "@/components/Checkbox";
 import tile from "@/components/Tile";
 import generic from "@/mixins/generic";
@@ -48,7 +44,6 @@ import {
 
 export default {
   components: {
-    isotope,
     checkbox,
     tile
   },
@@ -58,11 +53,6 @@ export default {
     open: String
   },
   mixins: [generic],
-  data() {
-    return {
-      init: true
-    };
-  },
   computed: {
     ...mapState([
       "filters",
@@ -70,9 +60,9 @@ export default {
       "timestamp",
       "today",
       "loading",
-      "mobileNavOpen",
-      "columnWidth"
+      "mobileNavOpen"
     ]),
+    ...mapGetters(["timestamp"]),
     collection() {
       return this.collections[this.$route.meta.collection];
     },
@@ -84,21 +74,48 @@ export default {
       };
       return obj;
     },
-    isotopeOptions() {
-      return {
-        transitionDuration: "0.3s",
-        layoutMode: "masonry",
-        initLayout: false,
-        masonry: {
-          columnWidth: this.columnWidth,
-          gutter: 10
-        }
-      };
-    },
     filteredCollection() {
       const filterEntries = Object.entries(this.filters);
+      let startTime, endTime;
+      let startTimeDiff, endTimeDiff;
 
       return this.collection
+
+        .map((item, index) => {
+          item.openNow = item.reservation || false;
+          item.opensIn = null;
+          item.closesIn = null;
+
+          item.openingHours[this.today].forEach(element => {
+            if (element.start && element.end) {
+              startTime = this.parseTime(element.start);
+              endTime = this.parseTime(element.end);
+
+              startTimeDiff = differenceInSeconds(startTime, this.timestamp);
+              endTimeDiff = differenceInSeconds(endTime, this.timestamp);
+
+              if (
+                element.start &&
+                isWithinInterval(this.timestamp, {
+                  start: startTime,
+                  end: endTime
+                })
+              ) {
+                item.openNow = true;
+              }
+
+              if (startTimeDiff < 1800 && startTimeDiff > 0) {
+                item.opensIn = Math.ceil(startTimeDiff / 60);
+              }
+
+              if (endTimeDiff < 1800 && endTimeDiff > 0) {
+                item.closesIn = Math.ceil(endTimeDiff / 60);
+              }
+            }
+          });
+
+          return item;
+        })
 
         .filter(item => item.active === true)
         .filter(item =>
@@ -128,63 +145,14 @@ export default {
   beforeRouteEnter(to, from, next) {
     store.dispatch("fetchCollection", to.meta.collection).then(() => {
       next(vm => {
-        vm.init = true;
         vm.setFilters(vm.filterObject);
-        vm.setOpenNow();
       });
     });
   },
   methods: {
     ...mapActions(["toggleMobileNav", "setFilters", "setFilter"]),
-    setOpenNow() {
-      let startTime, endTime;
-      let startTimeDiff, endTimeDiff;
-
-      this.collection.forEach((item, index) => {
-        this.$set(this.collection[index], "openNow", item.reservation || false);
-        this.$set(this.collection[index], "opensIn", null);
-        this.$set(this.collection[index], "closesIn", null);
-
-        item.openingHours[this.today].forEach(element => {
-          if (element.start && element.end) {
-            startTime = this.parseTime(element.start);
-            endTime = this.parseTime(element.end);
-
-            startTimeDiff = differenceInSeconds(startTime, this.timestamp);
-            endTimeDiff = differenceInSeconds(endTime, this.timestamp);
-
-            if (
-              element.start &&
-              isWithinInterval(this.timestamp, {
-                start: startTime,
-                end: endTime
-              })
-            ) {
-              item.openNow = true;
-            }
-
-            if (startTimeDiff < 1800 && startTimeDiff > 0) {
-              item.opensIn = Math.ceil(startTimeDiff / 60);
-            }
-
-            if (endTimeDiff < 1800 && endTimeDiff > 0) {
-              item.closesIn = Math.ceil(endTimeDiff / 60);
-            }
-          }
-        });
-      });
-      if (this.init) {
-        this.arrange();
-        this.init = false;
-      }
-    },
     parseTime(time) {
       return parse(time, "HH:mm", new Date());
-    }
-  },
-  watch: {
-    timestamp() {
-      this.setOpenNow();
     }
   }
 };

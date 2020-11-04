@@ -1,5 +1,5 @@
 <template lang="pug">
-  .tile(
+  li.tile(
     :class="{'open': item.openNow, 'double': isDouble, 'reservation' : item.reservation, 'warn': (item.opensIn !== null && item.opensIn >= 0) || (item.closesIn !== null && item.closesIn >= 1), 'new': item.new}"
   )
     .content(@click="toggleDouble()")
@@ -22,9 +22,7 @@
           v-for="(cb, key) in filters"
           :key="`chip-${key}`"
           :name="key"
-        ) {{ key }}
-
-
+        )
 
     .footer(:class="{'reservation': item.reservation}")
       .status
@@ -64,7 +62,6 @@ export default {
   methods: {
     toggleDouble() {
       this.isDouble = !this.isDouble;
-      this.$emit("arrange");
     },
     chipVisible(item, key) {
       if (key === "noPreorder") key = "preorder";

@@ -8,9 +8,6 @@ Vue.use(Vuex);
 
 const currentTime = new Date();
 
-const columnWidth =
-  window.innerWidth < 576 ? (window.innerWidth - 30) / 2 : 180;
-
 export default new Vuex.Store({
   state: {
     timestamp: currentTime,
@@ -27,7 +24,6 @@ export default new Vuex.Store({
       boats: []
     },
     document: {},
-    columnWidth: columnWidth,
     warnDisabled: localStorage.getItem("boatWarnDisabled") || false
   },
   mutations: {
@@ -151,7 +147,8 @@ export default new Vuex.Store({
     }
   },
   getters: {
-    boats: state => state.collections.boats
+    boats: state => state.collections.boats,
+    timestamp: state => state.timestamp
   },
   modules: {}
 });

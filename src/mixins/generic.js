@@ -13,12 +13,6 @@ export default {
     }
   },
   methods: {
-    arrange() {
-      this.$nextTick(() => {
-        this.$refs.isotope.arrange();
-      });
-      if (this.mobileNavOpen) this.toggleMobileNav();
-    },
     setQuery(key, val) {
       this.setFilter({ key, val });
 
