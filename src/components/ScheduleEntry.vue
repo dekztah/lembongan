@@ -52,6 +52,7 @@ export default {
         mode: "multiple",
         inline: true,
         minDate: this.formattedDate,
+        monthSelectorType: "static",
         locale: {
           firstDayOfWeek: 1
         }
