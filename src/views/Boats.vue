@@ -24,7 +24,7 @@
             strong {{ nextBoat.leavingIn }}
           span(v-else) All boats to {{ dest === 'departToSanur' ? 'Sanur' : 'Lembongan'}} have left today
 
-        .wrap
+        .wrap(v-if="isMobile")
           schedule-entry(
             v-for="boat in schedule[dest]"
             :entry="boat"
@@ -32,7 +32,7 @@
             :key="`${boat.name}-${boat.departure}`"
           )
 
-        .line
+        .line(v-else)
           .part-of-day(v-for="(partOfDay, key) in hoursArray")
             .segment(v-for="segment in hoursArray[key]")
               .hour {{ segment }}:00
@@ -89,7 +89,7 @@ export default {
       "weekArray",
       "today"
     ]),
-    ...mapGetters(["boats", "timestamp"]),
+    ...mapGetters(["boats", "timestamp", "isMobile"]),
     nextBoat() {
       return this.schedule[this.dest].find(item => {
         const leaveTime = this.parseTime(item.departure);

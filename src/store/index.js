@@ -23,6 +23,7 @@ export default new Vuex.Store({
       services: [],
       boats: []
     },
+    isMobile: window.innerWidth < 992,
     document: {},
     warnDisabled: localStorage.getItem("boatWarnDisabled") || false
   },
@@ -148,7 +149,8 @@ export default new Vuex.Store({
   },
   getters: {
     boats: state => state.collections.boats,
-    timestamp: state => state.timestamp
+    timestamp: state => state.timestamp,
+    isMobile: state => state.isMobile
   },
   modules: {}
 });

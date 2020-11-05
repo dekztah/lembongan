@@ -35,11 +35,6 @@
   }
 }
 .wrap {
-  display: none;
-
-  @media only screen and (max-width: $breakpoint-small) {
-    display: block;
-  }
   .boat {
     .generic {
       padding: 16px;
@@ -231,10 +226,6 @@
 }
 .line {
   margin-top: 40px;
-
-  @media only screen and (max-width: $breakpoint-small) {
-    display: none;
-  }
 }
 .part-of-day {
   display: flex;
