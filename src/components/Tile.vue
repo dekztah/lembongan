@@ -43,7 +43,8 @@
 <script>
 import { mapState, mapGetters } from "vuex";
 import chip from "@/components/Chip";
-import { isWithinInterval, parse, differenceInSeconds } from "date-fns";
+import generic from "@/mixins/generic";
+import { isWithinInterval, differenceInSeconds } from "date-fns";
 
 let startTime, endTime;
 let startTimeDiff, endTimeDiff;
@@ -60,6 +61,7 @@ export default {
   props: {
     item: Object
   },
+  mixins: [generic],
   computed: {
     ...mapState(["filters", "weekArray", "today"]),
     ...mapGetters(["timestamp"]),
@@ -126,9 +128,6 @@ export default {
     },
     waUrl(contact) {
       return `https://wa.me/${contact}`;
-    },
-    parseTime(time) {
-      return parse(time, "HH:mm", new Date());
     }
   }
 };
