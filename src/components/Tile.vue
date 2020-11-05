@@ -1,6 +1,6 @@
 <template lang="pug">
   .tile(
-    :class="{'open': openNow, 'double': isDouble, 'reservation' : item.reservation, 'warn': (item.opensIn !== null && item.opensIn >= 0) || (item.closesIn !== null && item.closesIn >= 1), 'new': item.new}"
+    :class="{'open': openNow, 'double': isDouble, 'reservation' : item.reservation, 'warn': (opensIn !== null && opensIn >= 0) || (closesIn !== null && closesIn >= 1), 'new': item.new}"
   )
     .content(@click="toggleDouble()")
       h2.name {{ item.name }}
@@ -26,10 +26,10 @@
 
     .footer(:class="{'reservation': item.reservation}")
       .status
-        span(v-if="item.opensIn !== null") Opens in:&nbsp;
-          strong {{ item.opensIn }}m
-        span(v-if="item.closesIn !== null") Closes in:&nbsp;
-          strong {{ item.closesIn }}m
+        span(v-if="opensIn !== null") Opens in:&nbsp;
+          strong {{ opensIn }}m
+        span(v-if="closesIn !== null") Closes in:&nbsp;
+          strong {{ closesIn }}m
         span(v-if="item.reservation") Contact for details
 
       a.social.maps(v-if="item.gMapsLink" :href="item.gMapsLink" target="_blank" rel="noopener")
@@ -63,33 +63,57 @@ export default {
   computed: {
     ...mapState(["filters", "weekArray", "today"]),
     ...mapGetters(["timestamp"]),
-    openNow() {
-      // ugly, and side effects
-      return this.item.openingHours[this.today].find(element => {
-        this.item.opensIn = null;
-        this.item.closesIn = null;
 
+    openingHoursToday() {
+      return this.item.openingHours[this.today];
+    },
+    openNow() {
+      return this.openingHoursToday.find(element => {
         if (element.start && element.end) {
           startTime = this.parseTime(element.start);
           endTime = this.parseTime(element.end);
 
-          startTimeDiff = differenceInSeconds(startTime, this.timestamp);
-          endTimeDiff = differenceInSeconds(endTime, this.timestamp);
-
-          if (startTimeDiff < 1800 && startTimeDiff > 0) {
-            this.item.opensIn = Math.ceil(startTimeDiff / 60);
-          }
-
-          if (endTimeDiff < 1800 && endTimeDiff > 0) {
-            this.item.closesIn = Math.ceil(endTimeDiff / 60);
-          }
-
-          return (this.item.openNow = isWithinInterval(this.timestamp, {
+          return isWithinInterval(this.timestamp, {
             start: startTime,
             end: endTime
-          }));
+          });
         }
       });
+    },
+    opensIn() {
+      let sec = null;
+
+      this.openingHoursToday.find(element => {
+        if (element.start && element.end) {
+          startTime = this.parseTime(element.start);
+          startTimeDiff = differenceInSeconds(startTime, this.timestamp);
+
+          if (startTimeDiff < 1800 && startTimeDiff > 0) {
+            sec = Math.ceil(startTimeDiff / 60);
+          }
+        }
+      });
+      return sec;
+    },
+    closesIn() {
+      let sec = null;
+
+      if (this.openNow) {
+        endTime = this.parseTime(this.openNow.end);
+        endTimeDiff = differenceInSeconds(endTime, this.timestamp);
+
+        if (endTimeDiff < 1800 && endTimeDiff > 0) {
+          sec = Math.ceil(endTimeDiff / 60);
+        }
+      }
+      return sec;
+    }
+  },
+  mounted() {
+    if (this.item.reservation) {
+      this.item.openNow = true;
+    } else {
+      this.item.openNow = typeof this.openNow === "object";
     }
   },
   methods: {
