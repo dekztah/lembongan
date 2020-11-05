@@ -5,7 +5,7 @@
       span.location(v-if="dest === 'departToSanur'") from {{ entry.lembonganLocation }}
       span.location(v-if="dest === 'departToLembongan'") to {{ entry.lembonganLocation }}
       .cal-wrapper(v-show="calOpen")
-        flat-pickr(v-model="operatingDates" :config="config")
+        flat-pickr(v-model="operatingDates" :config="calendarConfig")
 
     .footer
       .status
@@ -41,19 +41,22 @@ export default {
   mixins: [generic],
   data() {
     return {
-      calOpen: false,
-      config: {
-        mode: "multiple",
-        inline: true,
-        locale: {
-          firstDayOfWeek: 1
-        }
-      }
+      calOpen: false
     };
   },
   computed: {
     ...mapState(["loading", "mobileNavOpen", "weekArray", "today"]),
     ...mapGetters(["timestamp"]),
+    calendarConfig() {
+      return {
+        mode: "multiple",
+        inline: true,
+        minDate: this.formattedDate,
+        locale: {
+          firstDayOfWeek: 1
+        }
+      };
+    },
     leaveTime() {
       return this.parseTime(this.entry.departure);
     },
@@ -62,12 +65,13 @@ export default {
 
       return this.entry.activeDates.split(", ");
     },
+    formattedDate() {
+      return format(this.timestamp, "yyyy-MM-dd");
+    },
     isOperatingToday() {
       if (!this.operatingDates) return false;
 
-      let formattedDate = format(this.timestamp, "yyyy-MM-dd");
-
-      return this.operatingDates.includes(formattedDate);
+      return this.operatingDates.includes(this.formattedDate);
     },
     timeDiff() {
       return differenceInSeconds(this.leaveTime, this.timestamp);
