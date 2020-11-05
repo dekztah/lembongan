@@ -34,7 +34,6 @@ import store from "@/store";
 import { mapState, mapActions, mapGetters } from "vuex";
 import checkbox from "@/components/Checkbox";
 import tile from "@/components/Tile";
-import generic from "@/mixins/generic";
 import { differenceInDays } from "date-fns";
 
 export default {
@@ -47,7 +46,6 @@ export default {
     q: String,
     open: String
   },
-  mixins: [generic],
   computed: {
     ...mapState([
       "filters",
@@ -57,6 +55,17 @@ export default {
       "mobileNavOpen"
     ]),
     ...mapGetters(["timestamp"]),
+    search: {
+      get() {
+        return this.q ? this.q : "";
+      },
+      set(val) {
+        if (val === "") val = undefined;
+        this.$router.replace({
+          query: { q: val, tags: this.tags, open: this.open || undefined }
+        });
+      }
+    },
     collection() {
       return this.collections[this.$route.meta.collection];
     },
@@ -105,7 +114,27 @@ export default {
     });
   },
   methods: {
-    ...mapActions(["toggleMobileNav", "setFilters", "setFilter"])
+    ...mapActions(["toggleMobileNav", "setFilters", "setFilter"]),
+    setQuery(key, val) {
+      this.setFilter({ key, val });
+
+      if (key === "openNow") {
+        if (!val) val = undefined;
+        this.$router.replace({
+          query: { q: this.q, tags: this.tags, open: val }
+        });
+      } else {
+        let queryPush = JSON.parse(JSON.stringify(this.$route.query));
+        if (!queryPush.tags) queryPush.tags = [];
+
+        if (val) {
+          queryPush.tags.push(key);
+        } else {
+          queryPush.tags.splice(this.tags.indexOf(key), 1);
+        }
+        this.$router.push({ query: queryPush });
+      }
+    }
   }
 };
 </script>

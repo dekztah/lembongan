@@ -53,11 +53,11 @@
 <script>
 import store from "@/store";
 import { mapState, mapActions, mapGetters } from "vuex";
+import generic from "@/mixins/generic";
 import scheduleEntry from "@/components/ScheduleEntry";
 
 import {
   differenceInMinutes,
-  parse,
   getHours,
   isAfter,
   intervalToDuration,
@@ -68,6 +68,7 @@ export default {
   components: {
     scheduleEntry
   },
+  mixins: [generic],
   data() {
     return {
       schedule: {
@@ -139,9 +140,6 @@ export default {
     },
     compareTime(a, b) {
       return getHours(this.parseTime(a)) === b;
-    },
-    parseTime(time) {
-      return parse(time, "HH:mm", new Date());
     }
   }
 };

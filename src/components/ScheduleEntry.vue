@@ -1,19 +1,18 @@
 <template lang="pug">
-  .boat(:class="{'has-left': !available, 'noop': !operating, 'warn': leavingSoon}")
+  .boat(:class="{'has-left': !available, 'noop': !isOperatingToday, 'warn': leavingSoon}")
     .content
       h2.time(@click="calOpen = !calOpen") {{ entry.departure }} {{ entry.name }}
       span.location(v-if="dest === 'departToSanur'") from {{ entry.lembonganLocation }}
       span.location(v-if="dest === 'departToLembongan'") to {{ entry.lembonganLocation }}
       .cal-wrapper(v-show="calOpen")
-        flat-pickr(v-model="entry.opDays" :config="config")
+        flat-pickr(v-model="operatingDates" :config="config")
 
     .footer
       .status
-        .not-operating(v-if="!operating") Not operating today
+        .not-operating(v-if="!isOperatingToday") Not operating today
         span(v-if="leavingIn") departs in:&nbsp;
           strong {{ leavingIn }}
         span(v-if="!available") already left
-
 
       a.social.maps(v-if="entry.gMapsLink" :href="entry.gMapsLink" target="_blank" rel="noopener")
       a.social.wa(v-if="entry.contact" :href="waUrl(entry.contact)" target="_blank" rel="noopener") WA
@@ -22,10 +21,11 @@
 <script>
 import flatPickr from "vue-flatpickr-component";
 import { mapState, mapActions, mapGetters } from "vuex";
+import generic from "@/mixins/generic";
+
 import {
   differenceInSeconds,
   format,
-  parse,
   intervalToDuration,
   formatDuration
 } from "date-fns";
@@ -38,6 +38,7 @@ export default {
   components: {
     flatPickr
   },
+  mixins: [generic],
   data() {
     return {
       calOpen: false,
@@ -56,19 +57,23 @@ export default {
     leaveTime() {
       return this.parseTime(this.entry.departure);
     },
-    operating() {
+    operatingDates() {
       if (!this.entry.activeDates) return false;
 
-      let formattedDate = format(this.timestamp, "yyyy-MM-dd");
-      let dates = this.entry.activeDates.split(", ");
+      return this.entry.activeDates.split(", ");
+    },
+    isOperatingToday() {
+      if (!this.operatingDates) return false;
 
-      return dates.includes(formattedDate);
+      let formattedDate = format(this.timestamp, "yyyy-MM-dd");
+
+      return this.operatingDates.includes(formattedDate);
     },
     timeDiff() {
       return differenceInSeconds(this.leaveTime, this.timestamp);
     },
     available() {
-      return this.operating && this.timeDiff >= 0;
+      return this.isOperatingToday && this.timeDiff >= 0;
     },
     leavingSoon() {
       return this.timeDiff < 1800 && this.timeDiff >= 0;
@@ -89,9 +94,6 @@ export default {
   methods: {
     waUrl(contact) {
       return `https://wa.me/${contact}`;
-    },
-    parseTime(time) {
-      return parse(time, "HH:mm", new Date());
     }
   }
 };
