@@ -24,6 +24,7 @@
   box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.2);
   transform-origin: 10% 50%;
   backface-visibility: hidden;
+  transition: width 0.3s;
   z-index: 1;
 
   /* moving */
@@ -123,6 +124,7 @@
 
     &.today {
       display: flex;
+      transform: scale(1);
     }
 
     &.closed {

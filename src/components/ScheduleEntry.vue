@@ -20,7 +20,7 @@
 </template>
 <script>
 import flatPickr from "vue-flatpickr-component";
-import { mapState, mapActions, mapGetters } from "vuex";
+import { mapState, mapGetters } from "vuex";
 import generic from "@/mixins/generic";
 
 import {

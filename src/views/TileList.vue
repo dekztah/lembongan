@@ -87,7 +87,7 @@ export default {
             ? item.name.toLowerCase().includes(this.search.toLowerCase())
             : true
         )
-        .filter((item, index) => {
+        .filter(item => {
           const boolArr = filterEntries.map(([filterKey, filterValue]) => {
             if (filterKey === "noPreorder") {
               return filterValue ? item.preorder !== filterValue : true;
@@ -97,7 +97,7 @@ export default {
           });
           return boolArr.every(filter => filter === true);
         })
-        .sort((a, b) => {
+        .sort(a => {
           if (a.createdDate) {
             a.new =
               differenceInDays(this.timestamp, new Date(a.createdDate)) < 3;
