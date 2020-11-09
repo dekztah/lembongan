@@ -20,6 +20,7 @@
     transition-group.tile-list(
       tag="div"
       name="tile"
+      :key="$route.meta.collection"
     )
       tile(
         v-for="item in filteredCollection"
