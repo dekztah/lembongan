@@ -8,14 +8,9 @@ import TileList from "../views/TileList.vue";
 import Login from "../views/Login.vue";
 import Admin from "../views/Admin.vue";
 
-import PlacesList from "../views/admin/PlacesList.vue";
-import Place from "../views/admin/Place.vue";
-import BoatsList from "../views/admin/BoatsList.vue";
+import List from "../views/admin/List.vue";
+import Item from "../views/admin/Item.vue";
 import Boat from "../views/admin/Boat.vue";
-import ActivitiesList from "../views/admin/ActivitiesList.vue";
-import Activity from "../views/admin/Activity.vue";
-import ServicesList from "../views/admin/ServicesList.vue";
-import Service from "../views/admin/Service.vue";
 
 Vue.use(VueRouter);
 
@@ -108,17 +103,28 @@ const routes = [
       {
         path: "places-list",
         name: "PlacesList",
-        component: PlacesList
+        component: List,
+        meta: {
+          collection: "places",
+          item: "Place"
+        }
       },
       {
         path: "place/:id?",
         name: "Place",
-        component: Place
+        component: Item,
+        meta: {
+          collection: "places"
+        }
       },
       {
         path: "boats-list",
         name: "BoatsList",
-        component: BoatsList
+        component: List,
+        meta: {
+          collection: "boats",
+          item: "Boat"
+        }
       },
       {
         path: "boat/:id?",
@@ -128,22 +134,36 @@ const routes = [
       {
         path: "activities-list",
         name: "ActivitiesList",
-        component: ActivitiesList
+        component: List,
+        meta: {
+          collection: "activities",
+          item: "Activity"
+        }
       },
       {
         path: "activity/:id?",
         name: "Activity",
-        component: Activity
+        component: Item,
+        meta: {
+          collection: "activities"
+        }
       },
       {
         path: "services-list",
         name: "ServicesList",
-        component: ServicesList
+        component: List,
+        meta: {
+          collection: "services",
+          item: "Service"
+        }
       },
       {
         path: "service/:id?",
         name: "Service",
-        component: Service
+        component: Item,
+        meta: {
+          collection: "services"
+        }
       }
     ]
   },

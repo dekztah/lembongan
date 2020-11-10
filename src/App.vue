@@ -31,17 +31,19 @@
         router-view
 
         footer
-          span.contact-me Incorrect data? Contact me on:&nbsp;
-          a.social.wa(href="https://wa.me/6282144453436" target="_blank" rel="noopener") WA
+          .public-footer
+            span.contact-me Incorrect data? Contact me on:&nbsp;
+            a.social.wa(href="https://wa.me/6282144453436" target="_blank" rel="noopener") WA
 
-          a.kofi(href="https://ko-fi.com/dekztah" target="_blank" rel="noopener")
+            a.kofi(href="https://ko-fi.com/dekztah" target="_blank" rel="noopener")
 
-          .admin-header(v-if="userProfile.name")
+          .admin-footer(v-if="userProfile.name")
+            span.username {{ userProfile.name }}
             router-link.button(to="/admin/places-list") Places
             router-link.button(to="/admin/boats-list") Boats
             router-link.button(to="/admin/activities-list") Activities
             router-link.button(to="/admin/services-list") Services
-            span {{ userProfile.name }}
+
             a.button(@click="logout") logout
 
 </template>

@@ -45,7 +45,6 @@
     ]
   ],
   "active": false,
-  "reservation": false,
   "properties": {
     "dineIn": false,
     "delivery": false,

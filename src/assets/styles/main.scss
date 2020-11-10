@@ -60,10 +60,6 @@ header {
   padding: 10px;
   box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.2);
 
-  &.admin-bar {
-    height: 107px;
-  }
-
   .current-page {
     display: none;
     font-size: 12px;
@@ -230,13 +226,16 @@ footer {
   left: 0;
   right: 0;
   font-size: 12px;
-  display: flex;
-  align-items: center;
   background: darken($base-color, 60);
   color: white;
-  padding: 10px;
   transition: transform 0.3s ease-out;
   z-index: 2;
+
+  .public-footer {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+  }
 
   @media only screen and (max-width: $breakpoint-small) {
     position: static;
@@ -472,22 +471,4 @@ footer {
   width: 32px;
   height: 32px;
   border-radius: 50%;
-}
-
-.admin-list {
-  padding: 10px;
-
-  .list-item {
-    padding: 10px;
-    display: flex;
-    align-items: center;
-
-    &:not(:last-child) {
-      border-bottom: 1px solid #eee;
-    }
-
-    .button {
-      margin-left: auto;
-    }
-  }
 }

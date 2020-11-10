@@ -54,6 +54,7 @@
     "preorder": false,
     "motorRepair": false
   },
+  "reservation": false,
   "contact": "",
   "gMapsLink": "",
   "facebookLink": "",

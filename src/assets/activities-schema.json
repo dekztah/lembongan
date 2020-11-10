@@ -54,6 +54,7 @@
     "tour": false,
     "gym": false
   },
+  "reservation": false,
   "contact": "",
   "gMapsLink": "",
   "facebookLink": "",
