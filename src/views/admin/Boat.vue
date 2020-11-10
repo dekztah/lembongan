@@ -87,13 +87,7 @@ export default {
     flatPickr
   },
   computed: {
-    ...mapState(["document"]),
-    loading() {
-      return this.$store.state.loading;
-    },
-    weekArray() {
-      return this.$store.state.weekArray;
-    }
+    ...mapState(["document", "loading", "weekArray"])
   },
   mounted() {
     if (this.key !== undefined) {
