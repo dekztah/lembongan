@@ -18,7 +18,7 @@
 
       .info
         chip(
-          v-if="chipVisible(item, key)"
+          v-if="chipVisible(item.properties, key)"
           v-for="(cb, key) in filters"
           :key="`chip-${key}`"
           :name="key"
@@ -113,9 +113,9 @@ export default {
   },
   mounted() {
     if (this.item.reservation) {
-      this.item.openNow = true;
+      this.item.properties.openNow = true;
     } else {
-      this.item.openNow = typeof this.openNow === "object";
+      this.item.properties.openNow = typeof this.openNow === "object";
     }
   },
   methods: {

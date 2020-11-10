@@ -22,35 +22,31 @@
 
     .form-element.checkboxes
       .checkbox
-        input(type="checkbox" v-model="form.spa")
+        input(type="checkbox" v-model="form.properties.spa")
         label Spa
 
       .checkbox
-        input(type="checkbox" v-model="form.hairdresser")
+        input(type="checkbox" v-model="form.properties.hairdresser")
         label Hairdresser
 
       .checkbox
-        input(type="checkbox" v-model="form.barber")
+        input(type="checkbox" v-model="form.properties.barber")
         label Barber
 
       .checkbox
-        input(type="checkbox" v-model="form.laundry")
+        input(type="checkbox" v-model="form.properties.laundry")
         label Laundry
 
       .checkbox
-        input(type="checkbox" v-model="form.tailor")
-        label Tailor
-
-      .checkbox
-        input(type="checkbox" v-model="form.handcraft")
+        input(type="checkbox" v-model="form.properties.handcraft")
         label Handcraft
 
       .checkbox
-        input(type="checkbox" v-model="form.preorder")
+        input(type="checkbox" v-model="form.properties.preorder")
         label Preorder
 
       .checkbox
-        input(type="checkbox" v-model="form.motorRepair")
+        input(type="checkbox" v-model="form.properties.motorRepair")
         label Motor repair
 
     .form-element

@@ -45,13 +45,15 @@
     ]
   ],
   "active": false,
-  "spa": false,
-  "barber": false,
-  "hairdresser": false,
-  "tailor": false,
-  "laundry": false,
-  "handcraft": false,
-  "preorder": false,
+  "properties": {
+    "spa": false,
+    "barber": false,
+    "hairdresser": false,
+    "laundry": false,
+    "handcraft": false,
+    "preorder": false,
+    "motorRepair": false
+  },
   "contact": "",
   "gMapsLink": "",
   "facebookLink": "",

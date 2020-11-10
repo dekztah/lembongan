@@ -91,9 +91,13 @@ export default {
         .filter(item => {
           const boolArr = filterEntries.map(([filterKey, filterValue]) => {
             if (filterKey === "noPreorder") {
-              return filterValue ? item.preorder !== filterValue : true;
+              return filterValue
+                ? item.properties.preorder !== filterValue
+                : true;
             } else {
-              return filterValue ? item[filterKey] === filterValue : true;
+              return filterValue
+                ? item.properties[filterKey] === filterValue
+                : true;
             }
           });
           return boolArr.every(filter => filter === true);

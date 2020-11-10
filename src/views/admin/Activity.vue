@@ -23,43 +23,35 @@
 
     .form-element.checkboxes
       .checkbox
-        input(type="checkbox" v-model="form.yoga")
+        input(type="checkbox" v-model="form.properties.yoga")
         label Yoga
 
       .checkbox
-        input(type="checkbox" v-model="form.freediving")
+        input(type="checkbox" v-model="form.properties.freediving")
         label Freediving
 
       .checkbox
-        input(type="checkbox" v-model="form.scubaDiving")
+        input(type="checkbox" v-model="form.properties.scubaDiving")
         label Scuba diving
 
       .checkbox
-        input(type="checkbox" v-model="form.surf")
+        input(type="checkbox" v-model="form.properties.surf")
         label Surf lessons
 
       .checkbox
-        input(type="checkbox" v-model="form.spa")
-        label Spa
-
-      .checkbox
-        input(type="checkbox" v-model="form.snorkeling")
+        input(type="checkbox" v-model="form.properties.snorkeling")
         label Snorkeling
 
       .checkbox
-        input(type="checkbox" v-model="form.fishing")
-        label Fishing
-
-      .checkbox
-        input(type="checkbox" v-model="form.tour")
+        input(type="checkbox" v-model="form.properties.tour")
         label Tour
 
       .checkbox
-        input(type="checkbox" v-model="form.miniGolf")
+        input(type="checkbox" v-model="form.properties.miniGolf")
         label Mini golf
 
       .checkbox
-        input(type="checkbox" v-model="form.gym")
+        input(type="checkbox" v-model="form.properties.gym")
         label Gym
 
     .form-element

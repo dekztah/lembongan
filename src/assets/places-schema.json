@@ -44,13 +44,9 @@
       }
     ]
   ],
-  "dineIn": false,
-  "preorder": false,
-  "delivery": false,
-  "localDishes": false,
   "active": false,
   "reservation": false,
-  "tags": {
+  "properties": {
     "dineIn": false,
     "delivery": false,
     "preorder": false,

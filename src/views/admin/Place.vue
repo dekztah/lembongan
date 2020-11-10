@@ -22,39 +22,39 @@
 
     .form-element.checkboxes
       .checkbox
-        input(type="checkbox" v-model="form.dineIn")
+        input(type="checkbox" v-model="form.properties.dineIn")
         label Dine-in
 
       .checkbox
-        input(type="checkbox" v-model="form.delivery")
+        input(type="checkbox" v-model="form.properties.delivery")
         label Delivery
 
       .checkbox
-        input(type="checkbox" v-model="form.preorder")
+        input(type="checkbox" v-model="form.properties.preorder")
         label Preorder
 
       .checkbox
-        input(type="checkbox" v-model="form.localDishes")
+        input(type="checkbox" v-model="form.properties.localDishes")
         label Local dishes
 
       .checkbox
-        input(type="checkbox" v-model="form.coffee")
+        input(type="checkbox" v-model="form.properties.coffee")
         label Coffee
 
       .checkbox
-        input(type="checkbox" v-model="form.rendang")
+        input(type="checkbox" v-model="form.properties.rendang")
         label Rendang
 
       .checkbox
-        input(type="checkbox" v-model="form.desserts")
+        input(type="checkbox" v-model="form.properties.desserts")
         label Desserts
 
       .checkbox
-        input(type="checkbox" v-model="form.drinks")
+        input(type="checkbox" v-model="form.properties.drinks")
         label Drinks
 
       .checkbox
-        input(type="checkbox" v-model="form.winesAndSpirits")
+        input(type="checkbox" v-model="form.properties.winesAndSpirits")
         label Wines & Spirits
 
     .form-element

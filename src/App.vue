@@ -6,15 +6,7 @@
 
     transition(name="fade")
       .wrapper(v-show="!loading" :class="{'mobile-nav-open': mobileNavOpen}")
-        header(:class="{'admin-bar': userProfile.name }")
-          .admin-header(v-if="userProfile.name")
-            router-link.button(to="/admin/places-list") Places
-            router-link.button(to="/admin/boats-list") Boats
-            router-link.button(to="/admin/activities-list") Activities
-            router-link.button(to="/admin/services-list") Services
-            span {{ userProfile.name }}
-            a.button(@click="logout") logout
-
+        header
           #nav-mobile
             .hamburger.hamburger--emphatic(type="button" @click="toggleMobileNav" :class="{'is-active': mobileNavOpen}")
               .hamburger-box
@@ -25,7 +17,6 @@
             router-link(to="/boats") Boats
             router-link(to="/activities") Activities
             router-link(to="/services") Services
-
 
           .greeting
             h1 Selamat {{ partOfTheDay }}!
@@ -44,6 +35,14 @@
           a.social.wa(href="https://wa.me/6282144453436" target="_blank" rel="noopener") WA
 
           a.kofi(href="https://ko-fi.com/dekztah" target="_blank" rel="noopener")
+
+          .admin-header(v-if="userProfile.name")
+            router-link.button(to="/admin/places-list") Places
+            router-link.button(to="/admin/boats-list") Boats
+            router-link.button(to="/admin/activities-list") Activities
+            router-link.button(to="/admin/services-list") Services
+            span {{ userProfile.name }}
+            a.button(@click="logout") logout
 
 </template>
 
