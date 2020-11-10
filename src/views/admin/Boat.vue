@@ -1,7 +1,7 @@
 <template lang="pug">
-  .admin-form-boats
-    .grid
-      .col-1
+  .admin-form
+    .top
+      .grid-item
         .form-element
           label Boat company name
           input(type="text" v-model="form.name")
@@ -18,38 +18,47 @@
           label Lembongan departure location
           input(type="text" v-model="form.lembonganLocation")
 
-      .col-2
+        .form-element
+          label Active
+          input(type="checkbox" v-model="form.active")
+
+      .grid-item
         flat-pickr(v-model="form.activeDates" :config="config")
 
-    .form-element
-      label To Sanur
+    .bottom
+      .opening-hours
+        label To Sanur
+        .weekdays
+          .weekday(v-for="(departure, day) in form.departToSanur" :key="`departure${day}${form.departToSanur.length}`")
+            label {{ weekArray[day] }}
 
-      .weekdays
-        .weekday(v-for="(departure, day) in form.departToSanur" :key="`departure${day}${form.departToSanur.length}`")
-          label {{ weekArray[day] }}
-          button.button(@click="addDepartureTime('departToSanur', day)") +
+            .items(v-for="(depTime, index) in departure")
+              .item
+                label departs
+                input(type="time" v-model="form.departToSanur[day][index]")
 
-          .x(v-for="(depTime, index) in departure")
-            input(type="time" v-model="form.departToSanur[day][index]")
-            button.button(v-if="index !== 0" @click="removeDepartureTime('departToSanur', index, day)") x
+              button.button(v-if="index !== 0" @click="removeDepartureTime('departToSanur', index, day)") x
 
-    .form-element
-      label To Lembongan
+            button.button(@click="addDepartureTime('departToSanur', day)") +
 
-      .weekdays
-        .weekday(v-for="(departure, day) in form.departToLembongan")
-          label {{ weekArray[day] }}
-          button.button(@click="addDepartureTime('departToLembongan', day)") +
 
-          .x(v-for="(depTime, index) in departure")
-            input(type="time" v-model="form.departToLembongan[day][index]")
-            button.button(v-if="index !== 0" @click="removeDepartureTime('departToLembongan', index, day)") x
+      .opening-hours
+        label To Lembongan
+        .weekdays
+          .weekday(v-for="(departure, day) in form.departToLembongan")
+            label {{ weekArray[day] }}
 
-    .form-element
-      label Active
-      input(type="checkbox" v-model="form.active")
+            .items(v-for="(depTime, index) in departure")
+              .item
+                label departs
+                input(type="time" v-model="form.departToLembongan[day][index]")
 
-    button.button(@click= "insert" :disabled="saveDisabled") save
+              button.button(v-if="index !== 0" @click="removeDepartureTime('departToLembongan', index, day)") x
+
+            button.button(@click="addDepartureTime('departToLembongan', day)") +
+
+    .save
+      button.button(@click= "insert" :disabled="saveDisabled") save
 
 </template>
 

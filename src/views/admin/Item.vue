@@ -1,10 +1,9 @@
 <template lang="pug">
-  .admin-form-2
+  .admin-form
     .top
       .grid-item
         .form-element
           label Name
-
           input(type="text" v-model="form.name")
 
         .form-element
@@ -34,8 +33,6 @@
         .checkbox(v-for="(cb,key) in form.properties")
           input(type="checkbox" :checked="cb" :id="key")
           label(:for="key") {{ text(key) }}
-
-
 
     .bottom
       .toggle-hours(v-if="form.reservation !== undefined")
