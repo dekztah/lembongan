@@ -1,5 +1,6 @@
 <template lang="pug">
   .admin.main
+
     router-view
 
 </template>

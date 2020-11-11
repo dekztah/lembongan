@@ -11,6 +11,7 @@ import Admin from "../views/Admin.vue";
 import List from "../views/admin/List.vue";
 import Item from "../views/admin/Item.vue";
 import Boat from "../views/admin/Boat.vue";
+import Dashboard from "../views/admin/Dashboard.vue";
 
 Vue.use(VueRouter);
 
@@ -100,6 +101,11 @@ const routes = [
     },
     component: Admin,
     children: [
+      {
+        path: "/",
+        name: "Dashboard",
+        component: Dashboard
+      },
       {
         path: "places-list",
         name: "PlacesList",
