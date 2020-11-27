@@ -23,7 +23,9 @@
           input(type="checkbox" v-model="form.active")
 
       .grid-item
-        flat-pickr(v-model="form.activeDates" :config="config")
+        input(type="text" v-model="form.activeDates")
+        flat-pickr(v-model="form.activeDates" :config="config" @on-month-change="setDaysInMonth")
+        button.button(@click="setAllDays") select all days
 
     .bottom
       .opening-hours
@@ -67,6 +69,7 @@ import { db } from "@/firebase/firebase";
 import { mapState } from "vuex";
 import flatPickr from "vue-flatpickr-component";
 import schema from "@/assets/boats-schema.json";
+import { getDaysInMonth, isAfter, parse } from "date-fns";
 
 export default {
   data() {
@@ -80,14 +83,15 @@ export default {
       },
       form: schema,
       key: this.$route.params.id,
-      saveDisabled: false
+      saveDisabled: false,
+      daysInMonth: []
     };
   },
   components: {
     flatPickr
   },
   computed: {
-    ...mapState(["document", "loading", "weekArray"])
+    ...mapState(["document", "loading", "weekArray", "timestamp"])
   },
   mounted() {
     if (this.key !== undefined) {
@@ -109,6 +113,36 @@ export default {
     },
     removeDepartureTime(destination, index, day) {
       this.form[destination][day].splice(index, 1);
+    },
+    setAllDays() {
+      if (
+        isAfter(
+          parse(this.daysInMonth[0], "yyyy-MM-dd", new Date()),
+          this.timestamp
+        )
+      ) {
+        this.$set(
+          this.form,
+          "activeDates",
+          this.daysInMonth.join(", ").concat(", ", this.form.activeDates)
+        );
+      } else {
+        this.form.activeDates = this.daysInMonth.join(", ");
+      }
+    },
+    setDaysInMonth(selectedDates, dateStr, instance) {
+      let daysCount = getDaysInMonth(
+        new Date(instance.currentYear, instance.currentMonth)
+      );
+
+      this.daysInMonth = Array.from(
+        { length: daysCount },
+        (v, i) =>
+          `${instance.currentYear}-${instance.currentMonth + 1}-${i + 1}`
+      );
+    },
+    fha() {
+      console.log("open");
     },
     insert() {
       this.saveDisabled = true;
