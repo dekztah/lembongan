@@ -23,9 +23,8 @@
           input(type="checkbox" v-model="form.active")
 
       .grid-item
-        input(type="text" v-model="form.activeDates")
-        flat-pickr(v-model="form.activeDates" :config="config" @on-month-change="setDaysInMonth")
-        button.button(@click="setAllDays") select all days
+        flat-pickr(v-model="form.activeDates" :config="config" @on-month-change="setDaysInMonth" ref="cal")
+        button.button(@click="setAllDays") every day
 
     .bottom
       .opening-hours
@@ -69,7 +68,7 @@ import { db } from "@/firebase/firebase";
 import { mapState } from "vuex";
 import flatPickr from "vue-flatpickr-component";
 import schema from "@/assets/boats-schema.json";
-import { getDaysInMonth, isAfter, parse } from "date-fns";
+import { getDaysInMonth, isAfter, parse, getYear, getMonth } from "date-fns";
 
 export default {
   data() {
@@ -106,6 +105,8 @@ export default {
     } else {
       this.$store.commit("toggleLoading", false);
     }
+
+    this.setDaysInMonth();
   },
   methods: {
     addDepartureTime(destination, day) {
@@ -131,18 +132,22 @@ export default {
       }
     },
     setDaysInMonth(selectedDates, dateStr, instance) {
-      let daysCount = getDaysInMonth(
-        new Date(instance.currentYear, instance.currentMonth)
-      );
+      let year, month;
+
+      if (instance) {
+        year = instance.currentYear;
+        month = instance.currentMonth;
+      } else {
+        year = getYear(this.timestamp);
+        month = getMonth(this.timestamp);
+      }
+
+      let daysCount = getDaysInMonth(new Date(year, month));
 
       this.daysInMonth = Array.from(
         { length: daysCount },
-        (v, i) =>
-          `${instance.currentYear}-${instance.currentMonth + 1}-${i + 1}`
+        (v, i) => `${year}-${month + 1}-${i + 1}`
       );
-    },
-    fha() {
-      console.log("open");
     },
     insert() {
       this.saveDisabled = true;
