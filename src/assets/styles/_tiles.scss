@@ -49,10 +49,22 @@
   &-leave-to {
     opacity: 0;
   }
-
+  .opening-hours {
+    margin-bottom: 10px;
+  }
   .day-names {
     display: none;
     font-weight: 600;
+  }
+  .cal-wrapper {
+    display: none;
+    margin-top: 10px;
+  }
+  .closed-today,
+  .opens-in {
+    color: red;
+    font-weight: 600;
+    margin-bottom: 10px;
   }
 
   &.double {
@@ -61,6 +73,16 @@
     .day-names {
       display: block;
       text-align: center;
+    }
+    .opening-hours {
+      display: none;
+    }
+    .weekdays {
+      display: flex;
+      margin-top: 10px;
+    }
+    .cal-wrapper {
+      display: block;
     }
     .interval {
       font-size: 12px;
@@ -75,19 +97,13 @@
       }
     }
 
-    .closed-icon-text {
-      padding-top: 4px;
-
-      .text {
-        display: none;
-      }
-      .icon {
-        display: inline-block;
-        width: 24px;
-        height: 24px;
-        background-image: url(../Closed.svg);
-        background-size: 24px 24px;
-      }
+    .closed-icon {
+      margin-top: 4px;
+      display: inline-block;
+      width: 24px;
+      height: 24px;
+      background-image: url(../Closed.svg);
+      background-size: 24px 24px;
     }
 
     .wd {
@@ -111,7 +127,7 @@
   }
 
   .weekdays {
-    display: flex;
+    display: none;
   }
   .wd {
     display: none;
@@ -130,16 +146,6 @@
       &.today {
         display: flex;
         font-weight: 600;
-      }
-
-      .closed-icon-text {
-        align-items: center;
-        display: flex;
-        flex: 1;
-
-        .text {
-          color: #ff0000;
-        }
       }
     }
   }
@@ -200,7 +206,7 @@
   }
   h2.name {
     font-size: 16px;
-    margin-top: 0;
+    margin: 0;
     vertical-align: middle;
     cursor: pointer;
     display: flex;
@@ -249,5 +255,8 @@
       margin-right: auto;
       font-size: 12px;
     }
+  }
+  .flatpickr-days {
+    pointer-events: none;
   }
 }

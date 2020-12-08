@@ -45,6 +45,7 @@
     ]
   ],
   "active": false,
+  "activeDates": [""],
   "properties": {
     "yoga": false,
     "freeDiving": false,

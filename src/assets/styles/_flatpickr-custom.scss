@@ -16,6 +16,8 @@
   box-sizing: border-box;
   -ms-touch-action: manipulation;
   touch-action: manipulation;
+  border-radius: 4px;
+  overflow: hidden;
 
   &.open,
   &.inline {
@@ -37,7 +39,6 @@
   &.inline {
     display: block;
     position: relative;
-    top: 2px;
   }
 
   &.static {
@@ -171,7 +172,6 @@
   display: flex;
 
   .flatpickr-month {
-    border-radius: 5px 5px 0 0;
     background: #f5f5f5;
     color: #5a6171;
     fill: #5a6171;
@@ -577,8 +577,6 @@ span.flatpickr-weekday {
   -ms-flex-align: start;
   align-items: flex-start;
   width: 100%;
-  border-bottom-left-radius: 4px;
-  border-bottom-right-radius: 4px;
 
   &:focus {
     outline: 0;

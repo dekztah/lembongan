@@ -5,16 +5,24 @@
     .content(@click="toggleDouble()")
       h2.name {{ item.name }}
 
+      .opening-hours(v-if="isOpenToday")
+        .interval(v-for="time in item.openingHours[today]" v-if="time.start")
+          | {{ time.start }}-{{ time.end }}
+        .closed-today(v-if="!isOpenToday && !item.reservation") closed today
+
+      .opens-in(v-else) opens in {{ nextOpening }}
+
       .weekdays(v-if="!item.reservation")
-        .wd(v-for="(weekday, wid) in item.openingHours" :class="{'closed': weekday[0].start === '', 'today' : wid === today}")
-          div.day-names {{ weekArray[wid] }}
+        .wd(v-for="(weekday, wid) in item.openingHours" :class="{'closed': weekday[0].start === '' || !isOpenToday, 'today' : wid === today}")
+          .day-names {{ weekArray[wid] }}
           span(v-if="weekday[0].start !== ''")
-            div.interval(v-for="time in weekday")
+            .interval(v-for="time in weekday")
               | {{ time.start }}-{{ time.end }}
 
-          span(v-else).closed-icon-text
-            .icon
-            .text Closed today
+          span.closed-icon(v-else)
+
+      .cal-wrapper(v-if="openDates")
+        flat-pickr(v-model="openDates" :config="calendarConfig")
 
       .info
         chip(
@@ -44,7 +52,16 @@
 import { mapState, mapGetters } from "vuex";
 import chip from "@/components/Chip";
 import generic from "@/mixins/generic";
-import { isWithinInterval, differenceInSeconds } from "date-fns";
+import flatPickr from "vue-flatpickr-component";
+import {
+  isWithinInterval,
+  intervalToDuration,
+  differenceInSeconds,
+  differenceInDays,
+  format,
+  formatDuration,
+  parse
+} from "date-fns";
 
 let startTime, endTime;
 let startTimeDiff, endTimeDiff;
@@ -56,7 +73,8 @@ export default {
     };
   },
   components: {
-    chip
+    chip,
+    flatPickr
   },
   props: {
     item: Object
@@ -65,11 +83,53 @@ export default {
   computed: {
     ...mapState(["filters", "weekArray", "today"]),
     ...mapGetters(["timestamp"]),
+    calendarConfig() {
+      return {
+        mode: "multiple",
+        inline: true,
+        minDate: this.formattedDate,
+        monthSelectorType: "static",
+        locale: {
+          firstDayOfWeek: 1
+        }
+      };
+    },
+    openDates() {
+      if (!this.item.activeDates) return false;
 
+      return this.item.activeDates.split(", ");
+    },
+    formattedDate() {
+      return format(this.timestamp, "yyyy-MM-dd");
+    },
+
+    isOpenToday() {
+      if (!this.openDates) return true;
+
+      return this.openDates.includes(this.formattedDate);
+    },
+    nextOpening() {
+      let next = this.openDates.find(date => {
+        return differenceInDays(this.parseDate(date), this.timestamp) > 0;
+      });
+
+      let duration = intervalToDuration({
+        start: this.parseDate(this.formattedDate),
+        end: this.parseDate(next)
+      });
+
+      return formatDuration(duration, {
+        format: ["days"]
+      });
+
+      // return format(this.parseDate(next), "yyyy.MM.dd");
+    },
     openingHoursToday() {
       return this.item.openingHours[this.today];
     },
     openNow() {
+      if (!this.isOpenToday) return false;
+
       return this.openingHoursToday.find(element => {
         if (element.start && element.end) {
           startTime = this.parseTime(element.start);
@@ -128,6 +188,9 @@ export default {
     },
     waUrl(contact) {
       return `https://wa.me/${contact}`;
+    },
+    parseDate(date) {
+      return parse(date, "yyyy-MM-dd", new Date());
     }
   }
 };

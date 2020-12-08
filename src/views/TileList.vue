@@ -74,7 +74,10 @@ export default {
       const filterProps = this.$route.meta.filterProps;
       const obj = {
         ...{ openNow: false },
-        ...filterProps.reduce((o, key) => ({ ...o, [key]: false }), {})
+        ...filterProps
+          .sort()
+          .reverse()
+          .reduce((o, key) => ({ ...o, [key]: false }), {})
       };
       return obj;
     },

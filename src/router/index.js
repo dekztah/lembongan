@@ -75,7 +75,8 @@ const routes = [
         "hairdresser",
         "laundry",
         "handcraft",
-        "motorRepair"
+        "motorRepair",
+        "scooterRental"
       ]
     },
     props: route => ({

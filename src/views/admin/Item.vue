@@ -7,6 +7,10 @@
           input(type="text" v-model="form.name")
 
         .form-element
+          label Contact
+          input(type="number" v-model="form.contact")
+
+        .form-element
           label Facebook link
           input(type="text" v-model="form.facebookLink")
 
@@ -14,18 +18,16 @@
           label Instagram link
           input(type="text" v-model="form.instagramLink")
 
-      .grid-item
+        .form-element
+          label Maps link
+          input(type="text" v-model="form.gMapsLink")
+
         .form-element
           label Active
           input(type="checkbox" v-model="form.active")
 
-        .form-element
-          label Contact
-          input(type="number" v-model="form.contact")
-
-        .form-element
-          label Maps link
-          input(type="text" v-model="form.gMapsLink")
+      .grid-item
+        flat-pickr(v-model="form.activeDates" :config="config")
 
     .middle
       label Properties
@@ -69,6 +71,7 @@ import { mapState } from "vuex";
 import placesSchema from "@/assets/places-schema.json";
 import servicesSchema from "@/assets/services-schema.json";
 import activitiesSchema from "@/assets/activities-schema.json";
+import flatPickr from "vue-flatpickr-component";
 
 export default {
   data() {
@@ -78,10 +81,20 @@ export default {
         servicesSchema,
         activitiesSchema
       },
+      config: {
+        mode: "multiple",
+        inline: true,
+        locale: {
+          firstDayOfWeek: 1
+        }
+      },
       form: [],
       key: this.$route.params.id,
       saveDisabled: false
     };
+  },
+  components: {
+    flatPickr
   },
   computed: {
     ...mapState(["document", "loading", "weekArray"]),

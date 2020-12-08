@@ -45,6 +45,7 @@
     ]
   ],
   "active": false,
+  "activeDates": [""],
   "properties": {
     "spa": false,
     "barber": false,
@@ -52,7 +53,8 @@
     "laundry": false,
     "handcraft": false,
     "preorder": false,
-    "motorRepair": false
+    "motorRepair": false,
+    "scooterRental": false
   },
   "reservation": false,
   "contact": "",
