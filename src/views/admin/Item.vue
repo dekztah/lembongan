@@ -68,9 +68,6 @@
 <script>
 import { db } from "@/firebase/firebase";
 import { mapState } from "vuex";
-import placesSchema from "@/assets/places-schema.json";
-import servicesSchema from "@/assets/services-schema.json";
-import activitiesSchema from "@/assets/activities-schema.json";
 import flatPickr from "vue-flatpickr-component";
 
 export default {
@@ -95,9 +92,11 @@ export default {
 
   computed: {
     ...mapState(["document", "loading", "weekArray"]),
+
     collectionName() {
       return this.$route.meta.collection;
     },
+
     schema() {
       const schema = require(`@/assets/${this.collectionName}-schema.json`);
       return JSON.parse(JSON.stringify(schema));
@@ -124,12 +123,15 @@ export default {
     addOpeningHourSet(day) {
       this.form.openingHours[day].push({ start: "", end: "" });
     },
+
     removeOpeningHourSet(index, day) {
       this.form.openingHours[day].splice(index, 1);
     },
+
     text(str) {
       return str.replace(/([A-Z])/g, g => ` ${g[0].toLowerCase()}`);
     },
+
     insert() {
       this.saveDisabled = true;
       this.key =

@@ -86,12 +86,20 @@ export default {
       daysInMonth: []
     };
   },
+
   components: {
     flatPickr
   },
+
   computed: {
-    ...mapState(["document", "loading", "weekArray", "timestamp"])
+    ...mapState(["document", "loading", "weekArray", "timestamp"]),
+
+    schema() {
+      const schema = require("@/assets/boats-schema.json");
+      return JSON.parse(JSON.stringify(schema));
+    }
   },
+
   mounted() {
     if (this.key !== undefined) {
       this.$store
@@ -103,11 +111,13 @@ export default {
           this.$set(this, "form", this.document);
         });
     } else {
+      this.$set(this, "form", this.schema);
       this.$store.commit("toggleLoading", false);
     }
 
     this.setDaysInMonth();
   },
+
   methods: {
     addDepartureTime(destination, day) {
       this.form[destination][day].push("");
