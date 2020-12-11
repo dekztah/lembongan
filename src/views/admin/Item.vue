@@ -76,11 +76,6 @@ import flatPickr from "vue-flatpickr-component";
 export default {
   data() {
     return {
-      schemas: {
-        placesSchema,
-        servicesSchema,
-        activitiesSchema
-      },
       config: {
         mode: "multiple",
         inline: true,
@@ -88,20 +83,27 @@ export default {
           firstDayOfWeek: 1
         }
       },
-      form: [],
+      form: {},
       key: this.$route.params.id,
       saveDisabled: false
     };
   },
+
   components: {
     flatPickr
   },
+
   computed: {
     ...mapState(["document", "loading", "weekArray"]),
     collectionName() {
       return this.$route.meta.collection;
+    },
+    schema() {
+      const schema = require(`@/assets/${this.collectionName}-schema.json`);
+      return JSON.parse(JSON.stringify(schema));
     }
   },
+
   mounted() {
     if (this.key !== undefined) {
       this.$store
@@ -113,10 +115,11 @@ export default {
           this.$set(this, "form", this.document);
         });
     } else {
-      this.$set(this, "form", this.schemas[`${this.collectionName}Schema`]);
+      this.$set(this, "form", this.schema);
       this.$store.commit("toggleLoading", false);
     }
   },
+
   methods: {
     addOpeningHourSet(day) {
       this.form.openingHours[day].push({ start: "", end: "" });
