@@ -32,8 +32,8 @@
     .middle
       label Properties
       .checkboxes
-        .checkbox(v-for="(cb,key) in form.properties")
-          input(type="checkbox" :checked="cb" :id="key")
+        .checkbox(v-for="(cb,key) in form.properties" :key="key")
+          input(type="checkbox" v-model="form.properties[key]" :id="key")
           label(:for="key") {{ text(key) }}
 
     .bottom
@@ -113,7 +113,7 @@ export default {
           this.$set(this, "form", this.document);
         });
     } else {
-      this.form = this.schemas[`${this.collectionName}Schema`];
+      this.$set(this, "form", this.schemas[`${this.collectionName}Schema`]);
       this.$store.commit("toggleLoading", false);
     }
   },

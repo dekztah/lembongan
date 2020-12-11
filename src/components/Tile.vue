@@ -72,17 +72,22 @@ export default {
       isDouble: false
     };
   },
+
   components: {
     chip,
     flatPickr
   },
+
   props: {
     item: Object
   },
+
   mixins: [generic],
+
   computed: {
     ...mapState(["filters", "weekArray", "today"]),
     ...mapGetters(["timestamp"]),
+
     calendarConfig() {
       return {
         mode: "multiple",
@@ -94,11 +99,13 @@ export default {
         }
       };
     },
+
     openDates() {
       if (!this.item.activeDates) return false;
 
       return this.item.activeDates.split(", ");
     },
+
     formattedDate() {
       return format(this.timestamp, "yyyy-MM-dd");
     },
@@ -108,6 +115,7 @@ export default {
 
       return this.openDates.includes(this.formattedDate);
     },
+
     nextOpening() {
       let next = this.openDates.find(date => {
         return differenceInDays(this.parseDate(date), this.timestamp) > 0;
@@ -121,12 +129,12 @@ export default {
       return formatDuration(duration, {
         format: ["days"]
       });
-
-      // return format(this.parseDate(next), "yyyy.MM.dd");
     },
+
     openingHoursToday() {
       return this.item.openingHours[this.today];
     },
+
     openNow() {
       if (!this.isOpenToday) return false;
 
@@ -142,6 +150,7 @@ export default {
         }
       });
     },
+
     opensIn() {
       let sec = null;
 
@@ -157,6 +166,7 @@ export default {
       });
       return sec;
     },
+
     closesIn() {
       let sec = null;
 
@@ -171,6 +181,7 @@ export default {
       return sec;
     }
   },
+
   mounted() {
     if (this.item.reservation) {
       this.item.properties.openNow = true;
@@ -178,17 +189,21 @@ export default {
       this.item.properties.openNow = typeof this.openNow === "object";
     }
   },
+
   methods: {
     toggleDouble() {
       this.isDouble = !this.isDouble;
     },
+
     chipVisible(item, key) {
       if (key === "noPreorder") key = "preorder";
       return item[key] && key !== "openNow";
     },
+
     waUrl(contact) {
       return `https://wa.me/${contact}`;
     },
+
     parseDate(date) {
       return parse(date, "yyyy-MM-dd", new Date());
     }
