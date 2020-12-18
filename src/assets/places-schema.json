@@ -45,7 +45,7 @@
     ]
   ],
   "active": false,
-  "activeDates": [""],
+  "activeDates": "",
   "properties": {
     "dineIn": false,
     "delivery": false,

@@ -27,7 +27,7 @@
           input(type="checkbox" v-model="form.active")
 
       .grid-item
-        flat-pickr(v-model="form.activeDates" :config="config")
+        flat-pickr(v-model="activeDates" :config="config")
 
     .middle
       label Properties
@@ -81,6 +81,7 @@ export default {
         }
       },
       form: {},
+      dates: "",
       key: this.$route.params.id,
       saveDisabled: false
     };
@@ -100,6 +101,18 @@ export default {
     schema() {
       const schema = require(`@/assets/${this.collectionName}-schema.json`);
       return JSON.parse(JSON.stringify(schema));
+    },
+
+    activeDates: {
+      get() {
+        return this.form.activeDates ? this.form.activeDates : "";
+      },
+      set(val) {
+        this.form.activeDates = val
+          .split(", ")
+          .sort()
+          .join(", ");
+      }
     }
   },
 
@@ -134,10 +147,11 @@ export default {
 
     insert() {
       this.saveDisabled = true;
-      this.key =
-        this.key === undefined
-          ? db.ref(this.collectionName).push().key
-          : this.key;
+
+      if (!this.key) {
+        this.key = db.ref(this.collectionName).push().key;
+        this.form.createdDate = new Date();
+      }
 
       let updates = {};
       updates[`/${this.collectionName}/` + this.key] = this.form;
