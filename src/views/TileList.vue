@@ -84,36 +84,34 @@ export default {
     filteredCollection() {
       const filterEntries = Object.entries(this.filters);
 
-      return (
-        this.collection
-          // .filter(item => item.active === true)
-          .filter(item =>
-            this.search
-              ? item.name.toLowerCase().includes(this.search.toLowerCase())
-              : true
-          )
-          .filter(item => {
-            const boolArr = filterEntries.map(([filterKey, filterValue]) => {
-              if (filterKey === "noPreorder") {
-                return filterValue
-                  ? item.properties.preorder !== filterValue
-                  : true;
-              } else {
-                return filterValue
-                  ? item.properties[filterKey] === filterValue
-                  : true;
-              }
-            });
-            return boolArr.every(filter => filter === true);
-          })
-          .sort(a => {
-            if (a.createdDate) {
-              a.new =
-                differenceInDays(this.timestamp, new Date(a.createdDate)) < 3;
+      return this.collection
+        .filter(item => item.active === true)
+        .filter(item =>
+          this.search
+            ? item.name.toLowerCase().includes(this.search.toLowerCase())
+            : true
+        )
+        .filter(item => {
+          const boolArr = filterEntries.map(([filterKey, filterValue]) => {
+            if (filterKey === "noPreorder") {
+              return filterValue
+                ? item.properties.preorder !== filterValue
+                : true;
+            } else {
+              return filterValue
+                ? item.properties[filterKey] === filterValue
+                : true;
             }
-            return a.createdDate && a.new ? -1 : 0;
-          })
-      );
+          });
+          return boolArr.every(filter => filter === true);
+        })
+        .sort(a => {
+          if (a.createdDate) {
+            a.new =
+              differenceInDays(this.timestamp, new Date(a.createdDate)) < 3;
+          }
+          return a.createdDate && a.new ? -1 : 0;
+        });
     }
   },
   beforeRouteEnter(to, from, next) {
