@@ -106,10 +106,6 @@ export default {
       return this.item.activeDates.split(", ");
     },
 
-    formattedDate() {
-      return format(this.timestamp, "yyyy-MM-dd");
-    },
-
     isOpenToday() {
       if (!this.openDates) return true;
 
@@ -202,10 +198,6 @@ export default {
 
     waUrl(contact) {
       return `https://wa.me/${contact}`;
-    },
-
-    parseDate(date) {
-      return parse(date, "yyyy-MM-dd", new Date());
     }
   }
 };

@@ -35,18 +35,23 @@ import store from "@/store";
 import { mapState, mapActions, mapGetters } from "vuex";
 import checkbox from "@/components/Checkbox";
 import tile from "@/components/Tile";
-import { differenceInDays } from "date-fns";
+import generic from "@/mixins/generic";
+import { differenceInDays, intervalToDuration } from "date-fns";
 
 export default {
   components: {
     checkbox,
     tile
   },
+
   props: {
     tags: Array,
     q: String,
     open: String
   },
+
+  mixins: [generic],
+
   computed: {
     ...mapState([
       "filters",
@@ -56,10 +61,12 @@ export default {
       "mobileNavOpen"
     ]),
     ...mapGetters(["timestamp"]),
+
     search: {
       get() {
         return this.q ? this.q : "";
       },
+
       set(val) {
         if (val === "") val = undefined;
         this.$router.replace({
@@ -67,9 +74,11 @@ export default {
         });
       }
     },
+
     collection() {
       return this.collections[this.$route.meta.collection];
     },
+
     filterObject() {
       const filterProps = this.$route.meta.filterProps;
       const obj = {
@@ -81,6 +90,7 @@ export default {
       };
       return obj;
     },
+
     filteredCollection() {
       const filterEntries = Object.entries(this.filters);
 
@@ -106,6 +116,17 @@ export default {
           return boolArr.every(filter => filter === true);
         })
         .sort(a => {
+          if (a.activeDates) {
+            let diff = 0;
+            let next = a.activeDates.split(", ").find(date => {
+              diff = differenceInDays(this.parseDate(date), this.timestamp);
+              return diff > 0;
+            });
+
+            return diff ? -1 : 0;
+          }
+        })
+        .sort(a => {
           if (a.createdDate) {
             a.new =
               differenceInDays(this.timestamp, new Date(a.createdDate)) < 3;
@@ -114,6 +135,7 @@ export default {
         });
     }
   },
+
   beforeRouteEnter(to, from, next) {
     store.dispatch("fetchCollection", to.meta.collection).then(() => {
       next(vm => {
@@ -121,6 +143,7 @@ export default {
       });
     });
   },
+
   methods: {
     ...mapActions(["toggleMobileNav", "setFilters", "setFilter"]),
     setQuery(key, val) {
