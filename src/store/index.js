@@ -29,6 +29,7 @@ export default new Vuex.Store({
   },
   mutations: {
     setUserProfile(state, val) {
+      // console.log("setuserprofile"); // too late
       state.userProfile = val;
     },
     updateTimeStamp(state) {
@@ -150,7 +151,9 @@ export default new Vuex.Store({
   getters: {
     boats: state => state.collections.boats,
     timestamp: state => state.timestamp,
-    isMobile: state => state.isMobile
+    isMobile: state => state.isMobile,
+    userProfile: state => state.userProfile,
+    isAdmin: state => state.userProfile.role === "admin"
   },
   modules: {}
 });
