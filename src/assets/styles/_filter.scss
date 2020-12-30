@@ -11,8 +11,11 @@
   font-size: 12px;
   font-weight: 600;
 
-  .filter {
+  .text-input {
     margin-right: 5px;
+  }
+
+  .filter {
     position: relative;
 
     @media only screen and (max-width: $breakpoint-small) {

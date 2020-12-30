@@ -44,6 +44,12 @@
   &.wines-and-spirits {
     background: #fdd92b !important;
   }
+  &.pizza {
+    background: #e12301 !important;
+  }
+  &.sushi {
+    background: #ff782e !important;
+  }
 
   // activities
   &.yoga {
@@ -95,5 +101,14 @@
   }
   &.scooter-rental {
     background: #ff3333 !important;
+  }
+  &.printing {
+    background: #00dddd !important;
+  }
+  &.gaming {
+    background: #0e7a0d !important;
+  }
+  &.babysitting {
+    background: #f177b0 !important;
   }
 }

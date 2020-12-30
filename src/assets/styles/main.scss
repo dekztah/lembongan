@@ -196,15 +196,7 @@ header {
 .mobile-nav-open {
   .tile-list,
   footer {
-    transform: translateY(247px);
-  }
-  .food-and-drink {
-    .tile-list {
-      transform: translateY(281px);
-    }
-  }
-  .food-and-drink + footer {
-    transform: translateY(281px);
+    transform: translateY(316px);
   }
 }
 .fade-enter-active,
