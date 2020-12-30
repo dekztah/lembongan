@@ -10,11 +10,16 @@ Vue.config.productionTip = false;
 
 router.beforeEach((to, from, next) => {
   const requiresAuth = to.matched.some(x => x.meta.requiresAuth);
+  const requiresAdmin = to.matched.some(x => x.meta.requiresAdmin);
 
   if (requiresAuth && !auth.currentUser) {
     next("/login");
   } else {
-    next();
+    if (requiresAdmin && !store.getters.isAdmin) {
+      next("/admin");
+    } else {
+      next();
+    }
   }
 });
 

@@ -31,6 +31,8 @@ const routes = [
         "rendang",
         "desserts",
         "drinks",
+        "pizza",
+        "sushi",
         "winesAndSpirits"
       ]
     },
@@ -69,14 +71,16 @@ const routes = [
     meta: {
       collection: "services",
       filterProps: [
-        "noPreorder",
         "spa",
         "barber",
         "hairdresser",
         "laundry",
         "handcraft",
         "motorRepair",
-        "scooterRental"
+        "scooterRental",
+        "gaming",
+        "printing",
+        "babysitting"
       ]
     },
     props: route => ({
@@ -113,7 +117,8 @@ const routes = [
         component: List,
         meta: {
           collection: "places",
-          item: "Place"
+          item: "Place",
+          requiresAdmin: true
         }
       },
       {
@@ -130,7 +135,8 @@ const routes = [
         component: List,
         meta: {
           collection: "boats",
-          item: "Boat"
+          item: "Boat",
+          requiresAdmin: true
         }
       },
       {
@@ -144,7 +150,8 @@ const routes = [
         component: List,
         meta: {
           collection: "activities",
-          item: "Activity"
+          item: "Activity",
+          requiresAdmin: true
         }
       },
       {
@@ -161,7 +168,8 @@ const routes = [
         component: List,
         meta: {
           collection: "services",
-          item: "Service"
+          item: "Service",
+          requiresAdmin: true
         }
       },
       {
