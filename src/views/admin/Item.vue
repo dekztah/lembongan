@@ -7,6 +7,10 @@
           input(type="text" v-model="form.name")
 
         .form-element
+          label Owner
+          input(type="text" v-model="form.owner" :disabled="!isAdmin")
+
+        .form-element
           label Contact
           input(type="number" v-model="form.contact")
 
@@ -67,8 +71,9 @@
 
 <script>
 import { db } from "@/firebase/firebase";
-import { mapState } from "vuex";
+import { mapState, mapGetters } from "vuex";
 import flatPickr from "vue-flatpickr-component";
+import deepmerge from "deepmerge";
 
 export default {
   data() {
@@ -93,6 +98,7 @@ export default {
 
   computed: {
     ...mapState(["document", "loading", "weekArray"]),
+    ...mapGetters(["isAdmin"]),
 
     collectionName() {
       return this.$route.meta.collection;
@@ -118,13 +124,23 @@ export default {
 
   mounted() {
     if (this.key !== undefined) {
+      const overwriteMerge = (destinationArray, sourceArray, options) =>
+        sourceArray;
+
       this.$store
         .dispatch("fetchDocument", {
           collectionName: this.collectionName,
           id: this.key
         })
         .then(() => {
-          this.$set(this, "form", this.document);
+          this.$set(
+            this,
+            "form",
+            deepmerge(this.schema, this.document, {
+              arrayMerge: overwriteMerge
+            })
+          );
+          console.log("x", this.schema, this.document, this.form);
         });
     } else {
       this.$set(this, "form", this.schema);
