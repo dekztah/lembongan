@@ -15,6 +15,10 @@
           input(type="text" v-model="form.gMapsLink")
 
         .form-element
+          label Facebook link
+          input(type="text" v-model="form.facebookLink")
+
+        .form-element
           label Lembongan departure location
           input(type="text" v-model="form.lembonganLocation")
 
