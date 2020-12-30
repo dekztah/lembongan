@@ -55,10 +55,13 @@
     "rendang": false,
     "desserts": false,
     "drinks": false,
+    "pizza": false,
+    "sushi": false,
     "winesAndSpirits": false
   },
   "contact": "",
   "gMapsLink": "",
   "facebookLink": "",
-  "instagramLink": ""
+  "instagramLink": "",
+  "owner": ""
 }
