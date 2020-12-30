@@ -1,6 +1,5 @@
 <template lang="pug">
-  .food-and-drink.main
-
+  .main
     .filter-control(:class="{'active': mobileNavOpen}")
       .filter.text-input
         input(type="text" v-model="search"  placeholder="search by name...")
@@ -25,7 +24,7 @@
       tile(
         v-for="item in filteredCollection"
         :item="item"
-        :key="item.name"
+        :key="item.key"
       )
 
 </template>
@@ -117,13 +116,15 @@ export default {
         })
         .sort(a => {
           if (a.activeDates) {
-            let diff = 0;
             let next = a.activeDates.split(", ").find(date => {
-              diff = differenceInDays(this.parseDate(date), this.timestamp);
-              return diff > 0;
+              let diff = differenceInDays(
+                this.parseDate(date),
+                this.parseDate(this.formattedDate)
+              );
+              return diff === 0;
             });
 
-            return diff ? -1 : 0;
+            return next ? 0 : -1;
           }
         })
         .sort(a => {
