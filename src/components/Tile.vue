@@ -8,7 +8,8 @@
       .opening-hours(v-if="isOpenToday")
         .interval(v-for="time in item.openingHours[today]" v-if="time.start")
           | {{ time.start }}-{{ time.end }}
-        .closed-today(v-if="!isOpenToday && !item.reservation") closed today
+
+        .closed-today(v-if="!item.openingHours[today][0].start && !item.reservation") closed today
 
       .opens-in(v-else) opens in {{ nextOpening }}
 
@@ -114,17 +115,26 @@ export default {
 
     nextOpening() {
       let next = this.openDates.find(date => {
-        return differenceInDays(this.parseDate(date), this.timestamp) > 0;
+        return (
+          differenceInDays(
+            this.parseDate(date),
+            this.parseDate(this.formattedDate)
+          ) > 0
+        );
       });
 
-      let duration = intervalToDuration({
-        start: this.parseDate(this.formattedDate),
-        end: this.parseDate(next)
-      });
+      if (next) {
+        let duration = intervalToDuration({
+          start: this.parseDate(this.formattedDate),
+          end: this.parseDate(next)
+        });
 
-      return formatDuration(duration, {
-        format: ["days"]
-      });
+        return formatDuration(duration, {
+          format: ["days"]
+        });
+      }
+
+      return null;
     },
 
     openingHoursToday() {
