@@ -14,9 +14,10 @@
         @input="setQuery(key, $event)"
       )
 
-      .count(v-if="!loading") {{ filteredCollection.length }} results
+      .count(v-if="filters") {{ filteredCollection.length }} results
 
     transition-group.tile-list(
+      v-if="filters"
       tag="div"
       name="tile"
       :key="$route.meta.collection"

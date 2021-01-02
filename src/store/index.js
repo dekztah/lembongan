@@ -16,7 +16,7 @@ export default new Vuex.Store({
     mobileNavOpen: false,
     loading: true,
     userProfile: {},
-    filters: {},
+    filters: null,
     collections: {
       places: [],
       activities: [],
