@@ -56,7 +56,8 @@
     "scooterRental": false,
     "gaming": false,
     "printing": false,
-    "babysitting": false
+    "babysitting": false,
+    "taxi": false
   },
   "reservation": false,
   "contact": "",

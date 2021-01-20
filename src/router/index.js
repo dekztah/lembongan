@@ -23,6 +23,7 @@ const routes = [
     meta: {
       collection: "places",
       filterProps: [
+        // TODO: get these from schema?
         "dineIn",
         "delivery",
         "noPreorder",
@@ -80,7 +81,8 @@ const routes = [
         "scooterRental",
         "gaming",
         "printing",
-        "babysitting"
+        "babysitting",
+        "taxi"
       ]
     },
     props: route => ({

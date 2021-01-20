@@ -39,17 +39,18 @@
 
           .admin-footer(v-if="userProfile.name")
             span.username {{ userProfile.name }}
-            router-link.button(to="/admin/places-list") Places
-            router-link.button(to="/admin/boats-list") Boats
-            router-link.button(to="/admin/activities-list") Activities
-            router-link.button(to="/admin/services-list") Services
+            template(v-if="isAdmin")
+              router-link.button(to="/admin/places-list") Places
+              router-link.button(to="/admin/boats-list") Boats
+              router-link.button(to="/admin/activities-list") Activities
+              router-link.button(to="/admin/services-list") Services
 
             a.button(@click="logout") logout
 
 </template>
 
 <script>
-import { mapState, mapActions } from "vuex";
+import { mapState, mapActions, mapGetters } from "vuex";
 import { format, isWithinInterval, parse } from "date-fns";
 
 export default {
@@ -58,6 +59,7 @@ export default {
   },
   computed: {
     ...mapState(["userProfile", "loading", "mobileNavOpen", "timestamp"]),
+    ...mapGetters(["isAdmin"]),
     showLogout() {
       return Object.keys(this.userProfile).length > 1;
     },
