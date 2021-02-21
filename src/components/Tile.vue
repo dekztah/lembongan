@@ -22,6 +22,8 @@
 
           span.closed-icon(v-else)
 
+      .description(v-if="item.description") {{ item.description }}
+
       .cal-wrapper(v-if="openDates")
         flat-pickr(v-model="openDates" :config="calendarConfig")
 

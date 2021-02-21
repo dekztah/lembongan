@@ -46,6 +46,7 @@
   ],
   "active": false,
   "activeDates": [""],
+  "description": "",
   "properties": {
     "spa": false,
     "barber": false,
@@ -57,7 +58,8 @@
     "gaming": false,
     "printing": false,
     "babysitting": false,
-    "taxi": false
+    "taxi": false,
+    "workspace": false
   },
   "reservation": false,
   "contact": "",

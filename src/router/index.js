@@ -82,7 +82,8 @@ const routes = [
         "gaming",
         "printing",
         "babysitting",
-        "taxi"
+        "taxi",
+        "workspace"
       ]
     },
     props: route => ({

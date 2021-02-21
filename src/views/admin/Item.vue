@@ -7,6 +7,10 @@
           input(type="text" v-model="form.name")
 
         .form-element
+          label Description
+          input(type="text" v-model="form.description")
+
+        .form-element
           label Owner
           input(type="text" v-model="form.owner" :disabled="!isAdmin")
 
