@@ -2,7 +2,7 @@
   .main
     .filter-control(:class="{'active': mobileNavOpen}")
       .filter.text-input
-        input(type="text" v-model="search"  placeholder="search by name...")
+        input(type="text" v-model="search"  placeholder="Use the search Luke")
         button.clear(v-if="search !== ''" @click="search = undefined")
 
       checkbox(
@@ -98,7 +98,10 @@ export default {
         .filter(item => item.active === true)
         .filter(item =>
           this.search
-            ? item.name.toLowerCase().includes(this.search.toLowerCase())
+            ? item.name.toLowerCase().includes(this.search.toLowerCase()) ||
+              item.description
+                ?.toLowerCase()
+                .includes(this.search.toLowerCase())
             : true
         )
         .filter(item => {
