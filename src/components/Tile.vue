@@ -13,6 +13,8 @@
 
       .opens-in(v-else) opens in {{ nextOpening }}
 
+      .description(v-if="item.description") {{ item.description }}
+
       .weekdays(v-if="!item.reservation")
         .wd(v-for="(weekday, wid) in item.openingHours" :class="{'closed': weekday[0].start === '' || !isOpenToday, 'today' : wid === today}")
           .day-names {{ weekArray[wid] }}
@@ -22,7 +24,7 @@
 
           span.closed-icon(v-else)
 
-      .description(v-if="item.description") {{ item.description }}
+
 
       .cal-wrapper(v-if="openDates")
         flat-pickr(v-model="openDates" :config="calendarConfig")
