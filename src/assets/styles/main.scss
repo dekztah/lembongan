@@ -229,6 +229,10 @@ footer {
     padding: 10px;
   }
 
+  .social {
+    margin-left: 10px;
+  }
+
   @media only screen and (max-width: $breakpoint-small) {
     position: static;
     height: 54px;
@@ -236,7 +240,7 @@ footer {
 
   .contact-me {
     @media only screen and (max-width: $breakpoint-small) {
-      max-width: 96px;
+      // max-width: 96px;
     }
   }
 }

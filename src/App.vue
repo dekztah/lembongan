@@ -32,7 +32,9 @@
 
         footer
           .public-footer
-            span.contact-me Incorrect data? Contact me on:&nbsp;
+            .left
+              .last(v-if="lastUpdate") last updated: {{ lastUpdateFormatted }}
+              .contact-me Incorrect data? Contact me on:&nbsp;
             a.social.wa(href="https://wa.me/6282144453436" target="_blank" rel="noopener") WA
 
             a.kofi(href="https://ko-fi.com/dekztah" target="_blank" rel="noopener")
@@ -59,7 +61,7 @@ export default {
   },
   computed: {
     ...mapState(["userProfile", "loading", "mobileNavOpen", "timestamp"]),
-    ...mapGetters(["isAdmin"]),
+    ...mapGetters(["isAdmin", "lastUpdate"]),
     showLogout() {
       return Object.keys(this.userProfile).length > 1;
     },
@@ -71,6 +73,9 @@ export default {
     },
     time() {
       return format(this.timestamp, "HH:mm");
+    },
+    lastUpdateFormatted() {
+      return format(this.lastUpdate, "yyyy-MM-dd HH:mm");
     },
     partOfTheDay() {
       let parts = ["pagi", "siang", "sore", "malam"];
