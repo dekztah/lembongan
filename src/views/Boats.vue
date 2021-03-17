@@ -3,12 +3,8 @@
     .title
       button.button(@click="dest = 'departToLembongan'" :class="{'active': dest === 'departToLembongan'}")
         | Sanur to Lembongan
-        br
-        | Sanur to Ceningan
       button.button(@click="dest = 'departToSanur'" :class="{'active': dest === 'departToSanur'}")
         | Lembongan to Sanur
-        br
-        | Ceningan to Sanur
 
     .daily-schedule(v-if="schedule[dest].length")
       .direction(v-if="!loading")
