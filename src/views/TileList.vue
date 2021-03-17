@@ -2,7 +2,8 @@
   .main
     .filter-control(:class="{'active': mobileNavOpen}")
       .filter.text-input
-        input(type="text" v-model="search"  placeholder="Use the search Luke")
+        input(type="text" v-model="search")
+        .search-icon(v-if="search === ''")
         button.clear(v-if="search !== ''" @click="search = undefined")
 
       checkbox(
