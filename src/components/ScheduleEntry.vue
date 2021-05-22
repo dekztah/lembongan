@@ -5,16 +5,18 @@
       span.location(v-if="dest === 'departToSanur'") from {{ entry.lembonganLocation }}
       span.location(v-if="dest === 'departToLembongan'") to {{ entry.lembonganLocation }}
       .cal-wrapper(v-show="calOpen")
-        flat-pickr(v-model="operatingDates" :config="calendarConfig")
+        flat-pickr(:value="operatingDates" :config="calendarConfig")
 
     .footer
       .status
         .not-operating(v-if="!isOperatingToday") Not operating today
-        span(v-if="leavingIn") departs in:&nbsp;
-          strong {{ leavingIn }}
-        span(v-if="!available") already left
+        template(v-else)
+          span(v-if="leavingIn") departs in:&nbsp;
+            strong {{ leavingIn }}
+          span(v-if="!available") already left
 
       a.social.maps(v-if="entry.gMapsLink" :href="entry.gMapsLink" target="_blank" rel="noopener")
+      a.social.fb(v-if="entry.facebookLink" :href="entry.facebookLink" target="_blank" rel="noopener")
       a.social.wa(v-if="entry.contact" :href="waUrl(entry.contact)" target="_blank" rel="noopener") WA
 
 </template>

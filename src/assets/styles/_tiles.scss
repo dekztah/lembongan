@@ -17,7 +17,7 @@
   display: inline-flex;
   flex-direction: column;
   justify-content: space-between;
-  background: white;
+  background: lighten(#92e6ff, 15);
   margin: 5px;
   width: 180px;
   border-radius: 4px;
@@ -263,5 +263,47 @@
   }
   .flatpickr-days {
     pointer-events: none;
+  }
+
+  &.sponsored {
+    background: white;
+    overflow: hidden;
+
+    .content {
+      padding: 0;
+    }
+    .name,
+    .description,
+    .weekdays,
+    .info,
+    .opening-hours {
+      padding: 0 15px;
+    }
+
+    .name {
+      padding-top: 15px;
+    }
+
+    img {
+      order: 0;
+    }
+    .description {
+      order: 2;
+    }
+    .weekdays {
+      order: 3;
+    }
+    .info {
+      order: 4;
+    }
+
+    .opening-hours {
+      order: 1;
+      padding-top: 15px;
+    }
+
+    .footer {
+      background: white;
+    }
   }
 }

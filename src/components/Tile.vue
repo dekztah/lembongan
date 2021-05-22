@@ -1,9 +1,9 @@
 <template lang="pug">
   .tile(
-    :class="{'open': openNow, 'double': isDouble, 'reservation' : item.reservation, 'warn': (opensIn !== null && opensIn >= 0) || (closesIn !== null && closesIn >= 1), 'new': item.new}"
+    :class="{'open': openNow, 'double': isDouble, 'reservation' : item.reservation, 'warn': (opensIn !== null && opensIn >= 0) || (closesIn !== null && closesIn >= 1), 'new': item.new, 'sponsored': item.sponsored}"
   )
     .content(@click="toggleDouble()")
-      h2.name {{ item.name }}
+      h2.name(v-if="!item.logo || item.sponsored === 0") {{ item.name }}
 
       .opening-hours(v-if="isOpenToday")
         .interval(v-for="time in item.openingHours[today]" v-if="time.start")
@@ -12,6 +12,8 @@
         .closed-today(v-if="!item.openingHours[today][0].start && !item.reservation") closed today
 
       .opens-in(v-else) opens in {{ nextOpening }}
+
+      img(v-if="item.logo && item.sponsored !== 0" :src="item.logo")
 
       .description(v-if="item.description") {{ item.description }}
 
@@ -23,8 +25,6 @@
               | {{ time.start }}-{{ time.end }}
 
           span.closed-icon(v-else)
-
-
 
       .cal-wrapper(v-if="openDates")
         flat-pickr(v-model="openDates" :config="calendarConfig")

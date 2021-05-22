@@ -97,6 +97,7 @@ export default {
 
       return this.collection
         .filter(item => item.active === true)
+
         .filter(item =>
           this.search
             ? item.name.toLowerCase().includes(this.search.toLowerCase()) ||
@@ -105,6 +106,7 @@ export default {
                 .includes(this.search.toLowerCase())
             : true
         )
+
         .filter(item => {
           const boolArr = filterEntries.map(([filterKey, filterValue]) => {
             if (filterKey === "noPreorder") {
@@ -119,6 +121,7 @@ export default {
           });
           return boolArr.every(filter => filter === true);
         })
+
         .sort(a => {
           if (a.activeDates) {
             let next = a.activeDates.split(", ").find(date => {
@@ -132,12 +135,23 @@ export default {
             return next ? 0 : -1;
           }
         })
+
         .sort(a => {
           if (a.createdDate) {
             a.new =
               differenceInDays(this.timestamp, new Date(a.createdDate)) < 3;
           }
-          return a.createdDate && a.new ? -1 : 0;
+          return a.createdDate && a.new ? -2 : 0;
+        })
+
+        .sort((a, b) => {
+          if (a.sponsored) {
+            if (b.sponsored) {
+              return a.sponsored > b.sponsored;
+            } else {
+              return -1;
+            }
+          }
         });
     }
   },

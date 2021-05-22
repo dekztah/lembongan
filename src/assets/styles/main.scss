@@ -468,3 +468,14 @@ footer {
   height: 32px;
   border-radius: 50%;
 }
+
+.maintenance {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  font-style: italic;
+  font-size: 72px;
+  font-weight: bold;
+  color: rgba(0, 0, 0, 0.5);
+}

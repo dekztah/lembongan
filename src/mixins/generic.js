@@ -1,4 +1,5 @@
 import { parse, format } from "date-fns";
+import { utcToZonedTime } from "date-fns-tz";
 
 export default {
   computed: {
@@ -9,11 +10,15 @@ export default {
 
   methods: {
     parseDate(date) {
-      return parse(date, "yyyy-MM-dd", new Date());
+      return parse(
+        date,
+        "yyyy-MM-dd",
+        utcToZonedTime(new Date(), "Asia/Makassar")
+      );
     },
 
     parseTime(time) {
-      return parse(time, "HH:mm", new Date());
+      return parse(time, "HH:mm", utcToZonedTime(new Date(), "Asia/Makassar"));
     }
   }
 };

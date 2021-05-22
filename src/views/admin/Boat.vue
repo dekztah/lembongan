@@ -73,6 +73,7 @@ import { mapState } from "vuex";
 import flatPickr from "vue-flatpickr-component";
 import schema from "@/assets/boats-schema.json";
 import { getDaysInMonth, isAfter, parse, getYear, getMonth } from "date-fns";
+import { utcToZonedTime } from "date-fns-tz";
 
 export default {
   data() {
@@ -120,6 +121,7 @@ export default {
     }
 
     this.setDaysInMonth();
+    // this.$refs.cal.fp.jumpToDate(this.timestamp);
   },
 
   methods: {
@@ -132,7 +134,11 @@ export default {
     setAllDays() {
       if (
         isAfter(
-          parse(this.daysInMonth[0], "yyyy-MM-dd", new Date()),
+          parse(
+            this.daysInMonth[0],
+            "yyyy-MM-dd",
+            utcToZonedTime(new Date(), "Asia/Makassar")
+          ),
           this.timestamp
         )
       ) {

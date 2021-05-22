@@ -3,10 +3,11 @@ import Vuex from "vuex";
 import { auth, db } from "@/firebase/firebase";
 import router from "../router/index";
 import { getISODay } from "date-fns";
+import { utcToZonedTime } from "date-fns-tz";
 
 Vue.use(Vuex);
 
-const currentTime = new Date();
+const currentTime = utcToZonedTime(new Date(), "Asia/Makassar");
 
 export default new Vuex.Store({
   state: {
@@ -30,12 +31,11 @@ export default new Vuex.Store({
   },
   mutations: {
     setUserProfile(state, val) {
-      // console.log("setuserprofile"); // too late
       state.userProfile = val;
     },
 
     updateTimeStamp(state) {
-      state.timestamp = new Date();
+      state.timestamp = utcToZonedTime(new Date(), "Asia/Makassar");
     },
 
     toggleMobileNav(state) {

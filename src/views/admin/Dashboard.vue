@@ -29,18 +29,6 @@ import { db } from "@/firebase/firebase";
 export default {
   computed: {
     ...mapGetters(["isAdmin", "userProfile"])
-  },
-
-  mounted() {
-    console.log("ff", this.userProfile);
-    for (let type in this.userProfile.ownerOf) {
-      console.log("yy", type);
-    }
-    db.ref("places/18/name")
-      .once("value")
-      .then(snapshot => {
-        console.log("x", snapshot.val());
-      });
   }
 };
 </script>

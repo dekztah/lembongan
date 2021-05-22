@@ -5,7 +5,7 @@
         .loader.blasting-ripple
 
     transition(name="fade")
-      .wrapper(v-show="!loading" :class="{'mobile-nav-open': mobileNavOpen}")
+      .wrapper(v-show="!loading" :class="{'mobile-nav-open': mobileNavOpen}" v-if="!maintenance")
         header
           #nav-mobile
             .hamburger.hamburger--emphatic(type="button" @click="toggleMobileNav" :class="{'is-active': mobileNavOpen}")
@@ -19,7 +19,8 @@
             router-link(to="/services") Services
 
           .greeting
-            h1 Selamat {{ partOfTheDay }}!
+            //- h1 Selamat {{ partOfTheDay }}!
+            h1 Lembongan today
             .current-page {{ $route.name }}
 
           .today
@@ -34,8 +35,8 @@
           .public-footer
             .left
               .last(v-if="lastUpdate") last updated: {{ lastUpdateFormatted }}
-              .contact-me Incorrect data? Contact me on:&nbsp;
-            a.social.wa(href="https://wa.me/6282144453436" target="_blank" rel="noopener") WA
+              .contact-me Incorrect data? Contact Martijn on:&nbsp;
+            a.social.wa(href="https://wa.me/6281237940300" target="_blank" rel="noopener") WA
 
             a.kofi(href="https://ko-fi.com/dekztah" target="_blank" rel="noopener")
 
@@ -49,15 +50,21 @@
 
             a.button(@click="logout") logout
 
+      .wrapper(v-else)
+        .maintenance Maintenance, we will be back soon
+
 </template>
 
 <script>
 import { mapState, mapActions, mapGetters } from "vuex";
 import { format, isWithinInterval, parse } from "date-fns";
+import { utcToZonedTime } from "date-fns-tz";
 
 export default {
   data() {
-    return {};
+    return {
+      maintenance: false
+    };
   },
   computed: {
     ...mapState(["userProfile", "loading", "mobileNavOpen", "timestamp"]),
@@ -123,7 +130,7 @@ export default {
       "updateTimeStamp"
     ]),
     parseTime(time) {
-      return parse(time, "HH:mm", new Date());
+      return parse(time, "HH:mm", utcToZonedTime(new Date(), "Asia/Makassar"));
     }
   },
   watch: {

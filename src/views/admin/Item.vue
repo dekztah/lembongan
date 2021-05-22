@@ -31,6 +31,19 @@
           input(type="text" v-model="form.gMapsLink")
 
         .form-element
+          label Sponsored
+          select(v-model="form.sponsored")
+            option(:value="0") not sponsored
+            option(:value="1") level 1
+            option(:value="2") level 2
+            option(:value="3") level 3
+            option(:value="4") level 4
+
+        .form-element(v-if="form.sponsored > 0")
+          label Logo
+          input(type="file" @change="onFileChange($event)")
+
+        .form-element
           label Active
           input(type="checkbox" v-model="form.active")
 
@@ -74,10 +87,11 @@
 </template>
 
 <script>
-import { db } from "@/firebase/firebase";
+import { db, storage } from "@/firebase/firebase";
 import { mapState, mapGetters } from "vuex";
 import flatPickr from "vue-flatpickr-component";
 import deepmerge from "deepmerge";
+import { utcToZonedTime } from "date-fns-tz";
 
 export default {
   data() {
@@ -92,7 +106,9 @@ export default {
       form: {},
       dates: "",
       key: this.$route.params.id,
-      saveDisabled: false
+      saveDisabled: false,
+      uploadComplete: false,
+      uploadProgess: 0
     };
   },
 
@@ -144,7 +160,6 @@ export default {
               arrayMerge: overwriteMerge
             })
           );
-          console.log("x", this.schema, this.document, this.form);
         });
     } else {
       this.$set(this, "form", this.schema);
@@ -170,7 +185,7 @@ export default {
 
       if (!this.key) {
         this.key = db.ref(this.collectionName).push().key;
-        this.form.createdDate = new Date();
+        this.form.createdDate = utcToZonedTime(new Date(), "Asia/Makassar");
       }
 
       let updates = {};
@@ -181,6 +196,34 @@ export default {
         if (!this.$route.params.id)
           this.$router.push({ params: { id: this.key } });
       });
+    },
+
+    onFileChange(e) {
+      let files = e.target.files;
+
+      if (files.length) {
+        files.forEach(file => {
+          let storageRef = storage.ref(`logos/${file.name}`);
+          let task = storageRef.put(file);
+          task.on(
+            "state_changed",
+            snapshot => {
+              var percentage =
+                (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+              this.uploadProgress = percentage;
+            },
+            err => {
+              console.log("err", err);
+            },
+            () => {
+              task.snapshot.ref.getDownloadURL().then(downloadURL => {
+                this.form.logo = downloadURL;
+                this.uploadComplete = true;
+              });
+            }
+          );
+        });
+      }
     }
   }
 };
