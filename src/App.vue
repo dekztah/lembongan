@@ -13,10 +13,10 @@
                 .hamburger-inner
 
           #nav(:class="{'active': mobileNavOpen}")
-            router-link(to="/food-and-drink") Food & Drink
-            router-link(to="/boats") Boats
-            router-link(to="/activities") Activities
-            router-link(to="/services") Services
+            router-link(to="/food-and-drink") Dining
+            router-link(to="/boats") Boat
+            router-link(to="/activities") Activity
+            router-link(to="/services") Service
 
           .greeting
             //- h1 Selamat {{ partOfTheDay }}!

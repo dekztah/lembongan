@@ -18,7 +18,7 @@ Vue.use(VueRouter);
 const routes = [
   {
     path: "/food-and-drink",
-    name: "Food & Drink",
+    name: "Dine",
     component: TileList,
     meta: {
       collection: "places",
