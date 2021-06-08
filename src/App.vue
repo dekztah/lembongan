@@ -38,7 +38,7 @@
               .contact-me Incorrect data? Contact Martijn on:&nbsp;
             a.social.wa(href="https://wa.me/6281237940300" target="_blank" rel="noopener") WA
 
-            a.kofi(href="https://ko-fi.com/dekztah" target="_blank" rel="noopener")
+            //- a.kofi(href="https://ko-fi.com/dekztah" target="_blank" rel="noopener")
 
           .admin-footer(v-if="userProfile.name")
             span.username {{ userProfile.name }}
