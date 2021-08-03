@@ -4,12 +4,16 @@ import qs from "qs";
 
 import Boats from "../views/Boats.vue";
 import TileList from "../views/TileList.vue";
+import AccomodationList from "../views/AccomodationList.vue";
+import Accomodation from "../views/Accomodation.vue";
 
 import Login from "../views/Login.vue";
 import Admin from "../views/Admin.vue";
 
 import List from "../views/admin/List.vue";
 import Item from "../views/admin/Item.vue";
+import AccomodationItem from "../views/admin/AccomodationItem.vue";
+
 import Boat from "../views/admin/Boat.vue";
 import Dashboard from "../views/admin/Dashboard.vue";
 
@@ -18,7 +22,7 @@ Vue.use(VueRouter);
 const routes = [
   {
     path: "/food-and-drink",
-    name: "Dine",
+    name: "Dining",
     component: TileList,
     meta: {
       collection: "places",
@@ -42,6 +46,28 @@ const routes = [
       q: route.query.q,
       open: route.query.open
     })
+  },
+  {
+    path: "/accomodations",
+    name: "Accomodations",
+    component: AccomodationList,
+    meta: {
+      collection: "accomodations",
+      filterProps: ["pool", "kitchen", "hotWater", "AC"]
+    },
+    props: route => ({
+      tags: route.query.tags,
+      q: route.query.q,
+      open: route.query.open
+    })
+  },
+  {
+    path: "/accomodations/:id?",
+    name: "Accomodation",
+    component: Accomodation,
+    meta: {
+      collection: "accomodations"
+    }
   },
   {
     path: "/activities",
@@ -94,7 +120,7 @@ const routes = [
   },
   {
     path: "/boats",
-    name: "Boats",
+    name: "Boat schedule",
     component: Boats
   },
   {
@@ -181,6 +207,24 @@ const routes = [
         component: Item,
         meta: {
           collection: "services"
+        }
+      },
+      {
+        path: "accomodations-list",
+        name: "AccomodationsList",
+        component: List,
+        meta: {
+          collection: "accomodations",
+          item: "Accomodation",
+          requiresAdmin: true
+        }
+      },
+      {
+        path: "accomodation/:id?",
+        name: "AccomodationAdmin",
+        component: AccomodationItem,
+        meta: {
+          collection: "accomodations"
         }
       }
     ]

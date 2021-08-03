@@ -7,6 +7,7 @@
           router-link.button(to="/admin/boats-list") Boats
           router-link.button(to="/admin/activities-list") Activities
           router-link.button(to="/admin/services-list") Services
+          router-link.button(to="/admin/accomodations-list") Accomodations
 
       .add
         .links
@@ -14,6 +15,7 @@
           router-link.button(to="/admin/boat") + new boat
           router-link.button(to="/admin/activity") + new activity
           router-link.button(to="/admin/service") + new service
+          router-link.button(to="/admin/accomodation") + new accomodation
 
     template(v-else)
       | test card {{ userProfile.ownerOf }}
@@ -24,7 +26,6 @@
 
 <script>
 import { mapGetters } from "vuex";
-import { db } from "@/firebase/firebase";
 
 export default {
   computed: {

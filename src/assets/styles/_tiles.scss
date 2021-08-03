@@ -1,14 +1,14 @@
 .tile-list {
   display: flex;
   flex-wrap: wrap;
-  margin-top: 130px;
+  margin-top: 160px;
   padding: 5px;
   position: relative;
   backface-visibility: hidden;
   transition: transform 0.3s ease-out;
 
   @media only screen and (max-width: $breakpoint-small) {
-    margin-top: 85px;
+    margin-top: 115px;
   }
 }
 
@@ -121,7 +121,7 @@
       }
 
       &.today {
-        background: #f1f1f1;
+        background: rgba(255, 255, 255, 0.7);
       }
     }
   }

@@ -14,9 +14,10 @@
 
           #nav(:class="{'active': mobileNavOpen}")
             router-link(to="/food-and-drink") Dining
-            router-link(to="/boats") Boat
-            router-link(to="/activities") Activity
-            router-link(to="/services") Service
+            router-link(to="/boats") Boat schedule
+            router-link(to="/activities") Activities
+            router-link(to="/services") Services
+            //- router-link(to="/accomodations") Accomodations
 
           .greeting
             //- h1 Selamat {{ partOfTheDay }}!
@@ -28,6 +29,9 @@
             | {{ date }}
             br
             | {{ time }}
+
+        .warning-message
+          a(href="https://www.indonesia.travel/gb/en/news/going-to-java-or-bali-read-these-new-ppkm-regulations-first" target="_blank" rel="noopener") PPKM in effect till 9th of August
 
         router-view
 

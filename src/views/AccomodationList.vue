@@ -30,13 +30,11 @@
       )
 
 </template>
-
 <script>
 import store from "@/store";
 import { mapState, mapActions, mapGetters } from "vuex";
 import checkbox from "@/components/Checkbox";
-import tile from "@/components/Tile";
-import generic from "@/mixins/generic";
+import tile from "@/components/AccomodationTile";
 import { differenceInDays } from "date-fns";
 
 export default {
@@ -50,8 +48,6 @@ export default {
     q: String,
     open: String
   },
-
-  mixins: [generic],
 
   computed: {
     ...mapState([

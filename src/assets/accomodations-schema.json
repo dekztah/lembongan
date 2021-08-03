@@ -1,0 +1,29 @@
+{
+  "name": "",
+  "type": "",
+  "view": "",
+  "active": false,
+  "properties": {
+    "pool": false,
+    "kitchen": false,
+    "AC": false,
+    "hotWater": false
+  },
+  "rates": {
+    "daily": "",
+    "weekly": "",
+    "monthly": "",
+    "electricityIncluded": false,
+    "waterIncluded": false,
+    "cleaningIncluded": false
+  },
+  "images": {
+    "main": "",
+    "bedroom": "",
+    "bathroom": "",
+    "view": "",
+    "other": ""
+  },
+  "gMapsLink": "",
+  "beachDistance": ""
+}

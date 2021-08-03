@@ -6,7 +6,7 @@
   right: 0;
   z-index: 2;
   padding: 10px;
-  top: 85px;
+  top: 115px;
   vertical-align: middle;
   font-size: 12px;
   font-weight: 600;
@@ -67,9 +67,11 @@
   }
 
   @media only screen and (max-width: $breakpoint-small) {
-    transform: translateX(-$breakpoint-small);
+    transform: translateX(-100%);
     position: fixed;
-    top: 127px;
+    top: 279px;
+    // top: 315px;
+    left: 0;
     transition: transform 0.3s ease-out;
     width: 100%;
     padding: 10px;
