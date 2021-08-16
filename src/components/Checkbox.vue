@@ -16,9 +16,11 @@ export default {
   computed: {
     ...mapState(["filters"]),
     className() {
+      if (this.name === "AC") return "ac";
       return this.name.replace(/([A-Z])/g, g => `-${g[0].toLowerCase()}`);
     },
     text() {
+      if (this.name === "AC") return "A/C";
       return this.name.replace(/([A-Z])/g, g => ` ${g[0].toLowerCase()}`);
     }
   },

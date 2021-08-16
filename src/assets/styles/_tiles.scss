@@ -1,14 +1,14 @@
 .tile-list {
   display: flex;
   flex-wrap: wrap;
-  margin-top: 160px;
+  margin-top: 130px;
   padding: 5px;
   position: relative;
   backface-visibility: hidden;
   transition: transform 0.3s ease-out;
 
   @media only screen and (max-width: $breakpoint-small) {
-    margin-top: 115px;
+    margin-top: 85px;
   }
 }
 

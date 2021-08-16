@@ -215,7 +215,7 @@ const routes = [
         component: List,
         meta: {
           collection: "accomodations",
-          item: "Accomodation",
+          item: "AccomodationAdmin",
           requiresAdmin: true
         }
       },

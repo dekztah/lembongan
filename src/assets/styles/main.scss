@@ -48,7 +48,7 @@ body {
 header {
   position: fixed;
   z-index: 3;
-  top: 30px;
+  top: 0;
   left: 0;
   right: 0;
   height: 85px;
@@ -89,7 +89,7 @@ header {
     position: fixed;
     z-index: 1;
     background: lighten($base-color, 10);
-    top: 115px;
+    top: 85px;
     left: 0;
     transition: transform 0.3s ease-out;
     width: 100%;
@@ -171,7 +171,7 @@ header {
 
   @media only screen and (max-width: $breakpoint-small) {
     margin-bottom: 0;
-    min-height: calc(100vh - 115px - 54px);
+    min-height: calc(100vh - 85px - 54px);
   }
 }
 

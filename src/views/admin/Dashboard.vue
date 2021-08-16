@@ -17,11 +17,6 @@
           router-link.button(to="/admin/service") + new service
           router-link.button(to="/admin/accomodation") + new accomodation
 
-    template(v-else)
-      | test card {{ userProfile.ownerOf }}
-      .link(v-for="place in userProfile.ownerOf.places")
-        router-link.button(:to="`/admin/place/${place}`")
-
 </template>
 
 <script>

@@ -79,7 +79,6 @@ export default {
     filterObject() {
       const filterProps = this.$route.meta.filterProps;
       const obj = {
-        ...{ openNow: false },
         ...filterProps
           .sort()
           .reverse()

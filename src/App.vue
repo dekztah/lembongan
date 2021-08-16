@@ -30,8 +30,8 @@
             br
             | {{ time }}
 
-        .warning-message
-          a(href="https://www.indonesia.travel/gb/en/news/going-to-java-or-bali-read-these-new-ppkm-regulations-first" target="_blank" rel="noopener") PPKM in effect till 9th of August
+        //- .warning-message
+        //-   a(href="https://www.indonesia.travel/gb/en/news/going-to-java-or-bali-read-these-new-ppkm-regulations-first" target="_blank" rel="noopener") PPKM in effect till 9th of August
 
         router-view
 
@@ -51,6 +51,7 @@
               router-link.button(to="/admin/boats-list") Boats
               router-link.button(to="/admin/activities-list") Activities
               router-link.button(to="/admin/services-list") Services
+              router-link.button(to="/admin/accomodations-list") Accomodations
 
             a.button(@click="logout") logout
 
