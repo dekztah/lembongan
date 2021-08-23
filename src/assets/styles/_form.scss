@@ -18,7 +18,9 @@
     padding: 8px;
   }
 }
-input {
+input,
+textarea,
+select {
   font-family: "Raleway", sans-serif;
 }
 input[type="text"] {

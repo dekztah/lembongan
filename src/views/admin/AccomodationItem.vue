@@ -8,7 +8,7 @@
 
         .form-element
           label Description
-          input(type="text" v-model="form.description")
+          textarea(v-model="form.description")
 
         .form-element
           label Type
@@ -25,7 +25,9 @@
       .grid-item
         .form-element
           label Location
-          input(type="text" v-model="form.location")
+          select(v-model="form.location")
+            option(value="Jungutbatu") Jungutbatu
+            option(value="Lembongan") Lembongan
 
         .form-element
           label Distance to beach
@@ -64,14 +66,17 @@
               input(type="checkbox" v-model="form.rates.cleaningIncluded")
               label cleaning included
 
-      .grid-item.images(v-if="form.images")
-        .form-element(v-for="(image, key ) in form.images")
-          label {{ key }} image
-          input(v-if="form.images[key] === ''" type="file" @change="onFileChange(key, $event)")
+      .images-grid
+        .form-element
+          label Images
+          .images(v-if="form.images")
+            .image(v-for="(image, key ) in form.images")
+              label {{ key }} image
+              input(v-if="form.images[key] === ''" type="file" @change="onFileChange(key, $event)")
 
-          .image(v-else)
-            img( :src="form.images[key]")
-            .clear(@click="form.images[key] = ''")
+              .image(v-else)
+                img( :src="form.images[key]")
+                .clear(@click="form.images[key] = ''")
 
     .middle
       label Properties

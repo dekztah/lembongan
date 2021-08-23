@@ -24,7 +24,7 @@
 
     br
 
-    | Distance to beach: #[strong {{ document.beachDistance }}m ]
+    div(v-if="document.beachDistance") Distance to beach: #[strong {{ document.beachDistance }}m ]
 
     hr
     h3 Photos
@@ -47,20 +47,20 @@
     .other
       strong(v-if="document.rates.electricityIncluded || document.rates.waterIncluded || document.rates.cleaningIncluded") price includes:
       div(v-if="document.rates.electricityIncluded") - Electricity
-      div(v-if="document.rates.waterIncluded") - Drinking Water
+      div(v-if="document.rates.waterIncluded") - Water
       div(v-if="document.rates.cleaningIncluded") - Cleaning service
 
     .other
       strong(v-if="!document.rates.electricityIncluded || !document.rates.waterIncluded || !document.rates.cleaningIncluded") price does not include:
       div(v-if="!document.rates.electricityIncluded") - Electricity
-      div(v-if="!document.rates.waterIncluded") - Drinking Water
+      div(v-if="!document.rates.waterIncluded") - Water
       div(v-if="!document.rates.cleaningIncluded") - Cleaning service
 
     hr
     h3 Contact
 
     .contact
-      a.social.email(href="mailto:pemuntalan@gmail.com" target="_blank" rel="noopener")
+      a.social.email(:href="`mailto:pemuntalan@gmail.com?subject=[${document.name}] request for info`" target="_blank" rel="noopener")
       span E-mail
 
     .contact
