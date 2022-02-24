@@ -1,70 +1,96 @@
 <template lang="pug">
-  .admin-form
+.admin-form
     .top
-      .grid-item
-        .form-element
-          label Boat company name
-          input(type="text" v-model="form.name")
+        .grid-item
+            .form-element
+                label Boat company name
+                input(type="text", v-model="form.name")
 
-        .form-element
-          label Contact
-          input(type="number" v-model="form.contact")
+            .form-element
+                label Contact
+                input(type="number", v-model="form.contact")
 
-        .form-element
-          label Maps link
-          input(type="text" v-model="form.gMapsLink")
+            .form-element
+                label Maps link
+                input(type="text", v-model="form.gMapsLink")
 
-        .form-element
-          label Facebook link
-          input(type="text" v-model="form.facebookLink")
+            .form-element
+                label Facebook link
+                input(type="text", v-model="form.facebookLink")
 
-        .form-element
-          label Lembongan departure location
-          input(type="text" v-model="form.lembonganLocation")
+            .form-element
+                label Instagram link
+                input(type="text", v-model="form.instagramLink")
 
-        .form-element
-          label Active
-          input(type="checkbox" v-model="form.active")
+            .form-element
+                label Lembongan departure location
+                input(type="text", v-model="form.lembonganLocation")
 
-      .grid-item
-        flat-pickr(v-model="form.activeDates" :config="config" @on-month-change="setDaysInMonth" ref="cal")
-        button.button(@click="setAllDays") every day
+            .form-element
+                label Active
+                input(type="checkbox", v-model="form.active")
+
+        .grid-item
+            flat-pickr(
+                v-model="form.activeDates",
+                :config="config",
+                @on-month-change="setDaysInMonth",
+                ref="cal"
+            )
+            button.button(@click="setAllDays") every day
 
     .bottom
-      .opening-hours
-        label To Sanur
-        .weekdays
-          .weekday(v-for="(departure, day) in form.departToSanur" :key="`departure${day}${form.departToSanur.length}`")
-            label {{ weekArray[day] }}
+        .opening-hours
+            label To Sanur
+            .weekdays
+                .weekday(
+                    v-for="(departure, day) in form.departToSanur",
+                    :key="`departure${day}${form.departToSanur.length}`"
+                )
+                    label {{ weekArray[day] }}
 
-            .items(v-for="(depTime, index) in departure")
-              .item
-                label departs
-                input(type="time" v-model="form.departToSanur[day][index]")
+                    .items(v-for="(depTime, index) in departure")
+                        .item
+                            label departs
+                            input(
+                                type="time",
+                                v-model="form.departToSanur[day][index]"
+                            )
 
-              button.button(v-if="index !== 0" @click="removeDepartureTime('departToSanur', index, day)") x
+                        button.button(
+                            v-if="index !== 0",
+                            @click="removeDepartureTime('departToSanur', index, day)"
+                        ) x
 
-            button.button(@click="addDepartureTime('departToSanur', day)") +
+                    button.button(
+                        @click="addDepartureTime('departToSanur', day)"
+                    ) +
 
+        .opening-hours
+            label To Lembongan
+            .weekdays
+                .weekday(v-for="(departure, day) in form.departToLembongan")
+                    label {{ weekArray[day] }}
 
-      .opening-hours
-        label To Lembongan
-        .weekdays
-          .weekday(v-for="(departure, day) in form.departToLembongan")
-            label {{ weekArray[day] }}
+                    .items(v-for="(depTime, index) in departure")
+                        .item
+                            label departs
+                            input(
+                                type="time",
+                                v-model="form.departToLembongan[day][index]"
+                            )
 
-            .items(v-for="(depTime, index) in departure")
-              .item
-                label departs
-                input(type="time" v-model="form.departToLembongan[day][index]")
+                        button.button(
+                            v-if="index !== 0",
+                            @click="removeDepartureTime('departToLembongan', index, day)"
+                        ) x
 
-              button.button(v-if="index !== 0" @click="removeDepartureTime('departToLembongan', index, day)") x
-
-            button.button(@click="addDepartureTime('departToLembongan', day)") +
+                    button.button(
+                        @click="addDepartureTime('departToLembongan', day)"
+                    ) +
 
     .save
-      button.button(@click= "insert" :disabled="saveDisabled") save
-
+        button.button(@click="insert", :disabled="saveDisabled") save
 </template>
 
 <script>

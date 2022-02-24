@@ -1,24 +1,46 @@
 <template lang="pug">
-  .boat(:class="{'has-left': !available, 'noop': !isOperatingToday, 'warn': leavingSoon}")
+.boat(
+    :class="{ 'has-left': !available, noop: !isOperatingToday, warn: leavingSoon }"
+)
     .content
-      h2.time(@click="calOpen = !calOpen") {{ entry.departure }} {{ entry.name }}
-      span.location(v-if="dest === 'departToSanur'") from {{ entry.lembonganLocation }}
-      span.location(v-if="dest === 'departToLembongan'") to {{ entry.lembonganLocation }}
-      .cal-wrapper(v-show="calOpen")
-        flat-pickr(:value="operatingDates" :config="calendarConfig")
+        h2.time(@click="calOpen = !calOpen") {{ entry.departure }} {{ entry.name }}
+        span.location(v-if="dest === 'departToSanur'") from {{ entry.lembonganLocation }}
+        span.location(v-if="dest === 'departToLembongan'") to {{ entry.lembonganLocation }}
+        .cal-wrapper(v-show="calOpen")
+            flat-pickr(:value="operatingDates", :config="calendarConfig")
 
     .footer
-      .status
-        .not-operating(v-if="!isOperatingToday") Not operating today
-        template(v-else)
-          span(v-if="leavingIn") departs in:&nbsp;
-            strong {{ leavingIn }}
-          span(v-if="!available") already left
+        .status
+            .not-operating(v-if="!isOperatingToday") Not operating today
+            template(v-else)
+                span(v-if="leavingIn") departs in:&nbsp;
+                    strong {{ leavingIn }}
+                span(v-if="!available") already left
 
-      a.social.maps(v-if="entry.gMapsLink" :href="entry.gMapsLink" target="_blank" rel="noopener")
-      a.social.fb(v-if="entry.facebookLink" :href="entry.facebookLink" target="_blank" rel="noopener")
-      a.social.wa(v-if="entry.contact" :href="waUrl(entry.contact)" target="_blank" rel="noopener") WA
-
+        a.social.maps(
+            v-if="entry.gMapsLink",
+            :href="entry.gMapsLink",
+            target="_blank",
+            rel="noopener"
+        )
+        a.social.fb(
+            v-if="entry.facebookLink",
+            :href="entry.facebookLink",
+            target="_blank",
+            rel="noopener"
+        )
+        a.social.insta(
+            v-if="entry.instagramLink",
+            :href="entry.instagramLink",
+            target="_blank",
+            rel="noopener"
+        )
+        a.social.wa(
+            v-if="entry.contact",
+            :href="waUrl(entry.contact)",
+            target="_blank",
+            rel="noopener"
+        ) WA
 </template>
 <script>
 import flatPickr from "vue-flatpickr-component";
