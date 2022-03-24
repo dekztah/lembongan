@@ -61,25 +61,21 @@ header {
   box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.2);
 
   .current-page {
-    display: none;
-    font-size: 12px;
+    display: block;
+    text-align: center;
   }
 
   @media only screen and (max-width: $breakpoint-small) {
     .greeting {
       h1 {
-        font-size: 16px;
+        font-size: 20px;
       }
-    }
-    .current-page {
-      display: block;
-      text-align: center;
     }
 
     .today {
       font-size: 12px;
       h2 {
-        font-size: 16px;
+        font-size: 14px;
       }
     }
   }
@@ -126,7 +122,9 @@ header {
 
     h1 {
       text-align: center;
+      text-transform: uppercase;
       margin: 0;
+      line-height: 1;
     }
   }
 
@@ -135,6 +133,8 @@ header {
     text-align: right;
     h2 {
       margin: 0;
+      line-height: 1;
+      text-transform: uppercase;
     }
   }
   #nav-mobile {
@@ -202,7 +202,12 @@ footer {
   .public-footer {
     display: flex;
     align-items: center;
+    justify-content: space-between;
     padding: 10px;
+
+    .right {
+      display: flex;
+    }
   }
 
   .social {

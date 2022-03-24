@@ -21,7 +21,7 @@ import store from "@/store";
 export default {
     data() {
         return {
-            search: ""
+            search: "",
         };
     },
     computed: {
@@ -36,14 +36,14 @@ export default {
         },
 
         filteredCollection() {
-            return this.collection.filter(item =>
+            return this.collection.filter((item) =>
                 this.search
                     ? item.name
                           .toLowerCase()
                           .includes(this.search.toLowerCase())
                     : true
             );
-        }
+        },
     },
 
     beforeRouteEnter(to, from, next) {
@@ -55,7 +55,7 @@ export default {
     methods: {
         addNew() {
             this.$router.push(`/admin/${this.itemName}`);
-        }
-    }
+        },
+    },
 };
 </script>
