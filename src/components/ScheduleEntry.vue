@@ -48,82 +48,82 @@ import { mapState, mapGetters } from "vuex";
 import generic from "@/mixins/generic";
 
 import {
-  differenceInSeconds,
-  format,
-  intervalToDuration,
-  formatDuration
+    differenceInSeconds,
+    format,
+    intervalToDuration,
+    formatDuration,
 } from "date-fns";
 
 export default {
-  props: {
-    entry: Object,
-    dest: String
-  },
-  components: {
-    flatPickr
-  },
-  mixins: [generic],
-  data() {
-    return {
-      calOpen: false
-    };
-  },
-  computed: {
-    ...mapState(["loading", "mobileNavOpen", "weekArray", "today"]),
-    ...mapGetters(["timestamp"]),
-    calendarConfig() {
-      return {
-        mode: "multiple",
-        inline: true,
-        minDate: this.formattedDate,
-        monthSelectorType: "static",
-        locale: {
-          firstDayOfWeek: 1
-        }
-      };
+    props: {
+        entry: Object,
+        dest: String,
     },
-    leaveTime() {
-      return this.parseTime(this.entry.departure);
+    components: {
+        flatPickr,
     },
-    operatingDates() {
-      if (!this.entry.activeDates) return false;
+    mixins: [generic],
+    data() {
+        return {
+            calOpen: false,
+        };
+    },
+    computed: {
+        ...mapState(["loading", "mobileNavOpen", "weekArray", "today"]),
+        ...mapGetters(["timestamp"]),
+        calendarConfig() {
+            return {
+                mode: "multiple",
+                inline: true,
+                minDate: this.formattedDate,
+                monthSelectorType: "static",
+                locale: {
+                    firstDayOfWeek: 1,
+                },
+            };
+        },
+        leaveTime() {
+            return this.parseTime(this.entry.departure);
+        },
+        operatingDates() {
+            if (!this.entry.activeDates) return false;
 
-      return this.entry.activeDates.split(", ");
-    },
-    formattedDate() {
-      return format(this.timestamp, "yyyy-MM-dd");
-    },
-    isOperatingToday() {
-      if (!this.operatingDates) return false;
+            return this.entry.activeDates.split(", ");
+        },
+        formattedDate() {
+            return format(this.timestamp, "yyyy-MM-dd");
+        },
+        isOperatingToday() {
+            if (!this.operatingDates) return false;
 
-      return this.operatingDates.includes(this.formattedDate);
-    },
-    timeDiff() {
-      return differenceInSeconds(this.leaveTime, this.timestamp);
-    },
-    available() {
-      return this.isOperatingToday && this.timeDiff >= 0;
-    },
-    leavingSoon() {
-      return this.timeDiff < 1800 && this.timeDiff >= 0;
-    },
-    leavingIn() {
-      if (!this.available) return false;
+            return this.operatingDates.includes(this.formattedDate);
+        },
+        timeDiff() {
+            return differenceInSeconds(this.leaveTime, this.timestamp);
+        },
+        available() {
+            return this.isOperatingToday && this.timeDiff >= 0;
+        },
+        leavingSoon() {
+            return this.timeDiff < 1800 && this.timeDiff >= 0;
+        },
+        leavingIn() {
+            if (!this.available) return false;
 
-      let duration = intervalToDuration({
-        start: this.timestamp,
-        end: this.leaveTime
-      });
+            let duration = intervalToDuration({
+                start: this.timestamp,
+                end: this.leaveTime,
+            });
 
-      return formatDuration(duration, {
-        format: ["hours", "minutes"]
-      });
-    }
-  },
-  methods: {
-    waUrl(contact) {
-      return `https://wa.me/${contact}`;
-    }
-  }
+            return formatDuration(duration, {
+                format: ["hours", "minutes"],
+            });
+        },
+    },
+    methods: {
+        waUrl(contact) {
+            return `https://wa.me/${contact}`;
+        },
+    },
 };
 </script>

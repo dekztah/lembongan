@@ -5,6 +5,7 @@ import store from "./store";
 import { auth } from "@/firebase/firebase";
 
 import "@/assets/styles/main.scss";
+import "./registerServiceWorker";
 
 Vue.config.productionTip = false;
 

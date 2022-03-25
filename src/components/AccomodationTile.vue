@@ -27,56 +27,56 @@ import chip from "@/components/Chip";
 import generic from "@/mixins/generic";
 
 export default {
-  data() {
-    return {
-      isDouble: true,
-      reservation: true
-    };
-  },
-
-  components: {
-    chip
-  },
-
-  props: {
-    item: Object
-  },
-
-  mixins: [generic],
-
-  computed: {
-    ...mapState(["filters"])
-  },
-
-  mounted() {},
-
-  methods: {
-    chipVisible(item, key) {
-      return item[key];
+    data() {
+        return {
+            isDouble: true,
+            reservation: true,
+        };
     },
 
-    waUrl(contact) {
-      return `https://wa.me/${contact}`;
-    }
-  }
+    components: {
+        chip,
+    },
+
+    props: {
+        item: Object,
+    },
+
+    mixins: [generic],
+
+    computed: {
+        ...mapState(["filters"]),
+    },
+
+    mounted() {},
+
+    methods: {
+        chipVisible(item, key) {
+            return item[key];
+        },
+
+        waUrl(contact) {
+            return `https://wa.me/${contact}`;
+        },
+    },
 };
 </script>
 
 <style lang="scss">
 .accomodation-tile {
-  .content {
-    img.main-image {
-      margin: -16px -16px 16px;
-      border-radius: 4px 4px 0 0;
+    .content {
+        img.main-image {
+            margin: -16px -16px 16px;
+            border-radius: 4px 4px 0 0;
+        }
+
+        .info {
+            margin-top: 10px;
+        }
     }
 
-    .info {
-      margin-top: 10px;
+    .more {
+        margin-top: 16px;
     }
-  }
-
-  .more {
-    margin-top: 16px;
-  }
 }
 </style>

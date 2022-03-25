@@ -94,137 +94,141 @@ import deepmerge from "deepmerge";
 import { utcToZonedTime } from "date-fns-tz";
 
 export default {
-  data() {
-    return {
-      config: {
-        mode: "multiple",
-        inline: true,
-        locale: {
-          firstDayOfWeek: 1
+    data() {
+        return {
+            config: {
+                mode: "multiple",
+                inline: true,
+                locale: {
+                    firstDayOfWeek: 1,
+                },
+            },
+            form: {},
+            dates: "",
+            key: this.$route.params.id,
+            saveDisabled: false,
+            uploadComplete: false,
+            uploadProgess: 0,
+        };
+    },
+
+    components: {
+        flatPickr,
+    },
+
+    computed: {
+        ...mapState(["document", "loading", "weekArray"]),
+        ...mapGetters(["isAdmin"]),
+
+        collectionName() {
+            return this.$route.meta.collection;
+        },
+
+        schema() {
+            const schema = require(`@/assets/${this.collectionName}-schema.json`);
+            return JSON.parse(JSON.stringify(schema));
+        },
+
+        activeDates: {
+            get() {
+                return this.form.activeDates ? this.form.activeDates : "";
+            },
+            set(val) {
+                this.form.activeDates = val.split(", ").sort().join(", ");
+            },
+        },
+    },
+
+    mounted() {
+        if (this.key !== undefined) {
+            const overwriteMerge = (destinationArray, sourceArray, options) =>
+                sourceArray;
+
+            this.$store
+                .dispatch("fetchDocument", {
+                    collectionName: this.collectionName,
+                    id: this.key,
+                })
+                .then(() => {
+                    this.$set(
+                        this,
+                        "form",
+                        deepmerge(this.schema, this.document, {
+                            arrayMerge: overwriteMerge,
+                        })
+                    );
+                });
+        } else {
+            this.$set(this, "form", this.schema);
+            this.$store.commit("toggleLoading", false);
         }
-      },
-      form: {},
-      dates: "",
-      key: this.$route.params.id,
-      saveDisabled: false,
-      uploadComplete: false,
-      uploadProgess: 0
-    };
-  },
-
-  components: {
-    flatPickr
-  },
-
-  computed: {
-    ...mapState(["document", "loading", "weekArray"]),
-    ...mapGetters(["isAdmin"]),
-
-    collectionName() {
-      return this.$route.meta.collection;
     },
 
-    schema() {
-      const schema = require(`@/assets/${this.collectionName}-schema.json`);
-      return JSON.parse(JSON.stringify(schema));
-    },
+    methods: {
+        addOpeningHourSet(day) {
+            this.form.openingHours[day].push({ start: "", end: "" });
+        },
 
-    activeDates: {
-      get() {
-        return this.form.activeDates ? this.form.activeDates : "";
-      },
-      set(val) {
-        this.form.activeDates = val
-          .split(", ")
-          .sort()
-          .join(", ");
-      }
-    }
-  },
+        removeOpeningHourSet(index, day) {
+            this.form.openingHours[day].splice(index, 1);
+        },
 
-  mounted() {
-    if (this.key !== undefined) {
-      const overwriteMerge = (destinationArray, sourceArray, options) =>
-        sourceArray;
+        text(str) {
+            return str.replace(/([A-Z])/g, (g) => ` ${g[0].toLowerCase()}`);
+        },
 
-      this.$store
-        .dispatch("fetchDocument", {
-          collectionName: this.collectionName,
-          id: this.key
-        })
-        .then(() => {
-          this.$set(
-            this,
-            "form",
-            deepmerge(this.schema, this.document, {
-              arrayMerge: overwriteMerge
-            })
-          );
-        });
-    } else {
-      this.$set(this, "form", this.schema);
-      this.$store.commit("toggleLoading", false);
-    }
-  },
+        insert() {
+            this.saveDisabled = true;
 
-  methods: {
-    addOpeningHourSet(day) {
-      this.form.openingHours[day].push({ start: "", end: "" });
-    },
-
-    removeOpeningHourSet(index, day) {
-      this.form.openingHours[day].splice(index, 1);
-    },
-
-    text(str) {
-      return str.replace(/([A-Z])/g, g => ` ${g[0].toLowerCase()}`);
-    },
-
-    insert() {
-      this.saveDisabled = true;
-
-      if (!this.key) {
-        this.key = db.ref(this.collectionName).push().key;
-        this.form.createdDate = utcToZonedTime(new Date(), "Asia/Makassar");
-      }
-
-      let updates = {};
-      updates[`/${this.collectionName}/` + this.key] = this.form;
-
-      this.$store.dispatch("update", updates).then(() => {
-        this.saveDisabled = false;
-        if (!this.$route.params.id)
-          this.$router.push({ params: { id: this.key } });
-      });
-    },
-
-    onFileChange(e) {
-      let files = e.target.files;
-
-      if (files.length) {
-        files.forEach(file => {
-          let storageRef = storage.ref(`logos/${file.name}`);
-          let task = storageRef.put(file);
-          task.on(
-            "state_changed",
-            snapshot => {
-              var percentage =
-                (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-              this.uploadProgress = percentage;
-            },
-            err => {
-              console.log("err", err);
-            },
-            () => {
-              task.snapshot.ref.getDownloadURL().then(downloadURL => {
-                this.form.logo = downloadURL;
-                this.uploadComplete = true;
-              });
+            if (!this.key) {
+                this.key = db.ref(this.collectionName).push().key;
+                this.form.createdDate = utcToZonedTime(
+                    new Date(),
+                    "Asia/Makassar"
+                );
             }
-          );
-        });
-      }
-    }
-  }
+
+            let updates = {};
+            updates[`/${this.collectionName}/` + this.key] = this.form;
+
+            this.$store.dispatch("update", updates).then(() => {
+                this.saveDisabled = false;
+                if (!this.$route.params.id)
+                    this.$router.push({ params: { id: this.key } });
+            });
+        },
+
+        onFileChange(e) {
+            let files = e.target.files;
+
+            if (files.length) {
+                files.forEach((file) => {
+                    let storageRef = storage.ref(`logos/${file.name}`);
+                    let task = storageRef.put(file);
+                    task.on(
+                        "state_changed",
+                        (snapshot) => {
+                            var percentage =
+                                (snapshot.bytesTransferred /
+                                    snapshot.totalBytes) *
+                                100;
+                            this.uploadProgress = percentage;
+                        },
+                        (err) => {
+                            console.log("err", err);
+                        },
+                        () => {
+                            task.snapshot.ref
+                                .getDownloadURL()
+                                .then((downloadURL) => {
+                                    this.form.logo = downloadURL;
+                                    this.uploadComplete = true;
+                                });
+                        }
+                    );
+                });
+            }
+        },
+    },
 };
 </script>

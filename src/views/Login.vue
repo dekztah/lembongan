@@ -10,24 +10,24 @@
 
 <script>
 export default {
-  data() {
-    return {
-      form: {
-        email: "",
-        password: ""
-      }
-    };
-  },
-  mounted() {
-    this.$store.commit("toggleLoading", false);
-  },
-  methods: {
-    login() {
-      this.$store.dispatch("login", {
-        email: this.form.email,
-        password: this.form.password
-      });
-    }
-  }
+    data() {
+        return {
+            form: {
+                email: "",
+                password: "",
+            },
+        };
+    },
+    mounted() {
+        this.$store.commit("toggleLoading", false);
+    },
+    methods: {
+        login() {
+            this.$store.dispatch("login", {
+                email: this.form.email,
+                password: this.form.password,
+            });
+        },
+    },
 };
 </script>

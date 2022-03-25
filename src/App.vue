@@ -43,8 +43,9 @@
             footer
                 .public-footer
                     .left
-                        .last(v-if="lastUpdate") last updated:
-                        div {{ lastUpdateFormatted }}
+                        div(v-if="lastUpdateFormatted")
+                            .last last updated:
+                            div {{ lastUpdateFormatted }}
 
                     .right
                         .contact-me Incorrect data? #[br] Contact me on:&nbsp;
@@ -98,7 +99,8 @@ export default {
             return format(this.timestamp, "HH:mm");
         },
         lastUpdateFormatted() {
-            return format(this.lastUpdate, "yyyy-MM-dd HH:mm");
+            // return format(this.lastUpdate, "yyyy-MM-dd HH:mm");
+            return false;
         },
         partOfTheDay() {
             let parts = ["pagi", "siang", "sore", "malam"];

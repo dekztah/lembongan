@@ -97,133 +97,140 @@ import deepmerge from "deepmerge";
 import { utcToZonedTime } from "date-fns-tz";
 
 export default {
-  data() {
-    return {
-      form: {},
-      key: this.$route.params.id,
-      saveDisabled: false,
-      uploadComplete: false,
-      uploadProgess: 0
-    };
-  },
-
-  computed: {
-    ...mapState(["document", "loading"]),
-    ...mapGetters(["isAdmin"]),
-
-    collectionName() {
-      return this.$route.meta.collection;
+    data() {
+        return {
+            form: {},
+            key: this.$route.params.id,
+            saveDisabled: false,
+            uploadComplete: false,
+            uploadProgess: 0,
+        };
     },
 
-    schema() {
-      const schema = require(`@/assets/${this.collectionName}-schema.json`);
-      return JSON.parse(JSON.stringify(schema));
-    }
-  },
+    computed: {
+        ...mapState(["document", "loading"]),
+        ...mapGetters(["isAdmin"]),
 
-  mounted() {
-    if (this.key !== undefined) {
-      const overwriteMerge = (destinationArray, sourceArray, options) =>
-        sourceArray;
+        collectionName() {
+            return this.$route.meta.collection;
+        },
 
-      this.$store
-        .dispatch("fetchDocument", {
-          collectionName: this.collectionName,
-          id: this.key
-        })
-        .then(() => {
-          this.$set(
-            this,
-            "form",
-            deepmerge(this.schema, this.document, {
-              arrayMerge: overwriteMerge
-            })
-          );
-        });
-    } else {
-      this.$set(this, "form", this.schema);
-      this.$store.commit("toggleLoading", false);
-    }
-  },
-
-  methods: {
-    text(str) {
-      return str.replace(/([A-Z])/g, g => ` ${g[0].toLowerCase()}`);
+        schema() {
+            const schema = require(`@/assets/${this.collectionName}-schema.json`);
+            return JSON.parse(JSON.stringify(schema));
+        },
     },
 
-    insert() {
-      this.saveDisabled = true;
+    mounted() {
+        if (this.key !== undefined) {
+            const overwriteMerge = (destinationArray, sourceArray, options) =>
+                sourceArray;
 
-      if (!this.key) {
-        this.key = db.ref(this.collectionName).push().key;
-        this.form.createdDate = utcToZonedTime(new Date(), "Asia/Makassar");
-      }
-
-      let updates = {};
-      updates[`/${this.collectionName}/` + this.key] = this.form;
-
-      this.$store.dispatch("update", updates).then(() => {
-        this.saveDisabled = false;
-        if (!this.$route.params.id)
-          this.$router.push({ params: { id: this.key } });
-      });
+            this.$store
+                .dispatch("fetchDocument", {
+                    collectionName: this.collectionName,
+                    id: this.key,
+                })
+                .then(() => {
+                    this.$set(
+                        this,
+                        "form",
+                        deepmerge(this.schema, this.document, {
+                            arrayMerge: overwriteMerge,
+                        })
+                    );
+                });
+        } else {
+            this.$set(this, "form", this.schema);
+            this.$store.commit("toggleLoading", false);
+        }
     },
 
-    onFileChange(key, e) {
-      let files = e.target.files;
+    methods: {
+        text(str) {
+            return str.replace(/([A-Z])/g, (g) => ` ${g[0].toLowerCase()}`);
+        },
 
-      if (files.length) {
-        files.forEach(file => {
-          let storageRef = storage.ref(`accomodations/${file.name}`);
-          let task = storageRef.put(file);
-          task.on(
-            "state_changed",
-            snapshot => {
-              var percentage =
-                (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-              this.uploadProgress = percentage;
-            },
-            err => {
-              console.log("err", err);
-            },
-            () => {
-              task.snapshot.ref.getDownloadURL().then(downloadURL => {
-                this.form.images[key] = downloadURL;
-                this.uploadComplete = true;
-              });
+        insert() {
+            this.saveDisabled = true;
+
+            if (!this.key) {
+                this.key = db.ref(this.collectionName).push().key;
+                this.form.createdDate = utcToZonedTime(
+                    new Date(),
+                    "Asia/Makassar"
+                );
             }
-          );
-        });
-      }
-    }
-  }
+
+            let updates = {};
+            updates[`/${this.collectionName}/` + this.key] = this.form;
+
+            this.$store.dispatch("update", updates).then(() => {
+                this.saveDisabled = false;
+                if (!this.$route.params.id)
+                    this.$router.push({ params: { id: this.key } });
+            });
+        },
+
+        onFileChange(key, e) {
+            let files = e.target.files;
+
+            if (files.length) {
+                files.forEach((file) => {
+                    let storageRef = storage.ref(`accomodations/${file.name}`);
+                    let task = storageRef.put(file);
+                    task.on(
+                        "state_changed",
+                        (snapshot) => {
+                            var percentage =
+                                (snapshot.bytesTransferred /
+                                    snapshot.totalBytes) *
+                                100;
+                            this.uploadProgress = percentage;
+                        },
+                        (err) => {
+                            console.log("err", err);
+                        },
+                        () => {
+                            task.snapshot.ref
+                                .getDownloadURL()
+                                .then((downloadURL) => {
+                                    this.form.images[key] = downloadURL;
+                                    this.uploadComplete = true;
+                                });
+                        }
+                    );
+                });
+            }
+        },
+    },
 };
 </script>
 
 <style lang="scss" scoped>
 .image {
-  width: 200px;
-  overflow: hidden;
-  border-radius: 4px;
-  position: relative;
+    width: 200px;
+    overflow: hidden;
+    border-radius: 4px;
+    position: relative;
 
-  img {
-    display: block;
-    width: 100%;
-  }
-  .clear {
-    position: absolute;
-    right: 8px;
-    top: 8px;
-    background-color: white;
-    border-radius: 100%;
-    padding: 12px;
-  }
+    img {
+        display: block;
+        width: 100%;
+    }
+    .clear {
+        position: absolute;
+        right: 8px;
+        top: 8px;
+        background-color: white;
+        border-radius: 100%;
+        padding: 12px;
+    }
 }
 
 .grid-item.images {
-  .form-element {
-    height: auto;
-  }
+    .form-element {
+        height: auto;
+    }
 }
 </style>

@@ -77,99 +77,99 @@ import chip from "@/components/Chip";
 import { mapState, mapGetters } from "vuex";
 
 const formatter = new Intl.NumberFormat("ID", {
-  style: "currency",
-  currency: "IDR",
-  minimumFractionDigits: 0
+    style: "currency",
+    currency: "IDR",
+    minimumFractionDigits: 0,
 });
 
 export default {
-  computed: {
-    ...mapState(["document"])
-  },
+    computed: {
+        ...mapState(["document"]),
+    },
 
-  components: {
-    chip
-  },
+    components: {
+        chip,
+    },
 
-  filters: {
-    currencyIDR(value) {
-      if (!value) return "TBD";
-      return formatter.format(value);
-    }
-  },
+    filters: {
+        currencyIDR(value) {
+            if (!value) return "TBD";
+            return formatter.format(value);
+        },
+    },
 
-  beforeRouteEnter(to, from, next) {
-    store
-      .dispatch("fetchDocument", {
-        collectionName: to.meta.collection,
-        id: to.params.id
-      })
-      .then(() => {
-        next();
-      });
-  }
+    beforeRouteEnter(to, from, next) {
+        store
+            .dispatch("fetchDocument", {
+                collectionName: to.meta.collection,
+                id: to.params.id,
+            })
+            .then(() => {
+                next();
+            });
+    },
 };
 </script>
 <style lang="scss">
 .accomodation-details {
-  padding: 8px 16px;
-  background: white;
+    padding: 8px 16px;
+    background: white;
 
-  h1.name {
-    margin-bottom: 0;
-  }
-
-  hr {
-    opacity: 0.3;
-    margin-top: 24px;
-    margin-bottom: 0;
-  }
-
-  .description {
-    font-size: 16px;
-    font-style: italic;
-    font-weight: bold;
-    margin-top: 16px;
-  }
-
-  .images {
-    img {
-      width: 100%;
+    h1.name {
+        margin-bottom: 0;
     }
-  }
 
-  .location {
-    a {
-      margin-right: 8px;
+    hr {
+        opacity: 0.3;
+        margin-top: 24px;
+        margin-bottom: 0;
     }
-    display: flex;
-    align-items: center;
-  }
 
-  .other {
-    margin-top: 16px;
-  }
-
-  .contact {
-    display: flex;
-    align-items: center;
-    margin-bottom: 8px;
-
-    a {
-      margin-right: 8px;
+    .description {
+        font-size: 16px;
+        font-style: italic;
+        font-weight: bold;
+        margin-top: 16px;
     }
-  }
-  .grid-3 {
-    display: grid;
-    gap: 8px;
-    grid-template-columns: 1fr 1fr 1fr;
-    text-align: center;
 
-    .price {
-      background: rgba(0, 0, 0, 0.05);
-      border-radius: 4px;
-      padding: 4px;
+    .images {
+        img {
+            width: 100%;
+        }
     }
-  }
+
+    .location {
+        a {
+            margin-right: 8px;
+        }
+        display: flex;
+        align-items: center;
+    }
+
+    .other {
+        margin-top: 16px;
+    }
+
+    .contact {
+        display: flex;
+        align-items: center;
+        margin-bottom: 8px;
+
+        a {
+            margin-right: 8px;
+        }
+    }
+    .grid-3 {
+        display: grid;
+        gap: 8px;
+        grid-template-columns: 1fr 1fr 1fr;
+        text-align: center;
+
+        .price {
+            background: rgba(0, 0, 0, 0.05);
+            border-radius: 4px;
+            padding: 4px;
+        }
+    }
 }
 </style>

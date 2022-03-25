@@ -23,8 +23,8 @@
 import { mapGetters } from "vuex";
 
 export default {
-  computed: {
-    ...mapGetters(["isAdmin", "userProfile"])
-  }
+    computed: {
+        ...mapGetters(["isAdmin", "userProfile"]),
+    },
 };
 </script>
