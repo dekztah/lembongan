@@ -1,14 +1,7 @@
 import Vue from "vue";
 import Vuex from "vuex";
 import { auth, db } from "@/firebase/firebase";
-import {
-    ref,
-    child,
-    get,
-    query,
-    orderByChild,
-    update,
-} from "firebase/database";
+import { ref, child, get, update } from "firebase/database";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import router from "../router/index";
 import { getISODay } from "date-fns";
