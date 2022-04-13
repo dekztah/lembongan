@@ -7,7 +7,11 @@
         button.button(@click="addNew") add new {{ itemName }}
 
     .items
-        .list-item(v-if="!loading", v-for="item in filteredCollection")
+        .list-item(
+            v-if="!loading",
+            v-for="item in filteredCollection",
+            :class="{ inactive: !item.active }"
+        )
             .name {{ item.name }}
             router-link.button(
                 :to="{ name: $route.meta.item, params: { id: item.key } }"

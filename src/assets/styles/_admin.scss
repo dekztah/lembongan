@@ -9,10 +9,12 @@
   .username {
     margin-right: auto;
   }
+
   .button {
     margin-left: 5px;
   }
 }
+
 .admin.main {
   margin-top: 85px;
   margin-bottom: 100px;
@@ -43,6 +45,7 @@
     align-items: center;
     text-align: center;
   }
+
   .add {
     .button {
       background: darken($base-color, 40);
@@ -61,6 +64,7 @@
       background: darken($base-color, 40);
       color: white;
     }
+
     input[type="text"] {
       margin-right: 10px;
     }
@@ -80,6 +84,10 @@
     background: white;
     color: black;
     border-radius: 4px;
+
+    &.inactive {
+      background: rgba(white, 0.4);
+    }
 
     .button {
       background: darken($base-color, 20);
@@ -109,6 +117,7 @@
     margin: 30px 0 0;
     border-top: 1px solid darken($base-color, 20);
   }
+
   .bottom {
     margin-top: 30px;
     border-top: 1px solid darken($base-color, 20);
@@ -126,6 +135,7 @@
         height: 20px;
       }
     }
+
     .opening-hours {
       display: grid;
       grid-template-columns: 1fr 9fr;
@@ -138,6 +148,7 @@
       }
     }
   }
+
   .save {
     text-align: right;
     margin-top: 30px;
@@ -195,6 +206,7 @@
       align-items: center;
     }
   }
+
   .checkboxes {
     display: inline-flex;
 
@@ -207,12 +219,14 @@
         width: 20px;
         height: 20px;
       }
+
       label {
         margin-left: 5px;
         font-size: 14px;
       }
     }
   }
+
   .weekdays {
     display: grid;
     grid-template-columns: repeat(7, 1fr);
@@ -221,14 +235,15 @@
     .weekday {
       text-align: right;
 
-      > label {
+      >label {
         font-weight: 600;
         font-size: 14px;
         display: block;
         text-align: center;
         margin-bottom: 10px;
       }
-      > .button {
+
+      >.button {
         background: $wa-color;
         color: white;
         font-weight: 600;
@@ -244,7 +259,7 @@
       text-align: right;
       background: darken($base-color, 20);
 
-      > .button {
+      >.button {
         background: red;
         color: white;
         font-weight: 600;
@@ -283,6 +298,7 @@
     align-items: center;
   }
 }
+
 .clear {
   background-image: url(../Clear.svg);
   background-size: 16px 16px;
