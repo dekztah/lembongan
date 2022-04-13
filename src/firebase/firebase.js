@@ -1,16 +1,17 @@
 import firebaseConfig from "./firebaseConfig";
-import firebase from "firebase/app";
-import "firebase/auth";
-import "firebase/database";
-import "firebase/analytics";
-import "firebase/storage";
+import { initializeApp } from "firebase/app";
 
-firebase.initializeApp(firebaseConfig);
+import { getAuth } from "firebase/auth";
+import { getDatabase } from "firebase/database";
+import { getAnalytics } from "firebase/analytics";
+import { getStorage } from "firebase/storage";
 
-const auth = firebase.auth();
-const db = firebase.database();
-const storage = firebase.storage();
+const firebaseApp = initializeApp(firebaseConfig);
 
-firebase.analytics();
+const auth = getAuth(firebaseApp);
+const db = getDatabase(firebaseApp);
+const storage = getStorage(firebaseApp);
 
-export { db, auth, storage };
+const analytics = getAnalytics(firebaseApp);
+
+export { db, auth, storage, analytics };

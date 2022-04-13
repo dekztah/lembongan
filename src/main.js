@@ -3,6 +3,7 @@ import App from "./App.vue";
 import router from "./router";
 import store from "./store";
 import { auth } from "@/firebase/firebase";
+import { onAuthStateChanged } from "firebase/auth";
 
 import "@/assets/styles/main.scss";
 import "./registerServiceWorker";
@@ -41,7 +42,7 @@ ralewayFontFace
     });
 
 let app;
-auth.onAuthStateChanged((user) => {
+onAuthStateChanged(auth, (user) => {
     if (!app) {
         app = new Vue({
             router,

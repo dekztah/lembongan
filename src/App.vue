@@ -43,7 +43,7 @@
             footer
                 .public-footer
                     .left
-                        div(v-if="lastUpdateFormatted")
+                        div(v-if="lastUpdate")
                             .last last updated:
                             div {{ lastUpdateFormatted }}
 
@@ -99,8 +99,8 @@ export default {
             return format(this.timestamp, "HH:mm");
         },
         lastUpdateFormatted() {
-            // return format(this.lastUpdate, "yyyy-MM-dd HH:mm");
-            return false;
+            return format(this.lastUpdate, "yyyy-MM-dd HH:mm");
+            // return false;
         },
         partOfTheDay() {
             let parts = ["pagi", "siang", "sore", "malam"];

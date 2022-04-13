@@ -1,6 +1,8 @@
 import Vue from "vue";
 import Vuex from "vuex";
 import { auth, db } from "@/firebase/firebase";
+import { ref, child, get, update } from "firebase/database";
+import { signInWithEmailAndPassword } from "firebase/auth";
 import router from "../router/index";
 import { getISODay } from "date-fns";
 import { utcToZonedTime } from "date-fns-tz";
@@ -102,7 +104,8 @@ export default new Vuex.Store({
         },
 
         async login({ dispatch }, form) {
-            const { user } = await auth.signInWithEmailAndPassword(
+            const { user } = await signInWithEmailAndPassword(
+                auth,
                 form.email,
                 form.password
             );
@@ -118,9 +121,19 @@ export default new Vuex.Store({
         },
 
         async fetchUserProfile({ commit }, user) {
-            const userProfile = await db.ref(`users/${user.uid}`).once("value");
+            const dbRef = ref(db);
 
-            commit("setUserProfile", userProfile.val());
+            await get(child(dbRef, `users/${user.uid}`))
+                .then((snapshot) => {
+                    if (snapshot.exists()) {
+                        commit("setUserProfile", snapshot.val());
+                    } else {
+                        console.log("No data available");
+                    }
+                })
+                .catch((error) => {
+                    console.error(error);
+                });
 
             if (router.currentRoute.path === "/login") {
                 router.push("/");
@@ -134,17 +147,24 @@ export default new Vuex.Store({
 
             if (!state.collections[collectionName].length) {
                 commit("toggleLoading", true);
-                await db
-                    .ref(collectionName)
-                    .orderByChild("name")
-                    .once("value")
+
+                const dbRef = ref(db);
+
+                await get(child(dbRef, collectionName))
                     .then((snapshot) => {
-                        snapshot.forEach((child) => {
-                            let item = child.val();
-                            item.key = child.key;
-                            collection.push(item);
-                        });
-                        commit("toggleLoading", false);
+                        if (snapshot.exists()) {
+                            snapshot.forEach((child) => {
+                                let item = child.val();
+                                item.key = child.key;
+                                collection.push(item);
+                            });
+                            commit("toggleLoading", false);
+                        } else {
+                            console.log("No data available");
+                        }
+                    })
+                    .catch((error) => {
+                        console.error(error);
                     });
 
                 commit("setCollection", { collectionName, collection });
@@ -154,35 +174,49 @@ export default new Vuex.Store({
         async fetchDocument({ commit }, { collectionName, id }) {
             let document = {};
 
-            await db
-                .ref(`${collectionName}/${id}`)
-                .once("value")
+            const dbRef = ref(db);
+
+            await get(child(dbRef, `${collectionName}/${id}`))
                 .then((snapshot) => {
-                    document = snapshot.val();
-                    document.key = snapshot.key;
-                    commit("setDocument", document);
-                    commit("toggleLoading", false);
+                    if (snapshot.exists()) {
+                        document = snapshot.val();
+                        document.key = snapshot.key;
+                        commit("setDocument", document);
+                        commit("toggleLoading", false);
+                    } else {
+                        console.log("No data available");
+                    }
+                })
+                .catch((error) => {
+                    console.error(error);
                 });
         },
 
         async fetchLastUpdate({ commit }) {
-            await db
-                .ref("lastUpdate")
-                .once("value")
+            const dbRef = ref(db);
+
+            await get(child(dbRef, `lastUpdate`))
                 .then((snapshot) => {
-                    commit("setLastUpdate", snapshot.val());
+                    if (snapshot.exists()) {
+                        commit("setLastUpdate", snapshot.val());
+                    } else {
+                        console.log("No data available");
+                    }
+                })
+                .catch((error) => {
+                    console.error(error);
                 });
         },
 
         async update({ commit }, updates) {
-            const updated = Date.now();
-            commit("toggleLoading", true);
-            await db
-                .ref()
-                .update(updates)
+            updates.lastUpdate = Date.now();
+
+            await update(ref(db), updates)
                 .then(() => {
-                    db.ref().update({ lastUpdate: updated });
                     commit("toggleLoading", false);
+                })
+                .catch((error) => {
+                    console.error(error);
                 });
         },
     },
