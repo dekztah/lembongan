@@ -157,9 +157,7 @@ export default new Vuex.Store({
 
                 const dbRef = ref(db);
 
-                await get(
-                    query(child(dbRef, collectionName), orderByChild("name"))
-                )
+                await get(child(dbRef, collectionName))
                     .then((snapshot) => {
                         if (snapshot.exists()) {
                             snapshot.forEach((child) => {
@@ -175,6 +173,13 @@ export default new Vuex.Store({
                     .catch((error) => {
                         console.error(error);
                     });
+
+                if (collectionName !== "boats") {
+                    collection = collection
+                        .map((value) => ({ value, sort: Math.random() }))
+                        .sort((a, b) => a.sort - b.sort)
+                        .map(({ value }) => value);
+                }
 
                 commit("setCollection", { collectionName, collection });
             }

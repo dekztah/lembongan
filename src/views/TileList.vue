@@ -1,34 +1,29 @@
 <template lang="pug">
-  .main
-    .filter-control(:class="{'active': mobileNavOpen}")
-      .filter.text-input
-        input(type="text" v-model="search")
-        .search-icon(v-if="search === ''")
-        button.clear(v-if="search !== ''" @click="search = undefined")
+.main
+    .filter-control(:class="{ active: mobileNavOpen }")
+        .filter.text-input
+            input(type="text", v-model="search")
+            .search-icon(v-if="search === ''")
+            button.clear(v-if="search !== ''", @click="search = undefined")
 
-      checkbox(
-        v-for="(cb, key) in filters"
-        :key="`filter-${key}`"
-        :name="key"
-        :tags="tags"
-        :open="open"
-        @input="setQuery(key, $event)"
-      )
+        checkbox(
+            v-for="(cb, key) in filters",
+            :key="`filter-${key}`",
+            :name="key",
+            :tags="tags",
+            :open="open",
+            @input="setQuery(key, $event)"
+        )
 
-      .count(v-if="filters") {{ filteredCollection.length }} results
+        .count(v-if="filters") {{ filteredCollection.length }} results
 
     transition-group.tile-list(
-      v-if="filters"
-      tag="div"
-      name="tile"
-      :key="$route.meta.collection"
+        v-if="filters",
+        tag="div",
+        name="tile",
+        :key="$route.meta.collection"
     )
-      tile(
-        v-for="item in filteredCollection"
-        :item="item"
-        :key="item.key"
-      )
-
+        tile(v-for="item in filteredCollection", :item="item", :key="item.key")
 </template>
 
 <script>
