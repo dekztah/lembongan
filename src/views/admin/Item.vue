@@ -1,93 +1,100 @@
 <template lang="pug">
-  .admin-form
+.admin-form
     .top
-      .grid-item
-        .form-element
-          label Name
-          input(type="text" v-model="form.name")
+        .grid-item
+            .form-element
+                label Name
+                input(type="text", v-model="form.name")
 
-        .form-element
-          label Description
-          input(type="text" v-model="form.description")
+            .form-element
+                label Description
+                input(type="text", v-model="form.description")
 
-        .form-element
-          label Owner
-          input(type="text" v-model="form.owner" :disabled="!isAdmin")
+            .form-element
+                label Owner
+                input(type="text", v-model="form.owner", :disabled="!isAdmin")
 
-        .form-element
-          label Contact
-          input(type="number" v-model="form.contact")
+            .form-element
+                label Contact
+                input(type="number", v-model="form.contact")
 
-        .form-element
-          label Facebook link
-          input(type="text" v-model="form.facebookLink")
+            .form-element
+                label Facebook link
+                input(type="text", v-model="form.facebookLink")
 
-        .form-element
-          label Instagram link
-          input(type="text" v-model="form.instagramLink")
+            .form-element
+                label Instagram link
+                input(type="text", v-model="form.instagramLink")
 
-        .form-element
-          label Maps link
-          input(type="text" v-model="form.gMapsLink")
+            .form-element
+                label Maps link
+                input(type="text", v-model="form.gMapsLink")
 
-        .form-element
-          label Sponsored
-          select(v-model="form.sponsored")
-            option(:value="0") not sponsored
-            option(:value="1") level 1
-            option(:value="2") level 2
-            option(:value="3") level 3
-            option(:value="4") level 4
+            .form-element
+                label Sponsored
+                select(v-model="form.sponsored")
+                    option(:value="0") not sponsored
+                    option(:value="1") level 1
+                    option(:value="2") level 2
+                    option(:value="3") level 3
+                    option(:value="4") level 4
 
-        .form-element(v-if="form.sponsored > 0")
-          label Logo
-          input(type="file" @change="onFileChange($event)")
+            .form-element(v-if="form.sponsored > 0")
+                label Logo
+                input(type="file", @change="onFileChange($event)")
 
-        .form-element
-          label Active
-          input(type="checkbox" v-model="form.active")
+            .form-element
+                label Active
+                input(type="checkbox", v-model="form.active")
 
-      .grid-item
-        flat-pickr(v-model="activeDates" :config="config")
+        .grid-item
+            flat-pickr(v-model="activeDates", :config="config")
 
     .middle
-      label Properties
-      .checkboxes
-        .checkbox(v-for="(cb,key) in form.properties" :key="key")
-          input(type="checkbox" v-model="form.properties[key]" :id="key")
-          label(:for="key") {{ text(key) }}
+        label Properties
+        .checkboxes
+            .checkbox(v-for="(cb, key) in form.properties", :key="key")
+                input(
+                    type="checkbox",
+                    v-model="form.properties[key]",
+                    :id="key"
+                )
+                label(:for="key") {{ text(key) }}
 
     .bottom
-      .toggle-hours(v-if="form.reservation !== undefined")
-        label(for="reservation") Contact for details
-        input(type="checkbox" v-model="form.reservation" id="reservation")
+        .toggle-hours(v-if="form.reservation !== undefined")
+            label(for="reservation") Contact for details
+            input#reservation(type="checkbox", v-model="form.reservation")
 
-      .opening-hours(v-if="!form.reservation")
-        label Opening hours
-        .weekdays
-          .weekday(v-for="(openingHours, day) in form.openingHours")
-            label {{ weekArray[day] }}
+        .opening-hours(v-if="!form.reservation")
+            label Opening hours
+            .weekdays
+                .weekday(v-for="(openingHours, day) in form.openingHours")
+                    label {{ weekArray[day] }}
 
-            .items(v-for="(openingHour, index) in openingHours")
-              .item
-                label opens
-                input(type="time" v-model="openingHour.start")
+                    .items(v-for="(openingHour, index) in openingHours")
+                        .item
+                            label opens
+                            input(type="time", v-model="openingHour.start")
 
-              .item
-                label closes
-                input(type="time" v-model="openingHour.end")
+                        .item
+                            label closes
+                            input(type="time", v-model="openingHour.end")
 
-              button.button(v-if="index !== 0" @click="removeOpeningHourSet(index, day)") x
+                        button.button(
+                            v-if="index !== 0",
+                            @click="removeOpeningHourSet(index, day)"
+                        ) x
 
-            button.button(@click="addOpeningHourSet(day)") +
+                    button.button(@click="addOpeningHourSet(day)") +
 
     .save
-      button.button(@click= "insert" :disabled="saveDisabled") save
-
+        button.button(@click="insert", :disabled="saveDisabled") save
 </template>
 
 <script>
 import { db, storage } from "@/firebase/firebase";
+import { ref, child, push } from "firebase/database";
 import { mapState, mapGetters } from "vuex";
 import flatPickr from "vue-flatpickr-component";
 import deepmerge from "deepmerge";
@@ -181,7 +188,7 @@ export default {
             this.saveDisabled = true;
 
             if (!this.key) {
-                this.key = db.ref(this.collectionName).push().key;
+                this.key = push(child(ref(db), this.collectionName)).key;
                 this.form.createdDate = utcToZonedTime(
                     new Date(),
                     "Asia/Makassar"
