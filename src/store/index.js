@@ -209,7 +209,7 @@ export default new Vuex.Store({
         },
 
         async update({ commit }, updates) {
-            updates.lastUpdate = utcToZonedTime(new Date(), "Asia/Makassar");
+            updates.lastUpdate = Date.now();
 
             await update(ref(db), updates)
                 .then(() => {

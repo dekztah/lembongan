@@ -99,8 +99,10 @@ export default {
             return format(this.timestamp, "HH:mm");
         },
         lastUpdateFormatted() {
-            return format(this.lastUpdate, "yyyy-MM-dd HH:mm");
-            // return false;
+            return format(
+                utcToZonedTime(this.lastUpdate, "Asia/Makassar"),
+                "yyyy-MM-dd HH:mm"
+            );
         },
         partOfTheDay() {
             let parts = ["pagi", "siang", "sore", "malam"];
