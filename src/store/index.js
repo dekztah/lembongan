@@ -1,7 +1,14 @@
 import Vue from "vue";
 import Vuex from "vuex";
 import { auth, db } from "@/firebase/firebase";
-import { ref, child, get, update } from "firebase/database";
+import {
+    ref,
+    child,
+    get,
+    query,
+    orderByChild,
+    update,
+} from "firebase/database";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import router from "../router/index";
 import { getISODay } from "date-fns";
@@ -150,7 +157,9 @@ export default new Vuex.Store({
 
                 const dbRef = ref(db);
 
-                await get(child(dbRef, collectionName))
+                await get(
+                    query(child(dbRef, collectionName), orderByChild("name"))
+                )
                     .then((snapshot) => {
                         if (snapshot.exists()) {
                             snapshot.forEach((child) => {
