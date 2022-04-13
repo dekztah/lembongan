@@ -1,57 +1,84 @@
 <template lang="pug">
-  .tile(
-    :class="{'open': openNow, 'double': isDouble, 'reservation' : item.reservation, 'warn': (opensIn !== null && opensIn >= 0) || (closesIn !== null && closesIn >= 1), 'new': item.new, 'sponsored': item.sponsored}"
-  )
+.tile(
+    :class="{ open: openNow, double: isDouble, reservation: item.reservation, warn: (opensIn !== null && opensIn >= 0) || (closesIn !== null && closesIn >= 1), new: item.new, sponsored: item.sponsored }"
+)
     .content(@click="toggleDouble()")
-      h2.name(v-if="!item.logo || item.sponsored === 0") {{ item.name }}
+        h2.name(v-if="!item.logo || item.sponsored === 0") {{ item.name }}
 
-      .opening-hours(v-if="isOpenToday")
-        .interval(v-for="time in item.openingHours[today]" v-if="time.start")
-          | {{ time.start }}-{{ time.end }}
+        .opening-hours(v-if="isOpenToday")
+            .interval(
+                v-for="time in item.openingHours[today]",
+                v-if="time.start"
+            )
+                | {{ time.start }}-{{ time.end }}
 
-        .closed-today(v-if="!item.openingHours[today][0].start && !item.reservation") closed today
+            .closed-today(
+                v-if="!item.openingHours[today][0].start && !item.reservation"
+            ) closed today
 
-      .opens-in(v-else) opens in {{ nextOpening }}
+        .opens-in(v-else) opens in {{ nextOpening }}
 
-      img(v-if="item.logo && item.sponsored !== 0" :src="item.logo")
+        img(v-if="item.logo && item.sponsored !== 0", :src="item.logo")
 
-      .description(v-if="item.description") {{ item.description }}
+        .description(v-if="item.description") {{ item.description }}
 
-      .weekdays(v-if="!item.reservation")
-        .wd(v-for="(weekday, wid) in item.openingHours" :class="{'closed': weekday[0].start === '' || !isOpenToday, 'today' : wid === today}")
-          .day-names {{ weekArray[wid] }}
-          span(v-if="weekday[0].start !== ''")
-            .interval(v-for="time in weekday")
-              | {{ time.start }}-{{ time.end }}
+        .weekdays(v-if="!item.reservation")
+            .wd(
+                v-for="(weekday, wid) in item.openingHours",
+                :class="{ closed: weekday[0].start === '' || !isOpenToday, today: wid === today }"
+            )
+                .day-names {{ weekArray[wid] }}
+                span(v-if="weekday[0].start !== ''")
+                    .interval(v-for="time in weekday")
+                        | {{ time.start }}-{{ time.end }}
 
-          span.closed-icon(v-else)
+                span.closed-icon(v-else)
 
-      .cal-wrapper(v-if="openDates")
-        flat-pickr(v-model="openDates" :config="calendarConfig")
+        .cal-wrapper(v-if="openDates")
+            flat-pickr(v-model="openDates", :config="calendarConfig")
 
-      .info
-        chip(
-          v-if="chipVisible(item.properties, key)"
-          v-for="(cb, key) in filters"
-          :key="`chip-${key}`"
-          :name="key"
+        .info
+            chip(
+                v-if="chipVisible(item.properties, key)",
+                v-for="(cb, key) in filters",
+                :key="`chip-${key}`",
+                :name="key"
+            )
+
+    .footer(:class="{ reservation: item.reservation }")
+        .status
+            span(v-if="opensIn !== null") Opens in:&nbsp;
+                strong {{ opensIn }}m
+            span(v-if="closesIn !== null") Closes in:&nbsp;
+                strong {{ closesIn }}m
+            span(v-if="item.reservation") Contact for details
+
+        a.social.maps(
+            v-if="item.gMapsLink",
+            :href="item.gMapsLink",
+            target="_blank",
+            rel="noopener"
+        )
+        a.social.fb(
+            v-if="item.facebookLink",
+            :href="item.facebookLink",
+            target="_blank",
+            rel="noopener"
+        )
+        a.social.insta(
+            v-if="item.instagramLink",
+            :href="item.instagramLink",
+            target="_blank",
+            rel="noopener"
+        )
+        a.social.wa(
+            v-if="item.contact",
+            :href="waUrl(item.contact)",
+            target="_blank",
+            rel="noopener"
         )
 
-    .footer(:class="{'reservation': item.reservation}")
-      .status
-        span(v-if="opensIn !== null") Opens in:&nbsp;
-          strong {{ opensIn }}m
-        span(v-if="closesIn !== null") Closes in:&nbsp;
-          strong {{ closesIn }}m
-        span(v-if="item.reservation") Contact for details
-
-      a.social.maps(v-if="item.gMapsLink" :href="item.gMapsLink" target="_blank" rel="noopener")
-      a.social.fb(v-if="item.facebookLink" :href="item.facebookLink" target="_blank" rel="noopener")
-      a.social.insta(v-if="item.instagramLink" :href="item.instagramLink" target="_blank" rel="noopener")
-      a.social.wa(v-if="item.contact" :href="waUrl(item.contact)" target="_blank" rel="noopener")
-
     .highlight(v-if="item.new") NEW
-
 </template>
 <script>
 import { mapState, mapGetters } from "vuex";
@@ -63,9 +90,7 @@ import {
     intervalToDuration,
     differenceInSeconds,
     differenceInDays,
-    format,
     formatDuration,
-    parse,
 } from "date-fns";
 
 let startTime, endTime;
