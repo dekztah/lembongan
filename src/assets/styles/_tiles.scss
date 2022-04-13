@@ -49,17 +49,21 @@
   &-leave-to {
     opacity: 0;
   }
+
   .opening-hours {
     margin-bottom: 10px;
   }
+
   .day-names {
     display: none;
     font-weight: 600;
   }
+
   .cal-wrapper {
     display: none;
     margin-top: 10px;
   }
+
   .closed-today,
   .opens-in {
     color: red;
@@ -67,23 +71,92 @@
     margin-bottom: 10px;
   }
 
-  &.double {
-    width: 370px;
+  &.alt {
+    width: 100%;
+    margin: 0;
+    background: none;
+    box-shadow: none;
+
+    h2.name {
+      margin-right: 30px;
+      justify-content: left;
+
+      &:after {
+        display: none;
+      }
+
+      &:before {
+        flex-shrink: 0;
+        content: "";
+        width: 16px;
+        height: 16px;
+        border-radius: 100%;
+        background-color: red;
+        vertical-align: middle;
+        margin: 0 10px 2px 0;
+        transition: background-color 0.3s;
+      }
+    }
+
+    &.open {
+      h2.name {
+        &:before {
+          background-color: #00ff00;
+        }
+      }
+    }
+
+    &.warn {
+      h2.name {
+        &:before {
+          background-color: #ffba00;
+        }
+      }
+    }
+
+    &.reservation {
+      h2.name {
+        &:before {
+          width: 18px;
+          height: 18px;
+          background: url(../Contact.svg);
+          text-indent: -9999px;
+          background-size: 16px 16px;
+          background-position: 1px 1px;
+          background-repeat: no-repeat;
+        }
+      }
+    }
+
+    .content,
+    .footer {
+      padding: 20px;
+    }
+
+    .footer {
+      a {
+        margin-left: 10px;
+      }
+    }
 
     .day-names {
       display: block;
       text-align: center;
     }
+
     .opening-hours {
       display: none;
     }
+
     .weekdays {
       display: flex;
-      margin-top: 10px;
+      margin: 20px 0;
     }
+
     .cal-wrapper {
       display: block;
     }
+
     .interval {
       font-size: 12px;
       padding: 4px 4px 0 4px;
@@ -92,6 +165,7 @@
       &:not(:first-child) {
         border-top: 1px solid #ccc;
       }
+
       &:not(:last-child) {
         padding-bottom: 4px;
       }
@@ -111,6 +185,7 @@
       flex-direction: column;
       font-size: 14px;
       padding: 8px 0;
+      text-transform: uppercase;
 
       @media only screen and (max-width: $breakpoint-small) {
         font-size: 12px;
@@ -129,6 +204,7 @@
   .weekdays {
     display: none;
   }
+
   .wd {
     display: none;
     align-items: center;
@@ -165,6 +241,7 @@
     padding: 15px;
     -webkit-tap-highlight-color: transparent;
   }
+
   &.new {
     .highlight {
       background: #ffba00;
@@ -177,6 +254,7 @@
       border-bottom-right-radius: 4px;
     }
   }
+
   &.open {
     h2.name {
       &:after {
@@ -184,6 +262,7 @@
       }
     }
   }
+
   &.warn {
     h2.name {
       &:after {
@@ -191,6 +270,7 @@
       }
     }
   }
+
   &.reservation {
     h2.name {
       &:after {
@@ -204,6 +284,7 @@
       }
     }
   }
+
   h2.name {
     font-size: 16px;
     margin: 0;
@@ -224,16 +305,19 @@
       transition: background-color 0.3s;
     }
   }
+
   .description {
-    margin-bottom: 10px;
+    margin: 20px 0 0;
     font-size: 14px;
     font-style: italic;
   }
+
   .info {
     display: flex;
     flex-wrap: wrap-reverse;
     margin-top: auto;
   }
+
   .footer {
     margin-top: auto;
     display: flex;
@@ -261,6 +345,7 @@
       font-size: 12px;
     }
   }
+
   .flatpickr-days {
     pointer-events: none;
   }
@@ -272,6 +357,7 @@
     .content {
       padding: 0;
     }
+
     .name,
     .description,
     .weekdays,
@@ -287,12 +373,15 @@
     img {
       order: 0;
     }
+
     .description {
       order: 2;
     }
+
     .weekdays {
       order: 3;
     }
+
     .info {
       order: 4;
     }

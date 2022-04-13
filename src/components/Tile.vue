@@ -1,8 +1,8 @@
 <template lang="pug">
 .tile(
-    :class="{ open: openNow, double: isDouble, reservation: item.reservation, warn: (opensIn !== null && opensIn >= 0) || (closesIn !== null && closesIn >= 1), new: item.new, sponsored: item.sponsored }"
+    :class="{ open: openNow, alt: alt, reservation: item.reservation, warn: (opensIn !== null && opensIn >= 0) || (closesIn !== null && closesIn >= 1), new: item.new, sponsored: item.sponsored }"
 )
-    .content(@click="toggleDouble()")
+    .content
         h2.name(v-if="!item.logo || item.sponsored === 0") {{ item.name }}
 
         .opening-hours(v-if="isOpenToday")
@@ -20,7 +20,7 @@
 
         img(v-if="item.logo && item.sponsored !== 0", :src="item.logo")
 
-        .description(v-if="item.description") {{ item.description }}
+        .description(v-if="item.description && alt") {{ item.description }}
 
         .weekdays(v-if="!item.reservation")
             .wd(
@@ -97,12 +97,6 @@ let startTime, endTime;
 let startTimeDiff, endTimeDiff;
 
 export default {
-    data() {
-        return {
-            isDouble: false,
-        };
-    },
-
     components: {
         chip,
         flatPickr,
@@ -110,6 +104,7 @@ export default {
 
     props: {
         item: Object,
+        alt: Boolean,
     },
 
     mixins: [generic],
@@ -229,10 +224,6 @@ export default {
     },
 
     methods: {
-        toggleDouble() {
-            this.isDouble = !this.isDouble;
-        },
-
         chipVisible(item, key) {
             if (key === "noPreorder") key = "preorder";
             return item[key] && key !== "openNow";

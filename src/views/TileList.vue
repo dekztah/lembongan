@@ -23,7 +23,17 @@
         name="tile",
         :key="$route.meta.collection"
     )
-        tile(v-for="item in filteredCollection", :item="item", :key="item.key")
+        tile(
+            v-for="item in filteredCollection",
+            :item="item",
+            :key="item.key",
+            @click.native="toggleModal(item)"
+        )
+
+    .modal-overlay(:class="{ active: modal }")
+        .modal-content(v-if="modal")
+            .close(@click="toggleModal(null)")
+            tile(:item="modal", :alt="true")
 </template>
 
 <script>
@@ -47,6 +57,12 @@ export default {
     },
 
     mixins: [generic],
+
+    data() {
+        return {
+            modal: null,
+        };
+    },
 
     computed: {
         ...mapState([
@@ -191,6 +207,10 @@ export default {
                 }
                 this.$router.push({ query: queryPush });
             }
+        },
+
+        toggleModal(item) {
+            this.modal = item;
         },
     },
 };
