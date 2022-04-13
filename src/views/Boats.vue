@@ -1,49 +1,54 @@
 <template lang="pug">
-  .boats-list.main
+.boats-list.main
     .title
-      button.button(@click="dest = 'departToLembongan'" :class="{'active': dest === 'departToLembongan'}")
-        | Sanur to Lembongan
-      button.button(@click="dest = 'departToSanur'" :class="{'active': dest === 'departToSanur'}")
-        | Lembongan to Sanur
+        button.button(
+            @click="dest = 'departToLembongan'",
+            :class="{ active: dest === 'departToLembongan' }"
+        )
+            | Sanur to Lembongan
+        button.button(
+            @click="dest = 'departToSanur'",
+            :class="{ active: dest === 'departToSanur' }"
+        )
+            | Lembongan to Sanur
 
     .daily-schedule(v-if="schedule[dest].length")
-      .direction(v-if="!loading")
-        .warning(v-if="!warnDisabled")
-          button.clear(@click="setWarnDisabled")
-          .icon
-          .text
-            span This schedule is for information only, please always contact the boat company before travelling
+        .direction(v-if="!loading")
+            .warning(v-if="!warnDisabled")
+                button.clear(@click="setWarnDisabled")
+                .icon
+                .text
+                    span This schedule is for information only, please always contact the boat company before travelling
 
-        .next
-          span(v-if="nextBoat") next boat to {{ dest === 'departToSanur' ? 'Sanur' : 'Lembongan / Ceningan'}} in:&nbsp;
-            br
-            strong {{ nextBoat.leavingIn }}
-          span(v-else) All boats to {{ dest === 'departToSanur' ? 'Sanur' : 'Lembongan'}} have left today
+            .next
+                span(v-if="nextBoat") next boat to {{ dest === 'departToSanur' ? 'Sanur' : 'Lembongan / Ceningan' }} in:&nbsp;
+                    br
+                    strong {{ nextBoat.leavingIn }}
+                span(v-else) All boats to {{ dest === 'departToSanur' ? 'Sanur' : 'Lembongan' }} have left today
 
-        .wrap(v-if="isMobile")
-          schedule-entry(
-            v-for="boat in schedule[dest]"
-            :entry="boat"
-            :dest="dest"
-            :key="`${boat.name}-${boat.departure}`"
-          )
+            .wrap(v-if="isMobile")
+                schedule-entry(
+                    v-for="boat in schedule[dest]",
+                    :entry="boat",
+                    :dest="dest",
+                    :key="`${boat.name}-${boat.departure}`"
+                )
 
-        .line(v-else)
-          .part-of-day(v-for="(partOfDay, key) in hoursArray")
-            .segment(v-for="segment in hoursArray[key]")
-              .hour {{ segment }}:00
+            .line(v-else)
+                .part-of-day(v-for="(partOfDay, key) in hoursArray")
+                    .segment(v-for="segment in hoursArray[key]")
+                        .hour {{ segment }}:00
 
-              schedule-entry(
-                v-for="boat in schedule[dest]"
-                v-if="compareTime(boat.departure, segment)"
-                :entry="boat"
-                :dest="dest"
-                :key="`${boat.name}-${boat.departure}`"
-              )
+                        schedule-entry(
+                            v-for="boat in schedule[dest]",
+                            v-if="compareTime(boat.departure, segment)",
+                            :entry="boat",
+                            :dest="dest",
+                            :key="`${boat.name}-${boat.departure}`"
+                        )
 
     .none(v-else)
-      | ¯\_(ツ)_/¯ No boats today
-
+        | ¯\_(ツ)_/¯ No boats today
 </template>
 
 <script>
@@ -72,8 +77,8 @@ export default {
                 departToLembongan: [],
             },
             hoursArray: {
-                beforeNoon: [7, 8, 9, 10, 11],
-                afterNoon: [12, 13, 14, 15, 16],
+                beforeNoon: [6, 7, 8, 9, 10, 11],
+                afterNoon: [12, 13, 14, 15, 16, 17],
             },
             dest: "departToLembongan",
         };
