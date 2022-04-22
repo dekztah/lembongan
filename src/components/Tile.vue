@@ -57,25 +57,32 @@
             v-if="item.gMapsLink",
             :href="item.gMapsLink",
             target="_blank",
-            rel="noopener"
+            rel="noopener",
+            @click="$event.stopPropagation()"
         )
+
         a.social.fb(
             v-if="item.facebookLink",
             :href="item.facebookLink",
             target="_blank",
-            rel="noopener"
+            rel="noopener",
+            @click="$event.stopPropagation()"
         )
+
         a.social.insta(
             v-if="item.instagramLink",
             :href="item.instagramLink",
             target="_blank",
-            rel="noopener"
+            rel="noopener",
+            @click="$event.stopPropagation()"
         )
+
         a.social.wa(
             v-if="item.contact",
             :href="waUrl(item.contact)",
             target="_blank",
-            rel="noopener"
+            rel="noopener",
+            @click="$event.stopPropagation()"
         )
 
     .highlight(v-if="item.new") NEW
