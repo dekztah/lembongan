@@ -95,6 +95,7 @@
 
 <script>
 import { db } from "@/firebase/firebase";
+import { ref, child, push } from "firebase/database";
 import { mapState } from "vuex";
 import flatPickr from "vue-flatpickr-component";
 import schema from "@/assets/boats-schema.json";
@@ -200,7 +201,9 @@ export default {
         insert() {
             this.saveDisabled = true;
             this.key =
-                this.key === undefined ? db.ref("boats").push().key : this.key;
+                this.key === undefined
+                    ? push(child(ref(db), "boats")).key
+                    : this.key;
 
             let updates = {};
             updates["/boats/" + this.key] = this.form;
