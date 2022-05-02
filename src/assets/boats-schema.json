@@ -1,9 +1,53 @@
 {
   "name": "",
-  "departToSanur": [[""], [""], [""], [""], [""], [""], [""]],
-  "departToLembongan": [[""], [""], [""], [""], [""], [""], [""]],
+  "departToSanur": [
+    [
+      ""
+    ],
+    [
+      ""
+    ],
+    [
+      ""
+    ],
+    [
+      ""
+    ],
+    [
+      ""
+    ],
+    [
+      ""
+    ],
+    [
+      ""
+    ]
+  ],
+  "departToLembongan": [
+    [
+      ""
+    ],
+    [
+      ""
+    ],
+    [
+      ""
+    ],
+    [
+      ""
+    ],
+    [
+      ""
+    ],
+    [
+      ""
+    ],
+    [
+      ""
+    ]
+  ],
   "active": false,
-  "activeDates": [""],
+  "activeDates": "",
   "lembonganLocation": "",
   "contact": "",
   "gMapsLink": "",

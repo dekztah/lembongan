@@ -45,7 +45,7 @@
     ]
   ],
   "active": false,
-  "activeDates": [""],
+  "activeDates": "",
   "description": "",
   "properties": {
     "spa": false,
