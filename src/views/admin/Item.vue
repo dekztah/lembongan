@@ -1,5 +1,5 @@
 <template lang="pug">
-.admin-form
+.admin-form(v-if="!loading")
     .top
         .grid-item
             .form-element
