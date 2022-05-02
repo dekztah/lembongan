@@ -7,7 +7,7 @@
         span.location(v-if="dest === 'departToSanur'") from {{ entry.lembonganLocation }}
         span.location(v-if="dest === 'departToLembongan'") to {{ entry.lembonganLocation }}
         .cal-wrapper(v-show="calOpen")
-            flat-pickr(:value="operatingDates", :config="calendarConfig")
+            date-picker(:model="operatingDates", :config="calendarConfig")
 
     .footer
         .status
@@ -43,7 +43,7 @@
         ) WA
 </template>
 <script>
-import flatPickr from "vue-flatpickr-component";
+import datePicker from "@/components/DatePicker";
 import { mapState, mapGetters } from "vuex";
 import generic from "@/mixins/generic";
 
@@ -60,7 +60,7 @@ export default {
         dest: String,
     },
     components: {
-        flatPickr,
+        datePicker,
     },
     mixins: [generic],
     data() {
@@ -88,15 +88,15 @@ export default {
         operatingDates() {
             if (!this.entry.activeDates) return false;
 
-            return this.entry.activeDates.split(", ");
+            return this.entry.activeDates;
         },
         formattedDate() {
             return format(this.timestamp, "yyyy-MM-dd");
         },
         isOperatingToday() {
-            if (!this.operatingDates) return false;
+            if (!this.entry.activeDates) return false;
 
-            return this.operatingDates.includes(this.formattedDate);
+            return this.entry.activeDates.includes(this.formattedDate);
         },
         timeDiff() {
             return differenceInSeconds(this.leaveTime, this.timestamp);

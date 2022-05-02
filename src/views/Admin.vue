@@ -1,12 +1,11 @@
 <template lang="pug">
-  .admin.main
+.admin.main
     router-view
-
 </template>
 <script>
 export default {
     mounted() {
-        this.$store.commit("toggleLoading", false);
+        // this.$store.commit("toggleLoading", false);
     },
 };
 </script>

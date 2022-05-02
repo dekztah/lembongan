@@ -1,5 +1,5 @@
 <template lang="pug">
-.admin-form
+.admin-form(v-if="!loading")
     .top
         .grid-item
             .form-element
@@ -31,12 +31,7 @@
                 input(type="checkbox", v-model="form.active")
 
         .grid-item
-            flat-pickr(
-                v-model="form.activeDates",
-                :config="config",
-                @on-month-change="setDaysInMonth",
-                ref="cal"
-            )
+            date-picker(:model="form.activeDates", :config="config")
             button.button(@click="setAllDays") every day
 
     .bottom
@@ -97,7 +92,7 @@
 import { db } from "@/firebase/firebase";
 import { ref, child, push } from "firebase/database";
 import { mapState } from "vuex";
-import flatPickr from "vue-flatpickr-component";
+import datePicker from "@/components/DatePicker";
 import schema from "@/assets/boats-schema.json";
 import { getDaysInMonth, isAfter, parse, getYear, getMonth } from "date-fns";
 import { utcToZonedTime } from "date-fns-tz";
@@ -120,7 +115,7 @@ export default {
     },
 
     components: {
-        flatPickr,
+        datePicker,
     },
 
     computed: {
@@ -140,7 +135,9 @@ export default {
                     id: this.key,
                 })
                 .then(() => {
+                    console.log("feccs bót done");
                     this.$set(this, "form", this.document);
+                    this.$store.commit("toggleLoading", false);
                 });
         } else {
             this.$set(this, "form", this.schema);
@@ -148,16 +145,17 @@ export default {
         }
 
         this.setDaysInMonth();
-        // this.$refs.cal.fp.jumpToDate(this.timestamp);
     },
 
     methods: {
         addDepartureTime(destination, day) {
             this.form[destination][day].push("");
         },
+
         removeDepartureTime(destination, index, day) {
             this.form[destination][day].splice(index, 1);
         },
+
         setAllDays() {
             if (
                 isAfter(
@@ -180,6 +178,7 @@ export default {
                 this.form.activeDates = this.daysInMonth.join(", ");
             }
         },
+
         setDaysInMonth(selectedDates, dateStr, instance) {
             let year, month;
 
@@ -198,6 +197,7 @@ export default {
                 (v, i) => `${year}-${month + 1}-${i + 1}`
             );
         },
+
         insert() {
             this.saveDisabled = true;
             this.key =

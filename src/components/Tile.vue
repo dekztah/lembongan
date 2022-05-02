@@ -35,7 +35,7 @@
                 span.closed-icon(v-else)
 
         .cal-wrapper(v-if="openDates")
-            flat-pickr(v-model="openDates", :config="calendarConfig")
+            date-picker(:model="openDates", :config="calendarConfig")
 
         .info
             chip(
@@ -89,9 +89,9 @@
 </template>
 <script>
 import { mapState, mapGetters } from "vuex";
+import datePicker from "@/components/DatePicker";
 import chip from "@/components/Chip";
 import generic from "@/mixins/generic";
-import flatPickr from "vue-flatpickr-component";
 import {
     isWithinInterval,
     intervalToDuration,
@@ -106,7 +106,7 @@ let startTimeDiff, endTimeDiff;
 export default {
     components: {
         chip,
-        flatPickr,
+        datePicker,
     },
 
     props: {

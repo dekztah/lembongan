@@ -48,7 +48,7 @@
                 input(type="checkbox", v-model="form.active")
 
         .grid-item
-            flat-pickr(v-model="activeDates", :config="config")
+            date-picker(:model="form.activeDates", :config="config")
 
     .middle
         label Properties
@@ -96,7 +96,7 @@
 import { db, storage } from "@/firebase/firebase";
 import { ref, child, push } from "firebase/database";
 import { mapState, mapGetters } from "vuex";
-import flatPickr from "vue-flatpickr-component";
+import datePicker from "@/components/DatePicker";
 import deepmerge from "deepmerge";
 import { utcToZonedTime } from "date-fns-tz";
 
@@ -120,7 +120,7 @@ export default {
     },
 
     components: {
-        flatPickr,
+        datePicker,
     },
 
     computed: {
@@ -164,6 +164,7 @@ export default {
                             arrayMerge: overwriteMerge,
                         })
                     );
+                    this.$store.commit("toggleLoading", false);
                 });
         } else {
             this.$set(this, "form", this.schema);

@@ -179,6 +179,8 @@ export default new Vuex.Store({
         },
 
         async fetchDocument({ commit }, { collectionName, id }) {
+            commit("toggleLoading", true);
+
             let document = {};
 
             const dbRef = ref(db);
@@ -189,7 +191,7 @@ export default new Vuex.Store({
                         document = snapshot.val();
                         document.key = snapshot.key;
                         commit("setDocument", document);
-                        commit("toggleLoading", false);
+                        // commit("toggleLoading", false);
                     } else {
                         console.log("No data available");
                     }
