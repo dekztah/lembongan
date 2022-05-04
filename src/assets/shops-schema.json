@@ -47,23 +47,9 @@
   "active": false,
   "activeDates": "",
   "properties": {
-    "dineIn": false,
-    "delivery": false,
-    "preorder": false,
-    "localDishes": false,
-    "coffee": false,
-    "rendang": false,
-    "desserts": false,
-    "drinks": false,
-    "pizza": false,
-    "sushi": false,
-    "winesAndSpirits": false
+    "test": false
   },
-  "sponsored": 0,
-  "logo": null,
   "contact": "",
   "gMapsLink": "",
-  "facebookLink": "",
-  "instagramLink": "",
-  "owner": ""
+  "facebookLink": ""
 }

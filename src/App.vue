@@ -25,6 +25,7 @@
                     router-link(to="/boats") Boat schedule
                     router-link(to="/activities") Activities
                     router-link(to="/services") Services
+                    router-link(to="/shops") Shops
                     //- router-link(to="/accomodations") Accomodations
 
                 .greeting
@@ -64,6 +65,7 @@
                         router-link.button(to="/admin/boats-list") Boats
                         router-link.button(to="/admin/activities-list") Activities
                         router-link.button(to="/admin/services-list") Services
+                        router-link.button(to="/admin/shops-list") Shops
                         router-link.button(to="/admin/accomodations-list") Accomodations
 
                     a.button(@click="logout") logout

@@ -26,6 +26,7 @@ export default new Vuex.Store({
             services: [],
             boats: [],
             accomodations: [],
+            shops: [],
         },
         isMobile: window.innerWidth < 992,
         document: {},

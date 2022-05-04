@@ -119,6 +119,20 @@ const routes = [
         }),
     },
     {
+        path: "/shops",
+        name: "Shops",
+        component: TileList,
+        meta: {
+            collection: "shops",
+            filterProps: ["test"],
+        },
+        props: (route) => ({
+            tags: route.query.tags,
+            q: route.query.q,
+            open: route.query.open,
+        }),
+    },
+    {
         path: "/boats",
         name: "Boat schedule",
         component: Boats,
@@ -225,6 +239,24 @@ const routes = [
                 component: AccomodationItem,
                 meta: {
                     collection: "accomodations",
+                },
+            },
+            {
+                path: "shops-list",
+                name: "ShopsList",
+                component: List,
+                meta: {
+                    collection: "shops",
+                    item: "Shop",
+                    requiresAdmin: true,
+                },
+            },
+            {
+                path: "shop/:id?",
+                name: "Shop",
+                component: Item,
+                meta: {
+                    collection: "shops",
                 },
             },
         ],
