@@ -47,7 +47,9 @@
   "active": false,
   "activeDates": "",
   "properties": {
-    "test": false
+    "alcohol": false,
+    "groceries": false,
+    "hardware": false
   },
   "contact": "",
   "gMapsLink": "",

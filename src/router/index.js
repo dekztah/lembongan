@@ -38,7 +38,6 @@ const routes = [
                 "drinks",
                 "pizza",
                 "sushi",
-                "winesAndSpirits",
             ],
         },
         props: (route) => ({
@@ -124,7 +123,7 @@ const routes = [
         component: TileList,
         meta: {
             collection: "shops",
-            filterProps: ["test"],
+            filterProps: ["alcohol", "groceries", "hardware"],
         },
         props: (route) => ({
             tags: route.query.tags,
