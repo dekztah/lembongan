@@ -23,7 +23,7 @@
     background-image: url(../search.svg);
     background-size: 16px 16px;
     position: absolute;
-    top: 4px;
+    top: 8px;
     right: 10px;
   }
 
@@ -44,7 +44,7 @@
       background-image: url(../Clear.svg);
       background-size: 16px 16px;
       position: absolute;
-      top: 4px;
+      top: 8px;
       right: 10px;
       cursor: pointer;
 
@@ -52,10 +52,12 @@
         outline: none;
       }
     }
+
     @media only screen and (max-width: $breakpoint-small) {
       margin-bottom: 10px;
     }
   }
+
   .count {
     align-self: center;
     margin-left: auto;
@@ -69,7 +71,7 @@
   @media only screen and (max-width: $breakpoint-small) {
     transform: translateX(-100%);
     position: fixed;
-    top: 249px;
+    top: 285px;
     // top: 315px;
     left: 0;
     transition: transform 0.3s ease-out;
@@ -86,6 +88,7 @@
       transform: translateX(0px);
     }
   }
+
   .text {
     display: inline-block;
   }
@@ -100,20 +103,19 @@
     }
 
     label {
-      padding-left: 28px;
       cursor: pointer;
-      height: 24px;
+      height: 32px;
       display: inline-block;
-      border-radius: 24px;
+      border-radius: 32px;
       position: relative;
       margin-right: 5px;
       vertical-align: middle;
       background: darken($base-color, 40);
       color: darken($base-color, 10);
       font-weight: 400;
-      line-height: 20px;
+      line-height: 28px;
       margin-top: 0;
-      padding: 2px 8px 2px 28px;
+      padding: 2px 8px 2px 36px;
       box-shadow: inset 2px 2px 2px rgba(0, 0, 0, 0.2);
       transition: padding 0.2s ease-in, box-shadow 0.2s ease-in,
         background 0.2s ease-in;
@@ -122,12 +124,12 @@
       &:after {
         content: "";
         text-align: center;
-        line-height: 20px;
+        line-height: 28px;
         position: absolute;
         top: 2px;
         left: 2px;
-        width: 20px;
-        height: 20px;
+        width: 28px;
+        height: 28px;
         color: darken($base-color, 40);
         background: darken($base-color, 20);
         border-radius: 50%;
@@ -136,15 +138,15 @@
       }
     }
 
-    input:checked + label {
+    input:checked+label {
       padding-right: 28px;
       padding-left: 8px;
       color: white;
 
       &:after {
-        width: 20px;
-        height: 20px;
-        left: calc(100% - 22px);
+        width: 28px;
+        height: 28px;
+        left: calc(100% - 30px);
         content: "✓";
         color: black;
         background: white;

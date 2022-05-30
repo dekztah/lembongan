@@ -147,6 +147,16 @@ header {
     }
   }
 
+  .right {
+    flex: 1;
+    text-align: right;
+
+    .social {
+      width: 32px;
+      height: 32px;
+    }
+  }
+
   #nav-mobile {
     flex: 1;
     display: block;
@@ -223,13 +233,13 @@ footer {
   }
 
   .social {
-    margin-left: 10px;
+    margin-left: 6px;
   }
 
-  @media only screen and (max-width: $breakpoint-small) {
-    position: static;
-    height: 54px;
-  }
+  // @media only screen and (max-width: $breakpoint-small) {
+  //   position: static;
+  //   height: 54px;
+  // }
 
   .contact-me {
     @media only screen and (max-width: $breakpoint-small) {
@@ -442,6 +452,7 @@ footer {
 
 .tg {
   background-image: url(../Telegram.svg);
+  background-size: 32px 32px;
 }
 
 .fb {
@@ -459,11 +470,11 @@ footer {
 .kofi {
   background-color: darken($base-color, 20) !important;
   background-image: url(../Kofi.svg);
-  background-size: 20px 20px;
+  background-size: 23px 23px;
   background-repeat: no-repeat;
-  background-position: 7px 7px;
+  background-position: 5px 5px;
   display: inline-block;
-  margin-left: auto;
+  margin-left: 6px;
   width: 32px;
   height: 32px;
   border-radius: 50%;

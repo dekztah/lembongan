@@ -33,30 +33,50 @@
                     h1 Lembongan
                     .current-page {{ $route.name }}
 
-                .today
-                    h2 {{ dayOfTheWeek }}
-                    | {{ date }}
-                    br
-                    | {{ time }}
+                .right
+                    //- h2 {{ dayOfTheWeek }}
+                    //- | {{ date }}
+                    //- br
+                    //- | {{ time }}
+                    a.social.tg(
+                        href="https://t.me/dekztah",
+                        target="_blank",
+                        rel="noopener"
+                    )
+
+                    a.social.kofi(
+                        href="https://ko-fi.com/dekztah",
+                        target="_blank",
+                        rel="noopener"
+                    )
 
             router-view
 
             footer
-                .public-footer
-                    .left
-                        div(v-if="lastUpdate")
-                            .last last updated:
-                            div {{ lastUpdateFormatted }}
+                //- .public-footer
+                //-     .left
+                //-         //- div(v-if="lastUpdate")
+                //-         //-     .last last updated:
+                //-         //-     div {{ lastUpdateFormatted }}
 
-                    .right
-                        .contact-me Incorrect data? #[br] Contact me on:&nbsp;
-                        a.social.tg(
-                            href="https://t.me/dekztah",
-                            target="_blank",
-                            rel="noopener"
-                        )
+                //-     .right
+                //-         //- .contact-me Incorrect data? #[br] Contact me on:&nbsp;
+                //-         a.social.tg(
+                //-             href="https://t.me/dekztah",
+                //-             target="_blank",
+                //-             rel="noopener"
+                //-         )
 
-                    //- a.kofi(href="https://ko-fi.com/dekztah" target="_blank" rel="noopener")
+                //-         a.social.kofi(
+                //-             href="https://ko-fi.com/dekztah",
+                //-             target="_blank",
+                //-             rel="noopener"
+                //-         )
+
+                .warning(v-if="updateExists")
+                    .icon
+                    .text(@click="refreshApp()")
+                        span Update available, please refresh!
 
                 .admin-footer(v-if="userProfile.name")
                     span.username {{ userProfile.name }}
@@ -78,8 +98,11 @@
 import { mapState, mapActions, mapGetters } from "vuex";
 import { format, isWithinInterval, parse } from "date-fns";
 import { utcToZonedTime } from "date-fns-tz";
+import update from "@/mixins/update";
 
 export default {
+    mixins: [update],
+
     data() {
         return {
             maintenance: false,
