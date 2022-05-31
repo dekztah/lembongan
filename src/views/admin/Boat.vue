@@ -135,7 +135,6 @@ export default {
                     id: this.key,
                 })
                 .then(() => {
-                    console.log("feccs bót done");
                     this.$set(this, "form", this.document);
                     this.$store.commit("toggleLoading", false);
                 });
