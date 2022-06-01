@@ -1,21 +1,15 @@
 <template lang="pug">
-.boat(
-    :class="{ 'has-left': !available, noop: !isOperatingToday, warn: leavingSoon }"
-)
+.boat(:class="{ 'has-left': !available, warn: leavingSoon }")
     .content
-        h2.time(@click="calOpen = !calOpen") {{ entry.departure }} {{ entry.name }}
+        h2.time {{ entry.departure }} {{ entry.name }}
         span.location(v-if="dest === 'departToSanur'") from {{ entry.lembonganLocation }}
         span.location(v-if="dest === 'departToLembongan'") to {{ entry.lembonganLocation }}
-        .cal-wrapper(v-show="calOpen")
-            date-picker(:model="operatingDates", :config="calendarConfig")
 
     .footer
         .status
-            .not-operating(v-if="!isOperatingToday") Not operating today
-            template(v-else)
-                span(v-if="leavingIn") departs in:&nbsp;
-                    strong {{ leavingIn }}
-                span(v-if="!available") already left
+            span(v-if="leavingIn") departs in:&nbsp;
+                strong {{ leavingIn }}
+            span(v-if="!available") already left
 
         a.social.maps(
             v-if="entry.gMapsLink",
@@ -59,18 +53,23 @@ export default {
         entry: Object,
         dest: String,
     },
+
     components: {
         datePicker,
     },
+
     mixins: [generic],
+
     data() {
         return {
             calOpen: false,
         };
     },
+
     computed: {
         ...mapState(["loading", "mobileNavOpen", "weekArray", "today"]),
         ...mapGetters(["timestamp"]),
+
         calendarConfig() {
             return {
                 mode: "multiple",
@@ -82,31 +81,27 @@ export default {
                 },
             };
         },
+
         leaveTime() {
             return this.parseTime(this.entry.departure);
         },
-        operatingDates() {
-            if (!this.entry.activeDates) return false;
 
-            return this.entry.activeDates;
-        },
         formattedDate() {
             return format(this.timestamp, "yyyy-MM-dd");
         },
-        isOperatingToday() {
-            if (!this.entry.activeDates) return false;
 
-            return this.entry.activeDates.includes(this.formattedDate);
-        },
         timeDiff() {
             return differenceInSeconds(this.leaveTime, this.timestamp);
         },
+
         available() {
-            return this.isOperatingToday && this.timeDiff >= 0;
+            return this.timeDiff >= 0;
         },
+
         leavingSoon() {
             return this.timeDiff < 1800 && this.timeDiff >= 0;
         },
+
         leavingIn() {
             if (!this.available) return false;
 
@@ -120,6 +115,7 @@ export default {
             });
         },
     },
+
     methods: {
         waUrl(contact) {
             return `https://wa.me/${contact}`;

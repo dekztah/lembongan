@@ -30,10 +30,6 @@
                 label Active
                 input(type="checkbox", v-model="form.active")
 
-        .grid-item
-            date-picker(:model="form.activeDates", :config="config")
-            button.button(@click="setAllDays") every day
-
     .bottom
         .opening-hours
             label To Sanur
@@ -92,10 +88,7 @@
 import { db } from "@/firebase/firebase";
 import { ref, child, push } from "firebase/database";
 import { mapState } from "vuex";
-import datePicker from "@/components/DatePicker";
 import schema from "@/assets/boats-schema.json";
-import { getDaysInMonth, isAfter, parse, getYear, getMonth } from "date-fns";
-import { utcToZonedTime } from "date-fns-tz";
 
 export default {
     data() {
@@ -112,10 +105,6 @@ export default {
             saveDisabled: false,
             daysInMonth: [],
         };
-    },
-
-    components: {
-        datePicker,
     },
 
     computed: {
@@ -142,8 +131,6 @@ export default {
             this.$set(this, "form", this.schema);
             this.$store.commit("toggleLoading", false);
         }
-
-        this.setDaysInMonth();
     },
 
     methods: {
@@ -153,48 +140,6 @@ export default {
 
         removeDepartureTime(destination, index, day) {
             this.form[destination][day].splice(index, 1);
-        },
-
-        setAllDays() {
-            if (
-                isAfter(
-                    parse(
-                        this.daysInMonth[0],
-                        "yyyy-MM-dd",
-                        utcToZonedTime(new Date(), "Asia/Makassar")
-                    ),
-                    this.timestamp
-                )
-            ) {
-                this.$set(
-                    this.form,
-                    "activeDates",
-                    this.daysInMonth
-                        .join(", ")
-                        .concat(", ", this.form.activeDates)
-                );
-            } else {
-                this.form.activeDates = this.daysInMonth.join(", ");
-            }
-        },
-
-        setDaysInMonth(selectedDates, dateStr, instance) {
-            let year, month;
-
-            if (instance) {
-                year = instance.currentYear;
-                month = instance.currentMonth;
-            } else {
-                year = getYear(this.timestamp);
-                month = getMonth(this.timestamp);
-            }
-
-            let daysCount = getDaysInMonth(new Date(year, month));
-
-            this.daysInMonth = Array.from(
-                { length: daysCount },
-                (v, i) => `${year}-${month + 1}-${i + 1}`
-            );
         },
 
         insert() {
